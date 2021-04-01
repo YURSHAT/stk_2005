@@ -74,6 +74,7 @@ public:
 	{
 		qsort	(&*R.begin(),R.size(),sizeof(_REG_INFO),_REG_Compare);
 		while	((R.size()) && (R[R.size()-1].Prio<0)) R.pop_back();
+		if (R.empty())		R.clear		();
 	};
 };
 

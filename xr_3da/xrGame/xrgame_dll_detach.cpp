@@ -16,6 +16,7 @@
 #include "character_info.h"
 #include "specific_character.h"
 #include "character_community.h"
+#include "monster_community.h"
 #include "character_rank.h"
 #include "character_reputation.h"
 
@@ -31,6 +32,7 @@ extern void show_smart_cast_stats					();
 extern void clear_smart_cast_stats					();
 extern void release_smart_cast_stats				();
 extern void dump_list_wnd							();
+extern void dump_list_lines							();
 
 void clean_game_globals()
 {
@@ -71,7 +73,7 @@ void clean_game_globals()
 	CHARACTER_COMMUNITY::DeleteIdToIndexData		();
 	CHARACTER_RANK::DeleteIdToIndexData				();
 	CHARACTER_REPUTATION::DeleteIdToIndexData		();
-
+	MONSTER_COMMUNITY::DeleteIdToIndexData			();
 
 	//static shader for blood
 	CEntityAlive::UnloadBloodyWallmarks				();
@@ -83,6 +85,10 @@ void clean_game_globals()
 	// Очищение таблицы идентификаторов рангов и отношений сталкеров
 	InventoryUtilities::ClearCharacterInfoStrings	();
 
+				CSProblemSolver::const_iterator	I = problem_solver.operators().begin();
+			CSProblemSolver::const_iterator	E = problem_solver.operators().end();
+
+	std::lower_bound(problem
 	xr_delete										(g_sound_collection_storage);
 	
 #ifdef DEBUG
@@ -93,4 +99,5 @@ void clean_game_globals()
 	RELATION_REGISTRY::clear_relation_registry		();
 
 	dump_list_wnd									();
+	dump_list_lines									();
 }

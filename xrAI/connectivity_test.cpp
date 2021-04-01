@@ -33,8 +33,8 @@
 #include "data_storage_double_linked_list.h"
 
 //		priority queues
-#include "boost/f_heap.hpp"
-#include "boost/p_heap.hpp"
+//#include "boost/f_heap.hpp"
+//#include "boost/p_heap.hpp"
 #include "data_storage_priority_queue.h"
 #include "data_storage_binary_heap.h"
 #include "data_storage_binary_heap_list.h"

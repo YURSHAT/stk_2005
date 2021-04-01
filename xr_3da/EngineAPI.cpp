@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include "EngineAPI.h"
+#include "xrXRC.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -57,8 +58,10 @@ void CEngineAPI::Initialize(void)
 
 void CEngineAPI::Destroy	(void)
 {
-	if (hGame)		{ FreeLibrary(hGame);	hGame	= 0; }
-	if (hRender)	{ FreeLibrary(hRender); hRender = 0; }
-	pCreate			= 0;
-	pDestroy		= 0;
+	if (hGame)				{ FreeLibrary(hGame);	hGame	= 0; }
+	if (hRender)			{ FreeLibrary(hRender); hRender = 0; }
+	pCreate					= 0;
+	pDestroy				= 0;
+	Engine.Event._destroy	();
+	XRC.r_clear_compact		();
 }

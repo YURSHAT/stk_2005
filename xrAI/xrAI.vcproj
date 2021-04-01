@@ -270,10 +270,10 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
 				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories="x:\xrCore;&quot;X:\External Library\loki&quot;"
+				AdditionalIncludeDirectories="x:\xrCore;&quot;X:\External Library\loki&quot;;&quot;X:\External Library\boost_1_30_0&quot;;&quot;X:\External Library\MagicSoftware\FreeMagic\Include&quot;"
 				PreprocessorDefinitions="WIN32,_DEBUG,_WINDOWS,AI_COMPILER"
 				StringPooling="true"
-				RuntimeLibrary="2"
+				RuntimeLibrary="3"
 				StructMemberAlignment="0"
 				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="false"
@@ -310,6 +310,7 @@
 				OutputFile="x:\xrAI.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="X:\"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="x:\$(ProjectName).pdb"
 				GenerateMapFile="true"
@@ -1299,6 +1300,14 @@
 							<File
 								RelativePath=".\goap_test.cpp"
 								>
+								<FileConfiguration
+									Name="Mixed|Win32"
+									ExcludedFromBuild="true"
+									>
+									<Tool
+										Name="VCCLCompilerTool"
+									/>
+								</FileConfiguration>
 							</File>
 							<File
 								RelativePath=".\seed.dat"
