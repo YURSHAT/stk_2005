@@ -61,7 +61,7 @@ struct CVertexManagerGeneric {
 
 #pragma pack(push,1)
 		template <typename _path_id_type>
-		struct SGraphIndexVertex : public _index_vertex<CGraphVertex,SGraphIndexVertex> {
+		struct SGraphIndexVertex : public _index_vertex<CGraphVertex,SGraphIndexVertex<_path_id_type> > {
 			CGraphVertex	*m_vertex;
 		};
 #pragma pack(pop)

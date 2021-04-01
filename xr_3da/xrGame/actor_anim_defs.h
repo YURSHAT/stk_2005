@@ -74,7 +74,7 @@ struct					SActorMotions
 //
 struct SActorVehicleAnims
 {
-	static const TYPES_NUMBER=2;
+	static const int TYPES_NUMBER=2;
 	struct	SOneTypeCollection
 	{
 		static const u16 MAX_IDLES = 3		;

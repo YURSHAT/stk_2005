@@ -823,7 +823,7 @@ void CSE_ALifeAnomalousZone::STATE_Read		(NET_Packet	&tNetPacket, u16 size)
 			}
 		}
 
-		for ( i=0; i<l_wItemCount; ++i)
+		for (u16 i=0; i<l_wItemCount; ++i)
 			for (u16 j=0; j<m_wItemCount; ++j)
 				if (!strstr(l_cppArtefactSections[i],m_cppArtefactSections[j])) {
 					m_faWeights[j] = l_faWeights[i];

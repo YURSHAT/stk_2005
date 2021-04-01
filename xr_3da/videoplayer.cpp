@@ -72,7 +72,7 @@ void  Intro_DSHOW	( void* fn )
 	pMediaControl->Release		(); 
 	pEvent->Release				(); 
 	pGraph->Release				(); 
-	//	CoUninitialize			(); 
+	//	CoUninitialize			();
 	g_bIntroFinished			= TRUE;
 } 
 

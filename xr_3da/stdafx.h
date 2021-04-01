@@ -68,7 +68,9 @@
 
 #if	!defined(DEBUG) || defined(FORCE_NO_EXCEPTIONS)
 	// release: no error checking, no exceptions
+#ifndef LUABIND_NO_EXCEPTIONS
 	#define LUABIND_NO_EXCEPTIONS
+#endif
 	#define BOOST_THROW_EXCEPTION_HPP_INCLUDED
 	namespace boost {	ENGINE_API	void throw_exception(const std::exception &A);	};
 #endif

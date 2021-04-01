@@ -68,8 +68,8 @@ void CUIStaticItem::Render		(const ref_shader& sh)
 {
 	VERIFY(g_bRendering);
 	// установить обязательно перед вызовом CustomItem::Render() !!!
-	VERIFY(sh?sh:hShader);
-	RCache.set_Shader			(sh?sh:hShader);
+	VERIFY(sh._get()?sh._get():hShader);
+	RCache.set_Shader(sh._get()?sh._get():hShader);
 	// convert&set pos
 	Fvector2		bp;
 	UI()->ClientToScreenScaled	(bp,float(iPos.x),float(iPos.y),uAlign);
@@ -110,8 +110,8 @@ void CUIStaticItem::Render(float angle, const ref_shader& sh)
 {
 	VERIFY(g_bRendering);
 	// установить обязательно перед вызовом CustomItem::Render() !!!
-	VERIFY(sh?sh:hShader);
-	RCache.set_Shader			(sh?sh:hShader);
+	VERIFY(sh._get()?sh._get():hShader);
+	RCache.set_Shader(sh._get()?sh._get():hShader);
 	// convert&set pos
 	Fvector2 bp;
 	UI()->ClientToScreenScaled	(bp, iPos.x, iPos.y, uAlign);

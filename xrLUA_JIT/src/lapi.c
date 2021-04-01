@@ -231,12 +231,10 @@ LUA_API void LUA_CC lua_pushvalue (lua_State *L, int idx) {
 ** access functions (stack -> C)
 */
 
-
 LUA_API int LUA_CC lua_type (lua_State *L, int idx) {
   StkId o = index2adr(L, idx);
   return (o == &luaO_nilobject) ? LUA_TNONE : ttype(o);
 }
-
 
 LUA_API const char *LUA_CC lua_typename (lua_State *L, int t) {
   UNUSED(L);

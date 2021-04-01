@@ -533,7 +533,7 @@ void CUIInventoryWnd::InitInventory()
 	std::sort		(ruck_list.begin(),ruck_list.end(),GreaterRoomInRuck);
 
 	//аўъчръ
-	for(it =  ruck_list.begin(); ruck_list.end() != it; ++it) 
+	for(TIItemContainer::iterator it =  ruck_list.begin(); ruck_list.end() != it; ++it) 
 	{
 		if((*it)) 
 		{

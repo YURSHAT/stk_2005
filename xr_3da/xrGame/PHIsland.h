@@ -12,9 +12,9 @@
 
 class CPHIslandFlags
 {
-	static const	base				=8		;
-	static const	shift_to_variable	=base/2	;
-	static const	mask_static			=0xf	;
+	static const int	base				=8		;
+	static const int	shift_to_variable	=base/2	;
+	static const int	mask_static			=0xf	;
 	Flags8			flags						;
 
 	enum 
@@ -215,11 +215,11 @@ IC void				DisconnectJoint(dxJoint* joint)
 		dWorldRemoveJoint(DWorld(),joint);
 }
 
-IC				ConnectBody(dxBody* body)
+IC		void		ConnectBody(dxBody* body)
 {
 		dWorldAddBody(DWorld(),body);
 }
-IC				DisconnectBody(dxBody* body)
+IC		void		DisconnectBody(dxBody* body)
 {
 		dWorldRemoveBody(DWorld(),body);
 }

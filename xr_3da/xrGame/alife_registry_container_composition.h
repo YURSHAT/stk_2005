@@ -15,7 +15,7 @@
 
 #include "character_info_defs.h"
 #include "relation_registry_defs.h"
-
+#include "alife_registry_container_space.h"
 
 #include "gametaskdefs.h"
 #include "game_news.h"

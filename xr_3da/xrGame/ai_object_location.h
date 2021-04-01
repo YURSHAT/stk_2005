@@ -9,6 +9,7 @@
 #pragma once
 
 #include "game_graph_space.h"
+#include "level_graph_space.h"
 
 namespace LevelGraph {
 	class CVertex;

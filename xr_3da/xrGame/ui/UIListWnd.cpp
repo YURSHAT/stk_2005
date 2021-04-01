@@ -235,7 +235,7 @@ void CUIListWnd::UpdateList()
 	   
 
 	//показать текущий список
-	for(i=m_iFirstShownIndex; 
+	for(int i=m_iFirstShownIndex; 
 			i<_min(m_ItemList.size(),m_iFirstShownIndex + m_iRowNum+1);
 			++i, ++it)
 	{
