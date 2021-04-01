@@ -495,7 +495,8 @@ PM_API int		__cdecl PM_Convert	(
 	// Convert indices
 	vector<WORD>	Indices;
 	Indices.resize	(idxCount);
-	CopyMemory(Indices.begin(),pIndices,idxCount*sizeof(WORD));
+
+	CopyMemory(&*Indices.begin(),pIndices,idxCount*sizeof(WORD));
 	
 	// Perform all collapses and build face permute table
 	vector<DWORD> deg;
@@ -532,7 +533,7 @@ PM_API int		__cdecl PM_Convert	(
 	
 	// Permute faces
 	R_ASSERT(deg.size()==(idxCount/3));
-	CopyMemory(Indices.begin(),pIndices,idxCount*sizeof(WORD));
+	CopyMemory(&*Indices.begin(),pIndices,idxCount*sizeof(WORD));
 	reverse(deg.begin(),deg.end());
 	{
 		for (DWORD d=0; d<deg.size(); d++) {
@@ -550,7 +551,7 @@ PM_API int		__cdecl PM_Convert	(
 	pmSPLIT.clear	();
 	pmFACE_FIX.clear();
 	int I_Current	= idxCount;
-	CopyMemory(Indices.begin(),pIndices,idxCount*2);
+	CopyMemory(&*Indices.begin(),pIndices,idxCount*2);
 	for (V_Num = Vperm.num()-1; V_Num>=int(dwRealMin); V_Num--)
 	{
 		Vsplit				S;
@@ -603,13 +604,13 @@ PM_API int		__cdecl PM_Convert	(
 	reverse(pmFACE_FIX.begin(), pmFACE_FIX.end());
 	
 	// Record results
-	RESULT->permutePTR		= pmPERMUTE.begin	();
+	RESULT->permutePTR		= &*pmPERMUTE.begin	();
 	RESULT->permuteSIZE		= pmPERMUTE.size	();
 	
-	RESULT->splitPTR		= pmSPLIT.begin		();
+	RESULT->splitPTR		= &*pmSPLIT.begin		();
 	RESULT->splitSIZE		= pmSPLIT.size		();
 	
-	RESULT->facefixPTR		= pmFACE_FIX.begin	();
+	RESULT->facefixPTR		= &*pmFACE_FIX.begin	();
 	RESULT->facefixSIZE		= pmFACE_FIX.size	();
 	
 	RESULT->minVertices		= dwRealMin;

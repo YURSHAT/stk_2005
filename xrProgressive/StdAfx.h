@@ -47,17 +47,20 @@
 #include <map>
 #include <deque>
 #include <string>
+#include "_types.h"
+
 using namespace std;
 
 #ifdef _MIN 
 #undef _MIN
-#define _MIN(a,b) ((a<b)?a:b)
 #endif
+
+#define _MIN(a,b) ((a<b)?a:b)
 
 #ifdef _MAX 
 #undef _MAX
-#define _MAX(a,b) ((a>b)?a:b)
 #endif
+#define _MAX(a,b) ((a>b)?a:b)
 
 #define _sqrt sqrtf
 // TODO: reference additional headers your program requires here

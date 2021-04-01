@@ -26,7 +26,7 @@ template <class Type>
 class  List {
 	public:
 		vector<Type>	V;
-		typedef vector<Type>::iterator VI;
+		//typename vector<Type>::iterator VI;
 
 		List	(int s=0) 
 		{	if (s) V.reserve(s);}
@@ -40,13 +40,13 @@ class  List {
 		IC void	DelIndex(int i)		{ V.erase(V.begin()+i);		}
 		IC int 	Contains(Type T)	{ return count(V.begin(),V.end(),T); }
 		IC int	num()				{ return V.size();			}
-		IC int 	Place(Type T)		{ 
-			VI it = find(V.begin(),V.end(),T); 
+		IC int 	Place(Type T)		{
+			vector<Type>::iterator it = find(V.begin(),V.end(),T); 
 			if (it!=V.end())	return it-V.begin();
 			else				return -1;
 		}
-		IC void	Remove(Type T)		{
-			VI it = remove(V.begin(),V.end(),T);
+		IC int	Remove(Type T)		{
+			vector<Type>::iterator it = remove(V.begin(),V.end(),T);
 			V.erase(it,V.end());
 		}
 };

@@ -144,7 +144,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="X:\xrCore"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;XRPROGRESSIVE_EXPORTS"
 				StringPooling="true"
 				ExceptionHandling="0"
