@@ -1,0 +1,31 @@
+This directory contains some useful files and code.
+Unlike the code in ../src, everything here is in the public domain.
+
+all.c
+	Full Lua interpreter in a single file.
+	Do "make one".
+
+lua.hpp
+	Lua header files for C++ using 'extern "C"'.
+
+lua.ico
+	A Lua icon for Windows (and web sites: save as favicon.ico).
+	Drawn by hand by Markus Gritsch <gritsch@iue.tuwien.ac.at>.
+
+lua.pc
+	pkg-config data for Lua
+
+luavs.bat
+	Script to build Lua under "Visual Studio .NET Command Prompt".
+
+min.c
+	A minimal Lua interpreter.
+	Good for learning and for starting your own.
+
+noparser.c
+	Linking with noparser.o avoids loading the parsing modules in lualib.a.
+	Do "make noparser" to see a demo.
+
+strict.lua
+	Traps uses of undeclared global variables.
+
