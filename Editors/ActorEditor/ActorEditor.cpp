@@ -7,14 +7,14 @@
 #include "UI_ActorTools.h"
 #include "LogForm.h"
 //---------------------------------------------------------------------------
-USEFORM("BonePart.cpp", 	frmBonePart);
-USEFORM("ClipEditor.cpp", 	ClipMaker);
-USEFORM("KeyBar.cpp", 		frmKeyBar);
-USEFORM("LeftBar.cpp", 		fraLeftBar); /* TFrame: File Type */
-USEFORM("Splash.cpp", 		frmSplash);
-USEFORM("main.cpp", 		frmMain);
-USEFORM("TopBar.cpp", 		fraTopBar); /* TFrame: File Type */
-USEFORM("BottomBar.cpp", 	fraBottomBar); /* TFrame: File Type */
+USEFORM("BonePart.cpp", frmBonePart);
+USEFORM("ClipEditor.cpp", ClipMaker);
+USEFORM("KeyBar.cpp", frmKeyBar);
+USEFORM("LeftBar.cpp", fraLeftBar); /* TFrame: File Type */
+USEFORM("Splash.cpp", frmSplash);
+USEFORM("main.cpp", frmMain);
+USEFORM("TopBar.cpp", fraTopBar); /* TFrame: File Type */
+USEFORM("BottomBar.cpp", fraBottomBar); /* TFrame: File Type */
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE  hInst, HINSTANCE, LPSTR, int)
 {
@@ -44,8 +44,8 @@ WINAPI WinMain(HINSTANCE  hInst, HINSTANCE, LPSTR, int)
         TfrmLog::CreateLog		();
 
 		Application->CreateForm(__classid(TfrmMain), &frmMain);
-		Application->CreateForm(__classid(TfrmBonePart), &frmBonePart);
-		frmMain->SetHInst		(hInst);
+                 Application->CreateForm(__classid(TfrmBonePart), &frmBonePart);
+                 frmMain->SetHInst		(hInst);
 
 		xr_delete				(frmSplash);
 
