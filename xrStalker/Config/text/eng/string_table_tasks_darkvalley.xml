@@ -1,0 +1,27 @@
+    <string id="val_come_to_trader">
+        <text>Return to the dealer.</text>
+    </string>
+    <string id="val_come_to_trader_0">
+        <text>Return to the dealer as soon as possible.</text>
+    </string>
+    <string id="val_come_to_trader_main">
+        <text>Return to the dealer.</text>
+    </string>
+    <string id="val_prisoner_help">
+        <text>Help out the imprisoned Duty stalker.</text>
+    </string>
+    <string id="val_prisoner_help_0">
+        <text>Set the Duty stalker free from bandit captivity. Find the captive in the basement of the bandit base.</text>
+    </string>
+    <string id="val_prisoner_help_main">
+        <text>Set the Duty stalker free from bandit captivity. Find the captive in the basement of the bandit base.</text>
+    </string>
+    <string id="val_sos_help">
+        <text>Help out stalker.</text>
+    </string>
+    <string id="val_sos_help_0">
+        <text>Unknown stalker is asking for help.</text>
+    </string>
+    <string id="val_sos_help_main">
+        <text>Unknown stalker is asking for help. Find him on the neglected fuel station.</text>
+    </string>

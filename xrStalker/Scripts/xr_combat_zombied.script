@@ -1,0 +1,181 @@
+--[[----------------------------------------------------------------------------------------------------------
+Боевая схема зомбированных сталкеров
+Чугай Саша
+
+Сделать:
+	- звуки
+------------------------------------------------------------------------------------------------------------]]
+
+local turn_threshold_cos = math.cos( math.rad( 10 ) )
+
+class "evaluator_combat_zombied" ( property_evaluator )
+
+function evaluator_combat_zombied:__init( name, glob_storage ) super ( nil, name )
+	self.gst = glob_storage
+end
+
+function evaluator_combat_zombied:evaluate()
+	return self.gst.script_combat_type == "zombied"
+end
+
+--------------------------------------------------------------------------------------------------------------
+
+class "action_zombie_shoot" ( action_base )
+
+function action_zombie_shoot:__init( name, storage )  super ( nil, name )
+	self.st = storage
+	self.t  = {}
+end
+
+function action_zombie_shoot:initialize()
+	action_base.initialize( self )
+
+    self.object:set_node_evaluator      ()
+    self.object:set_path_evaluator      ()
+    self.object:set_desired_direction   ()
+	self.object:set_detail_path_type    ( move.line )
+
+	self.last_state = nil
+end
+
+function action_zombie_shoot:set_state( state, be )
+	if state ~= self.last_state then
+		self.t.look_object   = be
+		self.t.look_position = be:position()
+		state_mgr.set_state( self.object, state, nil, nil, self.t )
+
+		self.last_state = state
+--		printf( "set state !!!!!!!!!!!" )
+	end
+end
+
+function action_zombie_shoot:execute()
+	action_base.execute( self )
+
+	local be = self.object:best_enemy()
+
+	self.object:set_path_type           ( game_object.level_path )
+
+	if self.object:position():distance_to_sqr( be:position() ) > 9 then
+		utils.send_to_nearest_accessible_vertex( self.object, be:level_vertex_id() )
+
+		if self:can_shoot( be ) then
+			self:set_state( "raid_fire", be )
+		else
+			self:set_state( "raid",      be )
+		end
+    else
+		if self:can_shoot( be ) then
+			self:set_state( "guard_fire",  be )
+		else
+			self:set_state( "guard_na",    be )
+		end
+	end    
+end
+
+function action_zombie_shoot:finalize()
+	action_base.finalize( self )
+end
+
+function action_zombie_shoot:can_shoot( be )
+	if self.object:see( be ) then
+		local v1 = self.object:head_orientation()
+		local v2 = be:position():sub( self.object:position() )
+
+		-- повёрнут к врагу с погрешностью
+		local ang_cos = ( (v1.x*v2.x) + (v1.z*v2.z) ) / ( math.sqrt(v1.x*v1.x + v1.z*v1.z) * math.sqrt(v2.x*v2.x + v2.z*v2.z) )
+
+		self.object:info_add( tostring( math.deg( math.acos( ang_cos ) ) ) )
+
+		return ang_cos > turn_threshold_cos
+	else
+		return false
+	end
+end
+
+--------------------------------------------------------------------------------------------------------------
+
+class "action_zombie_go_to_danger" ( action_base )
+
+function action_zombie_go_to_danger:__init( name, storage )  super ( nil, name )
+	self.st = storage
+	self.t  = {}
+end
+
+function action_zombie_go_to_danger:initialize()
+	action_base.initialize( self )
+
+    self.object:set_node_evaluator      ()
+    self.object:set_path_evaluator      ()
+    self.object:set_desired_direction   ()
+	self.object:set_detail_path_type    ( move.line )
+	self.object:set_path_type           ( game_object.level_path )
+
+	self.last_state  = nil
+
+	self.bdo_id      = nil
+	self.bdo_vert_id = nil
+end
+
+function action_zombie_go_to_danger:set_state( state, be, pos )
+	if state ~= self.last_state then
+		self.t.look_object   = be
+		self.t.look_position = pos
+		state_mgr.set_state( self.object, state, nil, nil, self.t )
+
+		self.last_state = state
+--		printf( "set state !!!!!!!!!!!" )
+	end
+end
+
+function action_zombie_go_to_danger:execute()
+	action_base.execute( self )
+
+	local bd  = self.object:best_danger()
+	local bdo = bd:object()
+
+	if bdo and bd:type() ~= danger_object.grenade then
+		if not self.bdo_id or self.bdo_id ~= bdo:id() then
+			self.bdo_id      = bdo:id()
+			self.bdo_vert_id = bdo:level_vertex_id()
+		end
+
+		utils.send_to_nearest_accessible_vertex( self.object, self.bdo_vert_id )
+
+		self:set_state( "patrol", bdo, nil )
+	else
+		self:set_state( "guard",  nil, bd:position() )
+	end
+end
+
+function action_zombie_go_to_danger:finalize()
+	action_base.finalize( self )
+end
+
+--------------------------------------------------------------------------------------------------------------
+
+function add_to_binder( npc, ini, st, planner )
+--[[	planner:add_evaluator( xr_evaluators_id.combat_zombied_base, evaluator_combat_zombied( "combat_zombied", st ) )
+
+	local action = action_zombie_shoot( "action_zombie_shoot", st )
+	action:add_precondition( world_property( xr_evaluators_id.combat_zombied_base, true  ) )
+	action:add_effect      ( world_property( stalker_ids.property_enemy,           false ) )
+	planner:add_action( xr_actions_id.combat_zombied_base, action )]]
+
+	planner:add_evaluator( xr_evaluators_id.combat_zombied_base, evaluator_combat_zombied( "combat_zombied", db.storage[npc:id()] ) )
+
+	local action = action_zombie_shoot( "action_zombie_shoot", st )
+	action:add_precondition( world_property( stalker_ids.property_alive,           true  ) )
+	action:add_precondition( world_property( xr_evaluators_id.combat_zombied_base, true  ) )
+	action:add_precondition( world_property( xr_evaluators_id.script_combat,       true  ) )
+	action:add_effect      ( world_property( stalker_ids.property_enemy,           false ) )
+	planner:add_action( xr_actions_id.combat_zombied_base, action )
+
+	local action = action_zombie_go_to_danger( "action_zombie_go_to_danger", st )
+	action:add_precondition( world_property( stalker_ids.property_alive,           true  ) )
+	action:add_precondition( world_property( xr_evaluators_id.combat_zombied_base, true  ) )
+	action:add_precondition( world_property( stalker_ids.property_enemy,           false ) )
+	action:add_precondition( world_property( stalker_ids.property_danger,          true  ) )
+	action:add_effect      ( world_property( stalker_ids.property_danger,          false ) )
+	planner:add_action( xr_actions_id.combat_zombied_base + 1, action )
+end

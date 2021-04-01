@@ -1,0 +1,169 @@
+--local played_sound = nil
+
+class "snd_source"
+
+function snd_source:__init (obj, storage)
+	self.object = obj
+	self.st	= storage
+	self.destructed = false
+	self.first_sound = true
+	self.played_sound = nil
+	self.old_sound = 0
+end
+
+function snd_source:reset_scheme()
+	self.sound_list = {}
+	self.current_sound = 1
+	self.last_update = 0
+	self.st.signals = {}
+	self.played_sound = nil
+	--load the sounds
+	if sound_theme.ph_snd_themes[self.st.theme] == nil or table.getn (sound_theme.ph_snd_themes[self.st.theme]) == 0 then
+	   abort ("Invalid sound theme for object %s", self.object:name ())
+	   return
+	end
+	printf ("Load theme %s", self.st.theme)
+	for a = 1, table.getn (sound_theme.ph_snd_themes[self.st.theme]), 1 do
+	    local snd = sound_object (sound_theme.ph_snd_themes[self.st.theme][a])
+	    if snd ~= nil then
+	       table.insert (self.sound_list, snd)
+	       printf ("Loaded sound %s", sound_theme.ph_snd_themes[self.st.theme][a])
+	    end   
+    end	    
+    if table.getn (self.sound_list) > 1 then
+	   self.current_sound = math.random (1, table.getn (self.sound_list))
+	else   
+	   self.current_sound = 1
+	end   
+	
+--	self.current_sound = 1 --DELME !!!
+	
+	--self.object:set_callback(callback.hit, self.hit_callback, self)
+	self.first_sound = true
+	self.destructed = false
+    self.st.pause_time = 0	
+    self.st.sound_set = false
+    self.old_sound = 0
+    printf("PH_SOUND reset_scheme")
+end
+
+function snd_source:hit_callback(obj, amount, local_direction, who, bone_index)
+    printf ("SOUND SOURCE HAVE A HIT")
+	local who_name
+	if who then
+		who_name = who:name()
+	else
+		who_name = "nil"
+	end
+
+	printf("_bp: snd_source:hit_callback obj='%s', amount=%d, who='%s'", obj:name(), amount, who_name)
+
+    self.sound_list[self.current_sound]:stop ()
+    self.destructed = true
+end
+
+
+function snd_source:update(delta)
+    if self.destructed == true then return end
+
+	if xr_logic.try_switch_to_another_section (self.object, self.st, db.actor) then
+		return
+	end
+
+    --if self.st.pause_time ~= 0 then
+       if self.st.pause_time - device ():time_global () > 0 then
+          --printf ("PAUSE. NEED TIME : %d, CURRENT TIME : %d", self.st.pause_time, device ():time_global ())
+          return
+       end
+       
+       self.st.pause_time = 0
+       if self.st.sound_set == true then
+          self.st.sound_set = false  
+          if self.st.looped == false then
+             self.sound_list[self.current_sound]:play_at_pos (self.object, self.object:position ())
+          else 
+             self.sound_list[self.current_sound]:play_at_pos (self.object, self.object:position (), 0, sound_object.looped)
+          end   
+          self.played_sound = self.sound_list[self.current_sound]
+          self.first_sound = false
+          --printf ("PH_SOUND : PLAY SOUND NUMBER %d", self.current_sound)
+       end   
+    --end        
+
+       
+    if self.last_update == 0 then
+       self.last_update = device ():time_global ()
+    else
+       if device ():time_global () - self.last_update > 50 then
+          self.last_update = 0
+       else
+          return     
+       end          
+    end
+       
+    if self.sound_list[self.current_sound]:playing () == false then
+       if self.first_sound == false then
+          self.st.signals["sound_end"] = true
+       end
+          
+       if self.st.random == true and table.getn (self.sound_list) > 1 then   
+          local cur = math.random (1, table.getn (self.sound_list))
+          while cur == self.old_sound do
+                cur = math.random (1, table.getn (self.sound_list))
+          end      
+          self.current_sound = cur      
+       else        
+          self.current_sound = self.current_sound + 1
+          if self.current_sound > table.getn (self.sound_list) then
+             self.current_sound = 1
+             if self.first_sound == false then
+                self.st.signals["theme_end"] = true
+                printf("SETTING signal THEME_END")
+             end   
+          end
+       end
+       self.st.sound_set = true
+       if self.st.pause_min ~= 0 or self.st.pause_max ~= 0 then
+          local time = math.random (self.st.pause_min, self.st.pause_max)
+          self.st.pause_time = device ():time_global () + time
+          --printf ("PAUSE TIME : %d, start : %d", time, self.st.pause_time)
+       end 
+       self.first_sound = false
+    else
+       self.sound_list[self.current_sound]:set_position (self.object:position ())
+    end
+       
+end
+
+function snd_source:deactivate ()
+    if self.played_sound ~= nil then
+       self.played_sound:stop ()
+       self.played_sound = nil
+    end
+end
+
+
+
+function add_to_binder (npc, ini, scheme, section, storage)
+	local new_action = snd_source (npc, storage)
+	-- Зарегистрировать все actions, в которых должен быть вызван метод reset_scheme при изменении настроек схемы:
+	xr_logic.subscribe_action_for_events(npc, storage, new_action)
+	
+end
+
+function set_scheme(npc, ini, scheme, section, gulag_name)
+	local st    = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
+	st.logic    = xr_logic.cfg_get_switch_conditions(ini, section, npc)
+	st.theme    = utils.cfg_get_string(ini, section, "snd",	npc, false, "")
+	st.looped   = utils.cfg_get_bool (ini, section, "looped", npc, false)
+	st.random   = utils.cfg_get_bool (ini, section, "random", npc, false)
+	st.pause_min = utils.cfg_get_number (ini, section, "min_idle", npc, false, 0)
+	st.pause_max = utils.cfg_get_number (ini, section, "max_idle", npc, false, 0)
+	if st.pause_max < st.pause_min then
+	   abort ("PH_SOUND - invalid time range !!!")
+    end	    
+    if st.looped == true and st.random == true then
+       abort ("PH_SOUND - can't set looped sound with random play mode")
+    end    
+end
+    

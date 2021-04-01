@@ -1,0 +1,29 @@
+[m_phantom]
+GroupControlSection		= spawn_group
+$spawn                  = "monsters\phantom"		; option for Level Editor
+spawn 	                = on	;
+cform                   = skeleton
+class                   = AI_PHANT
+
+visuals                 = monsters\phantom\psevdodog_0 ,monsters\phantom\tushkano_0, monsters\phantom\flesh_0, monsters\phantom\mutant_boar_0, monsters\phantom\zombi_0, monsters\phantom\krovosos_0, monsters\phantom\cat_0, monsters\phantom\dog_0, monsters\phantom\kontroller_0, monsters\phantom\psevdogigant_0, monsters\phantom\snork_0
+
+speed                   = 4.0	
+angular_speed           = 3.5	
+contact_hit				= 20.0
+
+ef_creature_type		= -1
+
+script_binding  		= phantom_manager.bind
+
+; state BIRTH
+particles_birth 		= monsters\phantom_birth
+sound_birth 			= monsters\poltergeist\attack_hit_0
+; state FLY
+particles_fly	 		= monsters\phantom_fly
+sound_fly	 			= monsters\poltergeist\die_0
+; state CONTACT
+particles_contact 		= monsters\phantom_death
+sound_contact 			= monsters\poltergeist\hit_0
+; state SHOOT
+particles_shoot 		= monsters\phantom_death
+sound_shoot				= monsters\poltergeist\idle_3

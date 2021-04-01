@@ -1,0 +1,570 @@
+<?xml version='1.0' encoding="UTF-8"?>
+
+<xml>
+	<!-- НОВЫЕ ПРОФИЛЯ -->
+	<character id="actor">
+		<class>Actor</class>
+		<specific_character>actor</specific_character>
+	</character>
+	<character id="default">
+		<class>Stalker_general</class>
+	</character>
+
+	<!-- Escape -->
+	<character id="escape_trader">
+		<class>Trader</class>
+		<specific_character>escape_trader</specific_character>
+	</character>
+	
+	<character id="esc_wolf">
+		<class>esc_wolf</class>
+	</character>	
+
+	<character id="esc_ranger">
+		<class>esc_ranger</class>
+	</character>
+
+	<character id="esc_fanat">
+		<class>esc_fanat</class>
+	</character>	
+	
+	<character id="esc_fox">
+		<class>esc_fox</class>
+	</character>
+	
+	<character id="esc_tutorial_wounded">
+		<class>esc_tutorial_wounded</class>
+	</character>
+	
+	<character id="esc_killer_specnaz">
+		<class>esc_killer_specnaz</class>
+	</character>
+	
+	<character id="esc_killer_master">
+		<class>esc_killer_master</class>
+	</character>
+	
+	<character id="esc_bandit_novice">
+		<class>esc_bandit_novice</class>
+	</character>
+	
+	<character id="esc_stalker_novice">
+		<class>esc_stalker_novice</class>
+	</character>	
+	
+	<character id="esc_soldier_commander">
+		<class>esc_soldier_commander</class>
+	</character>
+
+	<character id="esc_soldier_regular">
+		<class>esc_soldier_regular</class>
+	</character>	
+	
+	<character id="esc_soldier_blokpost">
+		<class>esc_soldier_blokpost</class>
+	</character>
+	
+	<character id="esc_soldier_specnaz">
+		<class>esc_soldier_specnaz</class>
+	</character>
+	
+	<!-- Garbage -->
+	
+	<character id="gar_seriy">
+		<class>gar_seriy</class>
+	</character>
+
+	<character id="gar_dram_novice">
+		<class>gar_dram_novice</class>
+	</character>	
+	
+	<character id="gar_newbie_in_tonnel">
+		<class>gar_newbie_in_tonnel</class>
+	</character>
+	
+	<character id="gar_hellcar">
+		<class>gar_hellcar</class>
+	</character>
+	
+	<character id="gar_bandit_novice_wounded">
+		<class>gar_bandit_novice_wounded</class>
+	</character>
+	
+	<character id="gar_bandit_leader">
+		<class>gar_bandit_leader</class>
+	</character>
+	
+	<character id="gar_bandit_novice">
+		<class>gar_bandit_novice</class>
+	</character>
+
+	<character id="gar_bandit_general">
+		<class>gar_bandit_general</class>
+	</character>
+
+	<character id="gar_stalker_general">
+		<class>gar_stalker_general</class>
+	</character>
+
+	<character id="gar_wounded_bandit">
+		<class>gar_wounded_bandit</class>
+	</character>
+
+	<character id="gar_dolg_blokpost">
+		<class>gar_dolg_blokpost</class>
+	</character>
+		
+	<character id="gar_dolg_blokpost_commander">
+		<class>gar_dolg_blokpost_commander</class>
+	</character>
+		
+<!-- Agroprom + undeground-->
+	<character id="agr_krot">
+		<class>agr_krot</class>
+	</character>	
+	<character id="agr_ratcatcher">
+		<class>agr_ratcatcher</class>
+	</character>	
+	<!-- stalkers -->
+	<character id="agr_stalker_general">
+		<class>agr_Stalker_general</class>
+	</character>
+	<!-- soldiers -->
+	<character id="agr_soldier_regular">
+		<class>agr_Soldier_regular</class>
+	</character>
+	<character id="agr_soldier_specnaz">
+		<class>agr_Soldier_specnaz</class>
+	</character>
+	<character id="agr_soldier_commander">
+		<class>agr_Soldier_commander</class>
+	</character>	
+	<character id="agr_soldier_sniper">
+		<class>agr_Soldier_sniper</class>
+	</character>
+	<!--bandits-->
+	<character id="agr_bandit_general">
+		<class>agr_bandit_general</class>
+	</character>
+
+	
+<!-- Darkvalley + X18 -->
+	<!-- Bandits -->	
+	<character id="val_bandit_borov">
+		<class>val_bandit_borov</class>
+		<specific_character>val_bandit_borov</specific_character>
+	</character>
+	<character id="val_bandit_novice">
+		<class>val_bandit_novice</class>
+	</character>
+	<character id="val_bandit_general">
+		<class>val_bandit_general</class>
+	</character>
+	<character id="val_bandit_veteran">
+		<class>val_bandit_veteran</class>
+	</character>
+
+	<!-- Dolg -->
+	<character id="val_dolg_regular">
+		<class>val_dolg_regular</class>
+	</character>
+
+	<!-- Monolit -->
+	<character id="val_monolith_regular">
+		<class>val_monolith_regular</class>
+	</character>
+
+    <!-- Soldier  -->
+	<character id="val_soldier_regular">
+		<class>val_soldier_regular</class>
+	</character>
+	<character id="val_soldier_specnaz">
+		<class>val_soldier_specnaz</class>
+	</character>
+
+	<!-- Stalker  -->	
+	<character id="val_stalker_novice">
+		<class>val_stalker_novice</class>
+	</character>
+	<character id="val_stalker_general">
+		<class>val_stalker_general</class>
+	</character>
+
+<!-- X18 -->
+	<character id="dar_stalker_explorer">
+		<class>dar_stalker_explorer</class>
+	</character>
+	<character id="dar_corpse">
+		<class>dar_corpse</class>
+	</character>
+
+<!-- Bar + Rostok -->
+	<character id="bar_barman">
+		<class>bar_barman</class>
+		<specific_character>bar_barman</specific_character>
+	</character>	
+	<character id="bar_white_novice">
+		<class>bar_stalker_white_novice</class>
+	</character>
+	<character id="bar_brown_novice">
+		<class>bar_stalker_brown_novice</class>
+	</character>
+	<character id="bar_general">
+		<class>bar_stalker_general</class>
+	</character>
+	<character id="bar_dolg">
+		<class>bar_stalker_dolg</class>
+	</character>
+	<character id="bar_bandit">
+		<class>bar_stalker_bandit</class>
+	</character>
+	<character id="bar_killer">
+		<class>bar_stalker_killer</class>
+	</character>
+	<character id="bar_barman_guard">
+		<class>bar_stalker_guard</class>
+	</character>
+	<character id="bar_barman_guard2">
+		<class>bar_stalker_guard2</class>
+	</character>
+	<character id="bar_bar_osvedomitel">
+		<class>bar_stalker_osvedomitel</class>
+	</character>
+	<character id="bar_bar_hunter">
+		<class>bar_stalker_hunter</class>
+	</character>
+	<character id="bar_bar_drunk_dolg">
+			<class>bar_stalker_drunk_dolg</class>
+	</character>
+	<character id="bar_stalker_freeman">
+		<class>bar_stalker_freeman</class>
+	</character>
+	<character id="bar_bar_lisiy">
+		<class>bar_stalker_lisiy</class>
+	</character>
+	<character id="bar_psih">
+		<class>Bar_psih</class>
+	</character>
+	<character id="bar_arena_manager">
+		<class>bar_arena_manager</class>
+	</character>
+	<character id="bar_arena_guard">
+		<class>bar_arena_guard</class>
+	</character>
+	<character id="bar_arena_savage">
+		<class>bar_arena_savage</class>
+	</character>
+	
+	<character id="bar_dolg_leader">
+		<class>bar_dolg_leader</class>
+	</character>
+	<character id="bar_dolg_petrenko">
+		<class>bar_dolg_petrenko</class>
+	</character>
+	<character id="bar_dolg_ivancov">
+		<class>bar_dolg_ivancov</class>
+	</character>
+	<character id="bar_dolg_guard_commander">
+		<class>bar_dolg_guard_commander</class>
+	</character>
+	<character id="bar_zastava_commander_1">
+		<class>bar_zastava_commander</class>
+	</character>
+
+	<character id="bar_ecolog_professor">
+		<class>bar_ecolog_professor</class>
+	</character>
+	<character id="bar_svoboda_attack_commander">
+		<class>bar_svoboda_attack_commander</class>
+	</character>
+
+	<character id="bar_killer_ambush_tiran">
+		<class>bar_killer_ambush_tiran</class>
+	</character>
+	<character id="bar_crazy_veterans_lucky">
+		<class>bar_crazy_veterans_lucky</class>
+	</character>
+	<character id="bar_crazy_veterans">
+		<class>bar_crazy_veterans</class>
+	</character>
+
+	<character id="bar_dolg_regular">
+		<class>bar_Dolg_regular</class>
+	</character>
+	<character id="bar_dolg_sniper">
+		<class>bar_Dolg_sniper</class>
+	</character>
+	<character id="bar_dolg_veteran">
+		<class>bar_Dolg_specnaz</class>
+	</character>
+	<character id="bar_dolg_master">
+		<class>bar_Dolg_master</class>
+	</character>
+
+	<character id="bar_Stalker_novice">
+		<class>bar_Stalker_novice</class>
+	</character>
+	<character id="bar_Stalker_general">
+		<class>bar_Stalker_general</class>
+	</character>
+	<character id="bar_Stalker_veteran">
+		<class>bar_Stalker_veteran</class>
+	</character>
+	<character id="bar_ecolog_guard">
+		<class>bar_ecolog_guard</class>
+	</character>
+	<character id="bar_Killer_regular">
+		<class>bar_Killer_regular</class>
+	</character>
+	<character id="bar_Killer_sniper">
+		<class>bar_Killer_sniper</class>
+	</character>
+	<character id="bar_Killer_sniper_on_enter">
+		<class>bar_Killer_sniper_on_enter</class>
+	</character>	
+	<character id="bar_Killer_specnaz">
+		<class>bar_Killer_specnaz</class>
+	</character>
+
+
+	<!-- Yantar + X16 -->
+
+	<!-- Zombied -->
+	<character id="yan_zombied">
+		<class>yan_Zombied</class>
+	</character>
+	<character id="yan_zombied_veteran">
+		<class>yan_Zombied_veteran</class>
+	</character>
+	<character id="yan_zombied_master">
+		<class>yan_Zombied_master</class>
+	</character>
+	<character id="yan_fresh_Zombied">
+		<class>yan_fresh_Zombied</class>
+	</character>
+	<character id="yan_Ecolog">
+		<class>yan_Ecolog</class>
+	</character>
+	<!-------------glavniy ucheniy----------->
+	<character id="yan_general_ecolog">
+		<class>yan_general_ecolog</class>
+		<specific_character>yan_general_ecolog</specific_character>
+	</character>
+	<!-------------rescue_ecolog----------->
+	<character id="yan_ecolog_help">
+		<class>yan_ecolog_help</class>
+		<specific_character>yan_ecolog_help</specific_character>
+	</character>
+
+	
+	<!-- Military -->
+	<character id="mil_Svoboda_specnaz">
+		<class>mil_Svoboda_specnaz</class>
+	</character>
+	<character id="mil_Svoboda_regular">
+		<class>mil_Svoboda_regular</class>
+	</character>
+	<character id="mil_Svoboda_sniper">
+		<class>mil_Svoboda_sniper</class>
+	</character>
+	<character id="mil_Svoboda_stukach">
+		<class>mil_Svoboda_stukach</class>
+	</character>
+	<character id="mil_Svoboda_zoneguard">
+		<class>mil_Svoboda_zoneguard</class>
+	</character>
+	<character id="mil_Svoboda_bodyguard">
+		<class>mil_Svoboda_bodyguard</class>
+	</character>
+	<character id="mil_Svoboda_leader">
+		<class>mil_Svoboda_leader</class>
+	</character>
+	<character id="mil_Svoboda_trader">
+		<class>mil_Svoboda_trader</class>
+	</character>
+	<character id="mil_Svoboda_master_Max">
+		<class>mil_Svoboda_master_Max</class>
+	</character>
+	<character id="mil_Svoboda_master">
+		<class>mil_Svoboda_master</class>
+	</character>
+	<character id="mil_Svoboda_cook">
+		<class>mil_Svoboda_cook</class>
+	</character>
+	<character id="mil_Svoboda_blockpost_leader">
+		<class>mil_Svoboda_blockpost_leader</class>
+	</character>
+	<character id="mil_Svoboda_master_Ugrumiy">
+		<class>mil_Svoboda_master_Ugrumiy</class>
+	</character>
+	<character id="mil_Dolg_specnaz">
+		<class>mil_Dolg_specnaz</class>
+	</character>
+	<character id="mil_Dolg_specnaz_silence">
+		<class>mil_Dolg_specnaz_silence</class>
+	</character>
+	<character id="mil_Dolg_specnaz_cherep">
+		<class>mil_Dolg_specnaz_cherep</class>
+	</character>
+	<character id="mil_Killer_informator">
+		<class>mil_Killer_informator</class>
+	</character>
+	<character id="mil_Killer_specnaz">
+		<class>mil_Killer_specnaz</class>
+	</character>
+	<character id="mil_Stalker_master">
+		<class>mil_Stalker_master</class>
+	</character>
+	<character id="mil_Stalker_veteran">
+		<class>mil_Stalker_veteran</class>
+	</character>
+	<character id="mil_Svoboda_zombi_stalker">
+		<class>mil_Svoboda_zombi_stalker</class>
+	</character>
+	<character id="mil_Monolit_regular">
+		<class>mil_Monolit_regular</class>
+	</character>
+    <character id="mil_Svoboda_engineer">
+		<class>mil_Svoboda_engineer</class>
+	</character>
+	
+<!-- Radar -->
+	<!-- Monolith -->
+	<character id="rad_monolit_regular">
+		<class>rad_Monolit_regular</class>
+	</character>
+	<character id="rad_monolit_sniper">
+		<class>rad_Monolit_sniper</class>
+	</character>
+	<character id="rad_monolit_specnaz">
+		<class>rad_Monolit_specnaz</class>
+	</character>
+	<character id="rad_monolit_master">
+		<class>rad_Monolit_master</class>
+	</character>
+	<character id="rad_monolit_rpg">
+		<class>rad_Monolit_rpg</class>
+	</character>
+	<!-- Zombied -->
+	<character id="rad_zombied">
+		<class>rad_Zombied</class>
+	</character>
+	<character id="rad_zombied_veteran">
+		<class>rad_Zombied_veteran</class>
+	</character>
+	<!-- Stalkers veterans, masters -->
+	<character id="rad_stalker_veteran">
+		<class>rad_Stalker_veteran</class>
+	</character>
+	<character id="rad_stalker_master">
+		<class>rad_Stalker_master</class>
+	</character>
+	<!-- S.W.A.T. -->
+	<character id="rad_soldier_specnaz">
+		<class>rad_soldier_specnaz</class>
+	</character>	
+	<!-- Dolg -->
+	<character id="rad_Dolg_master">
+		<class>rad_Dolg_master</class>
+	</character>	
+	<!-- Svoboda -->
+	<character id="rad_Svoboda_master">
+		<class>rad_Svoboda_master</class>
+	</character>
+	<!-- dead scientists -->
+	<character id="rad_ecolog">
+		<class>rad_Ecolog</class>
+	</character>
+
+
+<!-- Pripyat -->
+	<!-- Monolith -->
+	<character id="pri_monolith_ambush">
+		<class>pri_monolith_ambush</class>
+	</character>
+
+	<character id="pri_monolith_regular">
+		<class>pri_monolith_regular</class>
+	</character>
+
+	<character id="pri_monolith_specnaz">
+		<class>pri_monolith_specnaz</class>
+	</character>
+
+	<character id="pri_monolith_exo">
+		<class>pri_monolith_exo</class>
+	</character>
+
+	<character id="pri_monolith_leader">
+		<class>pri_monolith_leader</class>
+		<specific_character>pri_monolith_leader</specific_character>
+	</character>
+
+	<!-- Followers -->	
+	<character id="pri_followers">
+		<class>pri_followers</class>
+	</character>
+
+	<!-- Soldier -->
+	<character id="pri_soldier_suicide">
+		<class>pri_soldier_suicide</class>
+	</character>
+
+	<!-- Zombied -->
+	<character id="pri_zombied_suicide">
+		<class>pri_zombied_suicide</class>
+	</character>
+	<character id="pri_zombied">
+		<class>pri_zombied</class>
+	</character>
+	<character id="pri_zombied_veteran">
+		<class>pri_zombied_veteran</class>
+	</character>
+
+<!-- Aes -->
+	<character id="aes_Monolit_rpg">
+		<class>aes_Monolit_rpg</class>
+	</character>
+	<character id="aes_Monolit_specnaz">
+		<class>aes_Monolit_specnaz</class>
+	</character>
+	<character id="aes_Monolit_sniper">
+		<class>aes_Monolit_sniper</class>
+	</character>
+	<character id="aes_Monolit_sniper_gauss">
+		<class>aes_Monolit_sniper_gauss</class>
+	</character>
+	<character id="aes_Monolit_master">
+		<class>aes_Monolit_master</class>
+	</character>
+	<character id="aes_Soldier_commander">
+		<class>aes_Soldier_commander</class>
+	</character>
+	<character id="aes_Soldier_military">
+		<class>aes_Soldier_military</class>
+	</character>
+	<character id="aes_Soldier_specnaz">
+		<class>aes_Soldier_specnaz</class>
+	</character>
+	<character id="aes_Soldier_specnaz_aes">
+		<class>aes_Soldier_specnaz_aes</class>
+	</character>
+	<character id="aes_Soldier_sniper">
+		<class>aes_Soldier_sniper</class>
+	</character>
+	<character id="aes_Monolit_specnaz_rg6">
+		<class>aes_Monolit_specnaz_rg6</class>
+	</character>
+	
+<!-- Sarcofag -->
+	<character id="sar_monolith_specnaz">
+		<class>sar_monolith_specnaz</class>
+	</character>
+	<character id="sar_monolith_exo">
+		<class>sar_monolith_exo</class>
+	</character>
+	<character id="sar_monolith_commander">
+		<class>sar_monolith_commander</class>
+	</character>
+	
+</xml>

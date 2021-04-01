@@ -1,0 +1,267 @@
+// UIMainIngameWnd.h:  окошки-информация в игре
+// 
+//////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include "UIButton.h"
+#include "UIFrameWindow.h"
+#include "UIDragDropList.h"
+#include "UIProgressBar.h"
+#include "UIWpnDragDropItem.h"
+#include "UIListWnd.h"
+#include "UIMultiTextStatic.h"
+#include "UIColorAnimatorWrapper.h"
+
+#include "../actor.h"
+#include "../weapon.h"
+#include "../alife_space.h"
+
+//#include "xrXMLParser.h"
+#include "UICarPanel.h"
+#include "UIMotionIcon.h"
+//////////////////////////////////////////////////////////////////////////
+
+//для режима настройки HUD
+extern int				g_bHudAdjustMode;
+extern float			g_fHudAdjustValue;
+extern int				g_bNewsDisable;
+
+class					CUIPdaMsgListItem;
+class					CLAItem;
+class					CUIZoneMap;
+class					CUIArtefactPanel;
+class					CUIMoneyIndicator;
+//////////////////////////////////////////////////////////////////////////
+
+struct CUSTOM_TEXTURE
+{
+	CUSTOM_TEXTURE(CUIStaticItem* si, float left, float top, float right, float bottom, int priority = 0)
+	{
+		static_item		= si;
+		x1				= left;
+		y1				= top;
+		x2				= right;
+		y2				= bottom;
+		texPriority		= priority;
+	};
+		
+	CUIStaticItem*	static_item;
+	float			x1, y1, x2, y2;
+	int				texPriority;
+};
+
+//////////////////////////////////////////////////////////////////////////
+
+DEFINE_VECTOR(CUSTOM_TEXTURE, CUSTOM_TEXTURE_VECTOR, CUSTOM_TEXTURE_IT);
+
+//////////////////////////////////////////////////////////////////////////
+
+class CUIMainIngameWnd: public CUIWindow  
+{
+public:
+	CUIMainIngameWnd();
+	virtual ~CUIMainIngameWnd();
+
+	virtual void Init();
+	virtual void Draw();
+//	virtual void DrawPdaMessages();
+	virtual void Update();
+
+	bool OnKeyboardPress(int dik);
+
+	// PDA MESSAGES
+		//для отображения сообщения пришедшего по PDA
+	void ReceivePdaMessage(CInventoryOwner* pSender, EPdaMsg msg, INFO_ID info_id);
+
+	bool SetDelayForPdaMessage          (int iValue, int iDelay);
+	void AddGameMessage	(LPCSTR message, int iId = -1, int iDelay = 0);
+	void AddIconedGameMessage			(LPCSTR textureName, Frect originalRect, LPCSTR message, int iId = -1, int iDelay = 0);
+protected:
+	CUIPdaMsgListItem* AddMessageToList(LPCSTR message, CUIListWnd* pListWnd, int iId, int iDelay);
+
+public:
+	void AddStaticItem					(CUIStaticItem* si, float left, float top, float right, float bottom, int priority = 0);
+	// Функция для вывода служебных сообщений, таких как "здась спать нельзя",
+	// "рюкзак переполнен", и т.д. Возвращаем указатель на добавленный элемент
+	void AddInfoMessage	(LPCSTR message);
+
+protected:
+	void HideAll();
+	void ShowAll();
+	bool m_bShowHudCrosshair;
+	
+	CUIStatic			UIStaticDiskIO;
+	CUIStatic			UIStaticHealth;
+	CUIStatic			UIStaticArmor;
+	CUIStatic			UIStaticBattery;
+	// Статик контрол для отображения подсказок действий при наведении прицела на объект
+	// Кнопка потому, что в статике еще нет функции выравнивания текста
+	CUIButton			UIStaticQuickHelp;
+	CUIStatic			UITextWound;
+	CUIProgressBar		UIHealthBar;
+	CUIProgressBar		UIArmorBar;
+	CUIProgressBar		UIBatteryBar;
+	CUICarPanel			UICarPanel;
+	CUIMotionIcon		UIMotionIcon;	
+	CUIZoneMap*			UIZoneMap;
+	CUIProgressBar		UILuminosityBar;
+	CUIProgressBar		UISndNoiseBar;
+
+	//иконка, показывающая количество активных PDA
+	CUIStatic			UIPdaOnline;
+	// Список входящих информационных сообщений
+	CUIListWnd			UIInfoMessages;
+	
+	//изображение оружия
+	CUIStatic			UIWeaponBack;
+	CUIStatic			UIWeaponSignAmmo;
+	CUIStatic			UIWeaponIcon;
+
+	// Для мультиплеера выводим денежки
+	CUIMoneyIndicator*	m_pMoneyIndicator;
+	CUIStatic			UITeam1Sign, UITeam1Score;
+	CUIStatic			UITeam2Sign, UITeam2Score;
+	//  [7/27/2005]
+	CUIStatic			UIRankIndicator;
+	//  [7/27/2005]
+	
+	//список текстур, задаваемых извне, которые будут отрисованы
+	//на текущем кадре
+	CUSTOM_TEXTURE_VECTOR m_CustomTextures;	
+public:
+	// Изменить индикатор текущего количества денег
+	void				ChangeTotalMoneyIndicator(shared_str newMoneyString);
+	// Показать (с анимацией) помледнте заработанные/отняные денежки
+	void				DisplayMoneyChange		(shared_str deltaMoney);
+	void				DisplayMoneyBonus		(shared_str bonus);
+	CUIStatic*			GetPDAOnline			() { return &UIPdaOnline; };
+	void				UpdateTeamsScore		(int t1, int t2);
+	void				SetRank					(int rank);
+protected:
+
+
+	// 5 статиков для отображения иконок:
+	// - сломанного оружия
+	// - радиации
+	// - ранения
+	// - голода
+	// - усталости
+	CUIStatic			UIWeaponJammedIcon;
+	CUIStatic			UIRadiaitionIcon;
+	CUIStatic			UIWoundIcon;
+	CUIStatic			UIStarvationIcon;
+	CUIStatic			UIFatigueIcon;
+	CUIStatic			UIInvincibleIcon;
+	CUIStatic			UISleepIcon;
+	CUIWindow*			m_pMPChatWnd;
+	CUIWindow*			m_pMPLogWnd;
+public:	
+	CUIArtefactPanel*    m_artefactPanel;
+	
+public:
+	
+	// Енумы соответсвующие предупреждающим иконкам 
+	enum EWarningIcons
+	{
+		ewiAll				= 0,
+		ewiWeaponJammed,
+		ewiRadiation,
+		ewiWound,
+		ewiStarvation,
+		ewiFatigue,
+		ewiInvincible,
+		ewiSleep,
+	};
+
+	void				SetMPChatLog(CUIWindow* pChat, CUIWindow* pLog);
+
+	// Задаем цвет соответствующей иконке
+	void				SetWarningIconColor(EWarningIcons icon, const u32 cl);
+	void				TurnOffWarningIcon(EWarningIcons icon);
+
+	// Пороги изменения цвета индикаторов, загружаемые из system.ltx
+	typedef				xr_map<EWarningIcons, xr_vector<float> >	Thresholds;
+	typedef				Thresholds::iterator						Thresholds_it;
+	Thresholds			m_Thresholds;
+
+	// Енум перечисления возможных мигающих иконок
+	enum EFlashingIcons
+	{
+		efiPdaTask	= 0,
+		efiMail
+	};
+	
+	// Вкл/выкл мигающую иконку
+	void				SetFlashIconState_(EFlashingIcons type, bool enable);
+
+	//
+	void				AnimateContacts();
+	ref_sound			m_contactsSnd;
+	// Обработчик события получения новости
+	void				ReceiveNews	(GAME_NEWS_DATA &news);
+	
+protected:
+
+	void				InitFlashingIcons			(CUIXml* node);
+	void				DestroyFlashingIcons		();
+	void				UpdateFlashingIcons			();
+
+	// first - иконка, second - анимация
+	DEF_MAP				(FlashingIcons, EFlashingIcons, CUIStatic*);
+	FlashingIcons		m_FlashingIcons;
+
+	//для текущего активного актера и оружия
+	CActor*				m_pActor;	
+	CWeapon*			m_pWeapon;
+	CInventoryItem*		m_pItem;
+
+	float				m_iWeaponIconX;
+	float				m_iWeaponIconY;
+	float				m_iWeaponIconWidth;
+	float				m_iWeaponIconHeight;
+
+	// Добавлено для поддержки fadein/fadeout реалтаймовых подсказок
+	float				fuzzyShowInfo;
+	// Отображение подсказок при наведении прицела на объект
+	void				RenderQuickInfos();
+	// Просчитать анимационные параметры фейда для айтемов листа
+	void				FadeUpdate(CUIListWnd *pWnd);//, int fadeDuration);
+
+private:
+	// Блок операций работы с текстурами-эффектами ударов когтей на экране(как в Doom 3)
+	DEF_MAP(ClawsTexturesRepository, shared_str /*texture name*/, ref_shader /*actually shader*/);
+	DEF_MAP(MonsterClawsTextures, shared_str /*monster name*/, ref_shader* /*effect texture*/);
+	ClawsTexturesRepository		m_ClawsRepos;
+	MonsterClawsTextures		m_ClawsTextures;
+
+	// Static item for display claws texture
+	CUIStaticItem				m_ClawsTexture;
+	// Animation engine for claws
+	CUIColorAnimatorWrapper		m_ClawsAnimation;
+
+public:
+	// Инициализировать текстуры когтей для монстров
+	void				AddMonsterClawsEffect(const shared_str &monsterName, const shared_str &textureName);
+	// Проиграть анимацию текстуры когтей монстра
+	void				PlayClawsAnimation(const shared_str &monsterName);
+	// Установить позицию заряда батарейки
+	void				SetBatteryCharge(float value);
+	// Показать/спрятать батарейку
+	void				ShowBattery(bool on);
+	CUICarPanel&		CarPanel(){return UICarPanel;};
+	CUIMotionIcon&		MotionIcon(){return UIMotionIcon;}
+protected:
+	CInventoryItem*		m_pPickUpItem;
+	CUIStatic			UIPickUpItemIcon;
+
+	float					m_iPickUpItemIconX;
+	float					m_iPickUpItemIconY;
+	float					m_iPickUpItemIconWidth;
+	float					m_iPickUpItemIconHeight;
+
+    void				UpdatePickUpItem();
+public:
+	void				SetPickUpItem	(CInventoryItem* PickUpItem);
+
+};

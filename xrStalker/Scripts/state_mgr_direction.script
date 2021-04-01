@@ -1,0 +1,157 @@
+--' Повороты тела
+--' Смотрим ли мы сейчас туда, куда нужно или нет?
+class "eva_state_mgr_direction" (property_evaluator)
+function eva_state_mgr_direction:__init(name, st) super (nil, name)
+	self.st = st
+end
+function eva_state_mgr_direction:evaluate()
+	self.st.target_position = nil
+
+	if self.st.look_position ~= nil then
+		self.st.target_position = self.st.look_position
+		--printf("changed for position")
+	end
+
+	if self.st.look_object ~= nil and
+	   level.object_by_id(self.st.look_object) ~= nil 
+	then
+		self.st.target_position = level.object_by_id(self.st.look_object):position()
+		if self.st.current_object == self.st.look_object then
+			return true
+		end		
+	end
+
+	if not self.st.planner:evaluator(self.st.properties["movement_stand"]):evaluate() then
+		return true
+	end
+			
+	if self.st.target_position == nil then
+		-- если текущая позиция нулевая
+		if self.st.current_direction == nil then
+			return true
+		else
+			return false
+		end	
+	else	
+		-- если текущая позиция ненулевая
+		local dir = vector():sub(self.st.target_position, self.object:position())
+		--printf("DIR[%s] head: %f", self.object:name(), yaw_degree3d(dir, self.object:head_orientation()))
+		--printf("DIR[%s] body: %f", self.object:name(), yaw_degree3d(dir, self.object:direction()))
+
+		if yaw_degree3d(dir, self.object:head_orientation()) > self.st.yaw_delta then
+			return false
+		else
+			self:callback()
+			return true
+		end
+	end	
+	return true
+end
+function eva_state_mgr_direction:callback()
+	if self.st.callback ~= nil and
+	   self.st.callback.turn_end_func ~= nil
+	then
+		self.st.callback.turn_end_func(self.st.callback.obj)
+		if self.st.callback ~= nil	then
+			self.st.callback.turn_end_func = nil
+		end
+	end
+end
+
+class "eva_state_mgr_direction_search" (property_evaluator)
+function eva_state_mgr_direction_search:__init(name, st) super (nil, name)
+	self.st = st
+end
+function eva_state_mgr_direction_search:evaluate()
+	return self.st.target_position == nil and self.st.current_direction ~= nil
+end
+
+--' Поворачиваемся ли мы сейчас
+class "eva_state_mgr_direction_turning" (property_evaluator)
+function eva_state_mgr_direction_turning:__init(name, st) super (nil, name)
+	self.st = st
+end
+function eva_state_mgr_direction_turning:evaluate()
+--	printf("BODY TURN %s", utils.to_str(self.object:is_body_turning()))
+	return self.object:is_body_turning()
+end
+
+
+
+--' Включаем поворот
+class "act_state_mgr_direction_turn" (action_base)
+function act_state_mgr_direction_turn:__init(name, st) super (nil, name)
+	self.st = st
+end
+function act_state_mgr_direction_turn:initialize()
+	action_base.initialize(self)
+	
+	if self.st.look_object ~= nil and
+	   level.object_by_id(self.st.look_object) ~= nil 
+	then
+		self.st.current_object = self.st.look_object
+		self.object:set_sight(level.object_by_id(self.st.look_object),true)	
+	else
+		self.st.current_object = nil
+		self.object:set_sight(look.direction, vector():sub(self.st.target_position, self.object:position()), true)		
+	end
+	self.st.current_direction = self.st.target_position	
+end
+function act_state_mgr_direction_turn:execute()
+	action_base.execute(self)
+	if self.st.look_object ~= nil and
+	   level.object_by_id(self.st.look_object) ~= nil 
+	then
+		self.st.current_object = self.st.look_object
+		self.object:set_sight(level.object_by_id(self.st.look_object),true)	
+	else
+		self.st.current_object = nil
+		self.object:set_sight(look.direction, vector():sub(self.st.target_position, self.object:position()), true)		
+	end
+end
+function act_state_mgr_direction_turn:finalize()
+	action_base.finalize(self)
+end
+
+--' Включаем поворот
+class "act_state_mgr_direction_search" (action_base)
+function act_state_mgr_direction_search:__init(name, st) super (nil, name)
+	self.st = st
+end
+function act_state_mgr_direction_search:initialize()
+	action_base.initialize(self)
+	if self.st.no_rotate ~= true then		
+		local type = look.danger
+		if state_lib.states[self.st.target_state].direction then
+			type = state_lib.states[self.st.target_state].direction
+		end
+		self.object:set_sight(type, nil, 0)
+	end
+	self.st.current_object = nil
+	self.st.current_direction = nil
+end
+function act_state_mgr_direction_search:execute()
+	action_base.execute(self)
+end
+function act_state_mgr_direction_search:finalize()
+	action_base.finalize(self)
+end
+
+
+
+function update_movement_direction(npc, st)
+	if st and st.target_position ~= nil then
+	
+		if st.look_object ~= nil and
+		   level.object_by_id(st.look_object) ~= nil 
+		then
+			st.current_object = st.look_object
+			npc:set_sight(level.object_by_id(st.look_object),true)	
+		else
+			st.current_object = nil
+			npc:set_sight(look.direction, vector():sub(st.target_position, npc:position()), true)
+		end
+	else
+		npc:set_sight(look.path_dir, nil, 0)
+	end	
+end

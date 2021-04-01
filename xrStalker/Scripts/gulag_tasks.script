@@ -1,0 +1,225 @@
+local t, k, v
+local level_gulags = xr_gulag.level_gulags
+
+function loadJob(sj, gname, type, squad, groups)
+	if type == "test" then
+		t = { section = "logic@walker1",
+			idle = 0,
+			prior = 0, state = {0},
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+		t = { section = "logic@walker2",
+			idle = 0,
+			prior = 0, state = {0},
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+		t = { section = "logic@walker3",
+			idle = 0,
+			prior = 0, state = {0},
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+		t = { section = "logic@nil",
+			idle = 0,
+			prior = 0, state = {1},
+			in_rest = "", out_rest = "test_sr"
+		}
+		table.insert(sj, t)
+	end
+
+	if type == "test1" then
+		t = { section = "logic@test1_sleeper1",
+			idle = 0,
+			prior = 0, state = {0},
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+		t = { section = "logic@test1_sleeper2",
+			idle = 0,
+			prior = 0, state = {1},
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+	end
+
+	if type == "test2" then
+		t = { section = "logic@test2_kamp1",
+			idle = 0,
+			prior = 0, state = {0},
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+		t = { section = "logic@test2_kamp1",
+			idle = 0,
+			prior = 0, state = {0},
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+	end
+
+	if type == "test_mob" then
+		t = { section = "logic@test_mob_mob_walker",
+			idle = 0,
+			prior = 0, state = {0},
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+	end
+
+	if type == "test_restr_changer" then
+	    local i
+	    for i = 1, 6 do
+		    t = { section = "logic@test_restr_changer_walker",
+			    idle = 0,
+			    prior = 0, state = {0},
+			    in_rest = "", out_rest = "test_restr_changer_restr1"
+		    }
+		    table.insert(sj, t)
+		    t = { section = "logic@test_restr_changer_walker",
+			    idle = 0,
+			    prior = 0, state = {1},
+			    in_rest = "", out_rest = "test_restr_changer_restr2"
+		    }
+		    table.insert(sj, t)
+		end
+	end
+--'--------------------------------------------------------------------------	
+--' ”ниверсальные гулаги дл€ smart terrain
+--'--------------------------------------------------------------------------
+	--' несколько кемперов
+	if type == "campers" then
+		for i = 1, 3 do
+			t = { section = "logic@campers_camper"..i,
+				idle = 0,
+				prior = 0, state = {0},
+				squad = squad, group = groups[i],
+				in_rest = "", out_rest = ""
+			}
+			table.insert(sj, t)
+		end
+	end
+	--' несколько walkers
+	if type == "walkers" then
+		for i = 1, 3 do
+			t = { section = "logic@walkers_walker"..i,
+				idle = 0,
+				prior = 0, state = {0},
+				squad = squad, group = groups[i],
+				in_rest = "", out_rest = ""
+			}
+			table.insert(sj, t)
+		end
+	end
+	--' один walker
+	if type == "search" then
+		t = { section = "logic@search_walker",
+			idle = 0,
+			prior = 0, state = {0},
+			squad = squad, group = groups[i],
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+	end
+	--' отдых
+	if type == "rest" then
+		t = { section = "logic@rest_rest",
+			idle = 0,
+			prior = 0, state = {0},
+			squad = squad, group = groups[i],
+			in_rest = "", out_rest = ""
+		}
+		table.insert(sj, t)
+	end
+
+    for k, v in pairs(level_gulags) do
+        v.load_job(sj, gname, type, squad, groups)
+    end
+end
+
+function loadStates(gname, type)
+	if type == "test" or type == "test1" or type == "test2" then
+		return function(gulag)
+			if gulag.state == 0 then
+				if db.actor:has_info( "tutorial_end" ) then
+					return 1
+				else
+					return 0
+				end
+			else
+				return 1
+			end
+		end
+	end
+	
+	if type == "test_restr_changer" then
+		return function(gulag)
+		    local state, tg
+		    local inv = {[0] = 1, [1] = 0}
+		    return inv[gulag.state]
+
+		    --[[
+		    state = gulag.state
+		    tg = time_global()
+		    if not gulag.haron_prev_time then
+		        gulag.haron_prev_time = tg
+		        return 0
+		    else
+		        if tg - gulag.haron_prev_time > 1000 then
+		            gulag.haron_prev_time = tg
+		            return inv[state]
+		        else
+		            return state
+		        end
+		    end
+		    ]]
+		end
+	end
+
+	if type == "test_mob" then
+		return function(gulag)
+			return 0
+		end
+	end
+
+	if type == "rest" or type == "search" or type == "walkers" or type == "campers" then
+		return function(gulag)
+			return 0
+		end
+	end
+
+	local f
+
+    for k, v in pairs(level_gulags) do
+	    f = v.load_states(gname, type)
+	    if f then
+		    return f
+	    end
+    end
+
+	abort("ERROR: unrecognized gulag's type '%s'", type)
+end
+
+function loadLtx(name, type)
+    local l
+    for k, v in pairs(level_gulags) do
+	    l = v.load_ltx(name, type)
+	    if l ~= nil then
+	        local ini = create_ini_file(l)
+	        --printf("gulag <ltx>:\n%s", l)
+	        return ini
+	    end
+    end
+
+    return nil
+end
+
+function get_megafone(type, name)
+--	if type == "blockpost" then
+--		st = gramofon.m_gramofon(name.."_rupor", "blockpost_commander")
+--		st:event(0)
+--		return st
+--	end
+	return nil
+end

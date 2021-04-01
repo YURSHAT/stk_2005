@@ -1,0 +1,39 @@
+    <string id="gar_kill_boars">
+        <text>Пропуск на Бар.</text>
+    </string>
+    <string id="gar_kill_boars_main">
+        <text>Квест для прохода на Бар.</text>
+    </string>
+    <string id="gar_kill_boars_1">
+        <text>Убить кабанов.</text>
+    </string>
+    <string id="gar_kill_boars_2">
+        <text>Получить пропуск у Долга.</text>
+    </string>
+    <string id="gar_help_hellcar">
+        <text>Отбить рейд бандитов.</text>
+    </string>
+    <string id="gar_defend_garbage">
+        <text>Уничтожить рейд бандитов.</text>
+    </string>
+    <string id="gar_kill_bandits">
+        <text>Уничтожить рейд бандитов.</text>
+    </string>
+    <string id="gar_hellcar_alive">
+        <text>Поговорить с Даймоном.</text>
+    </string>
+    <string id="garbage_meet_stalker_1">
+        <text>Поговорить с Серым о Стрелке.</text>
+    </string>
+    <string id="gar_help_tunnel_newbie">
+        <text>Помочь новичку со свалки</text>
+    </string>
+    <string id="gar_kill_bandits_post">
+        <text>Проводить новичка на кордон</text>
+    </string>
+    <string id="gar_kill_bandits_around_tunnel">
+        <text>Убить бандитов рядом с туннелем</text>
+    </string>
+    <string id="gar_say_free_pass">
+        <text>Сообщить новичку, что путь свободен</text>
+    </string>

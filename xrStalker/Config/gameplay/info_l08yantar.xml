@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding="windows-1251"?>
+
+<game_information_portions>
+	<info_portion id="yan_kill_brain_task_start">
+		<task>yan_kill_brain_task</task>
+	</info_portion>
+	<info_portion id="yan_find_scientist_start">
+		<task>yan_find_scientist</task>
+	</info_portion>
+	<info_portion id="yan_scientist_start_research"></info_portion>
+	<info_portion id="yan_scientist_return_to_bunker"></info_portion>
+	<info_portion id="yan_scientist_gulag_state_2"></info_portion>
+	<info_portion id="yan_scientist_gulag_state_3"></info_portion>
+	<info_portion id="yan_scientist_die"></info_portion>
+	<info_portion id="yan_scientist_door_2_open"></info_portion>
+	<info_portion id="yan_scientist_door_1_open"></info_portion>
+	<info_portion id="yan_scientist_exit"></info_portion>
+	<info_portion id="yan_bunker_door_1_open"></info_portion>
+	<info_portion id="yan_bunker_door_1_close"></info_portion>
+	<info_portion id="yan_bunker_door_2_open"></info_portion>
+	<info_portion id="yan_actor_must_sleep"></info_portion>
+	<info_portion id="yan_kill_brain_done"></info_portion>
+	<info_portion id="yan_find_scientist_done"></info_portion>
+	<info_portion id="yan_scientist_point_to_1"></info_portion>
+	<info_portion id="yan_scientist_point_to_2"></info_portion>
+	<info_portion id="yan_scientist_point_to_3"></info_portion>
+	<info_portion id="yan_scientist_point_to_4"></info_portion>
+	<info_portion id="yan_psi_zone_find_done"></info_portion>
+	<!-- Yantar zombied respawn -->
+	<info_portion id="yan_zombied_respawn_01"></info_portion>
+	<info_portion id="yan_zombied_respawn_02"></info_portion>
+	<info_portion id="yan_zombied_respawn_03"></info_portion>
+	<info_portion id="yan_zombied_respawn_04"></info_portion>
+	<info_portion id="yan_zombied_respawn_05"></info_portion>
+	<info_portion id="yan_zombied_respawn_06"></info_portion>
+	<info_portion id="yan_zombied_respawn_07"></info_portion>
+	
+
+	<!-- Yantar zombied after braindead -->
+	<info_portion id="yantar_attack_start"></info_portion>
+	<info_portion id="set_heli_enemy_actor"></info_portion>
+	<info_portion id="yantar_heli_1_die"></info_portion>
+	<info_portion id="yantar_heli_2_die"></info_portion>
+	<info_portion id="yantar_heli_3_die"></info_portion>
+	<info_portion id="yan_spawn_zombies_1"></info_portion>
+	<info_portion id="yan_spawn_zombies_2"></info_portion>
+	<info_portion id="yan_actor_talk_ucheniy"></info_portion>
+
+	<!-- Yantar Tunnel start -->
+	<info_portion id="yantar_tunnel_start"></info_portion>
+	<info_portion id="yantar_tunnel_finish"></info_portion>
+    
+</game_information_portions>

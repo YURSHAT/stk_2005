@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="windows-1251" standalone="no" ?>
+<string_table>
+    <string id="AK-74">
+        <text>AK-74</text>
+    </string>
+    <string id="AK-74_info">
+        <text>AK-74 info</text>
+    </string>
+    <string id="Machineguns">
+        <text>Machineguns</text>
+    </string>
+    <string id="Weapons">
+        <text>Weapons</text>
+    </string>
+    <string id="ak_74_desc">
+        <text>AK-74 this is main weapon of\npost soviet military troops.\nIt is highly robust and powerful weapon\nproduced since 1976.\n\nTTX:\nRange - 800M\nMagazine capacity: 30 bullet</text>
+    </string>
+    <string id="ak_74_info">
+        <text>AK-74 this is main weapon of\npost soviet military troops.\nIt is highly robust and powerful weapon\nproduced since 1976.\n\nTTX:\nRange - 800M\nMagazine capacity: 30 bullet</text>
+    </string>
+    <string id="alife_news_kill">
+        <text>%s kill %s</text>
+    </string>
+    <string id="alife_news_retreat">
+        <text>%s retreat from battlefield</text>
+    </string>
+    <string id="escape_blockpost_case">
+        <text>Case from blockpost</text>
+    </string>
+    <string id="test1">
+        <text>This is a GENERAL test string</text>
+    </string>
+    <string id="test2">
+        <text>This is a another GENERAL test string</text>
+    </string>
+	<string id="Btn_Yes">
+		<text>Yes</text>
+	</string>
+	<string id="Btn_No">
+		<text>No</text>
+	</string>
+	<string id="Btn_OK">
+		<text>Ok</text>
+	</string>
+	<string id="Btn_Cancel">
+		<text>Cancel</text>
+	</string>
+    
+</string_table>

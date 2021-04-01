@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding="windows-1251"?>
+
+<game_information_portions>
+
+<!-- Диалог со сталкером -->
+<info_portion id="dar_explorer_dlg_open"></info_portion>
+<info_portion id="dar_explorer_dlg_completed"></info_portion>
+<info_portion id="dar_explorer_actor_has_docs"></info_portion>
+<info_portion id="dar_explorer_dlg_angry"></info_portion>
+
+<!-- Кодовый замок 1 -->
+<info_portion id="dar_codelock1_unlock"></info_portion>
+<info_portion id="dar_codelock2_unlock"></info_portion>
+
+<!-- Игрок нашел документы -->
+<info_portion id="dar_actor_got_docs"></info_portion>
+
+
+<!-- Игрок нашел флешку с паролем -->
+<info_portion id="dar_password_info1">
+	<article>dar_password_info1</article>
+</info_portion>
+
+<!-- Игрок нашел документы с паролем -->
+<info_portion id="dar_password_info2">
+	<article>dar_password_info2</article>
+</info_portion>
+
+<!-- Игрок нашел документы 1 -->
+<info_portion id="dar_document1">
+	<article>dar_document1</article>
+</info_portion>
+
+<!-- Игрок нашел документы 2 -->
+<info_portion id="dar_document2">
+	<article>dar_document2</article>
+</info_portion>
+
+<!-- Игрок нашел документы 3 -->
+<info_portion id="dar_document3">
+	<article>dar_document3</article>
+</info_portion>
+
+<!-- Игрок нашел документы 4 -->
+<info_portion id="dar_document4">
+	<article>dar_document4</article>
+</info_portion>
+
+<!-- Игрок нашел документы 5 -->
+<info_portion id="dar_document5">
+	<article>dar_document5</article>
+</info_portion>
+
+<!-- Вспомогательные инфопоршены -->
+<info_portion id="x18_door2"></info_portion>
+<info_portion id="x18_door2_knock_stop"></info_portion>
+<info_portion id="dar_open_door1"></info_portion>
+<info_portion id="dar_open_door2"></info_portion>
+<info_portion id="info_knock"></info_portion>
+<info_portion id="dar_podval"></info_portion>
+
+<!-- Спаун снорков -->
+<info_portion id="dar_snork_spawn1"></info_portion>
+<info_portion id="dar_snork_spawn2"></info_portion>
+<info_portion id="dar_snork_spawn3"></info_portion>
+<info_portion id="dar_snork_restrictor_spawn1"></info_portion>
+<info_portion id="dar_snork_restrictor_spawn2"></info_portion>
+<info_portion id="dar_snork_restrictor_spawn3"></info_portion>
+<info_portion id="dar_snork_spawn11"></info_portion>
+<info_portion id="dar_snork_spawn22"></info_portion>
+<info_portion id="dar_snork_spawn33"></info_portion>
+
+
+</game_information_portions>

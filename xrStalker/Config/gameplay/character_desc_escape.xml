@@ -1,0 +1,925 @@
+<?xml version='1.0' encoding="windows-1251"?>
+
+<xml>
+	<specific_character id="escape_trader" no_random = "1">
+		<name>Сидорович</name>
+		<icon x="2" y="0"></icon>
+		<map_icon x="6" y="0"></map_icon>
+		<bio>Промышлял торговлей с малых лет. В детском садике продавал цветные карандаши.
+		В школе торговал жевательной резинкой.
+		В институте промышлял продажей легкой наркоты. С появлением Зоны смекнул, что на
+		этом можно хорошо заработать. Славится тем, что способен наладить хорошие торговые
+		отношения с самыми разношерстными клиентами.</bio>
+
+		<class>trader</class>
+		<community>trader</community>
+		<visual>actors\trader\trader</visual>
+				
+		<rank>70</rank>
+		<reputation>65</reputation>
+		
+		<supplies>
+			[spawn] \n
+			wpn_knife \n
+		</supplies>
+		
+		<start_dialog>escape_trader_start_dialog</start_dialog>	
+		<actor_dialog>escape_trader_talk_level</actor_dialog>
+		<actor_dialog>escape_trader_talk_info</actor_dialog>
+		<actor_dialog>escape_trader_jobs</actor_dialog>
+		<actor_dialog>escape_trader_done_tutorial_artefact</actor_dialog>
+		<actor_dialog>escape_trader_done_blockpost_box</actor_dialog>
+		<actor_dialog>escape_trader_tutorial_wounded_end</actor_dialog>		
+		<actor_dialog>escape_trader_bandits_killed</actor_dialog>
+		<actor_dialog>escape_trader_need_artefacts</actor_dialog>
+		<actor_dialog>escape_trader_docs_labx18</actor_dialog>
+		<actor_dialog>escape_trader_blokpost_case</actor_dialog>
+		<actor_dialog>escape_trader_help_wounded</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_wolf" team_default = "1">
+		<name>Сталкер "Волк"</name>
+		<icon x="16" y="4"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Главарь лагеря новичков.</bio>
+
+		<class>esc_wolf</class>
+		<community>stranger</community>
+		
+		<rank>90</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+ 
+		<visual>actors\neytral\stalker_neytral_balon_1</visual>
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj \n
+			af_medusa \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj \n
+			device_torch \n
+			stalker_outfit \n
+			medkit \n
+		</supplies>
+					
+		<start_dialog>escape_lager_volk_hello</start_dialog>
+		<actor_dialog>escape_lager_volk_job</actor_dialog>
+		<actor_dialog>escape_lager_volk_info</actor_dialog>		
+		<actor_dialog>escape_lager_volk_dynamite_done</actor_dialog>
+	</specific_character>
+	
+	<specific_character id="esc_fanat" team_default = "1">
+		<name>Сталкер "Фанат"</name>
+		<icon x="26" y="0"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Стал лидером лагеря новичков после Волка. Целеустремлен, агрессивен, пользуется среди новичков заслуженным авторитетом.</bio>
+
+		<class>esc_fanat</class>
+		<community>stranger</community>
+		
+		<rank>90</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+ 
+		<visual>actors\neytral\stalker_neytral_rukzak_3</visual>
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj \n
+			wpn_ak74 \n
+			ammo_5.45x39_fmj \n
+			device_torch \n
+			medkit \n
+		</supplies>
+					
+		<start_dialog>escape_lager_leader_hello</start_dialog>
+		<actor_dialog>escape_lager_leader_give_quest</actor_dialog>
+		<actor_dialog>escape_lager_leader_request</actor_dialog>		
+	</specific_character>
+	
+	<specific_character id="esc_fox" team_default = "1">
+		<name>Сталкер "Лис"</name>
+		<icon x="16" y="10"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Старый прожженый зоной одиночка.</bio>
+
+		<class>esc_fox</class>
+		<community>stalker</community>
+		
+		<rank>30</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+
+		<visual>actors\neytral\stalker_neytral_balon_4</visual>
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj \n
+			device_torch \n
+			fox_flash \n
+		</supplies>
+					
+		<start_dialog>escape_fox_hello_dialog</start_dialog>
+		<actor_dialog>escape_fox_flash_dialog</actor_dialog>
+		<actor_dialog>escape_fox_flame_dialog</actor_dialog>
+	</specific_character>
+	
+	<specific_character id="esc_tutorial_wounded" team_default = "1">
+		<name>Толик</name>
+		<icon x="30" y="2"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Просто сталкер.</bio>
+
+		<class>esc_tutorial_wounded</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+
+		<visual>actors\novice\green_stalker_1</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pb \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n
+		</supplies>
+					
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>tutorial_wounded_give_medkit</actor_dialog>
+		<actor_dialog>tutorial_wounded_thanks</actor_dialog>
+	</specific_character>
+	
+	<specific_character id="esc_killer_specnaz" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="18" y="8"></icon>
+		<map_icon x="2" y="0"></map_icon>
+		<bio>Неизвестный наемник. Возможно хорошо вооружен. Детальная информация отсутствует.</bio>
+
+		<team>Killer_specnaz</team>
+		
+		<class>esc_killer_specnaz</class>
+		<community>killer</community>
+
+		<rank>70</rank>
+		<reputation>-50</reputation>
+		
+		<snd_config>characters_voice\human_02\</snd_config>
+		
+		<panic_threshold>0</panic_threshold>
+
+		<visual>actors\killer\stalker_ki_head_1</visual>
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x19_pbp = 1 \n
+			wpn_ak74 \n
+			ammo_5.45x39_fmj \n
+		</supplies>
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+	<!---------------------------BANDIT NOVICE----------------------->
+	<specific_character id="esc_bandit_novice_default1" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="14" y="4"></icon>
+		<map_icon x="3" y="2"></map_icon>
+		<bio>Неизвестный сталкер. Сомнительная репутация. Детальная информация отсутствует.</bio>
+	
+		<class>esc_bandit_novice</class>
+		<community>bandit</community>
+		
+		<rank>0</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.2</panic_threshold>
+
+		<visual>actors\bandit\stalker_bandit_3</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pm \n
+			ammo_9x18_pmm = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"			
+		</supplies>
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+</specific_character>
+
+	<specific_character id="esc_bandit_novice_default2" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="28" y="2"></icon>
+		<map_icon x="3" y="2"></map_icon>
+		<bio>Неизвестный сталкер. Сомнительная репутация. Детальная информация отсутствует.</bio>
+		
+		<class>esc_bandit_novice</class>
+		<community>bandit</community>
+		
+		<rank>0</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.2</panic_threshold>
+
+		<visual>actors\bandit\stalker_bandit_4</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pb \n
+			ammo_9x18_pmm = 1 \n
+			device_torch \n
+			wpn_bm16 \n
+			ammo_12x70_buck \n
+#include "gameplay\character_items.xml"						
+		</supplies>
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_bandit_novice_default3" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="24" y="2"></icon>
+		<map_icon x="3" y="2"></map_icon>
+		<bio>Неизвестный сталкер. Сомнительная репутация. Детальная информация отсутствует.</bio>
+		
+		<class>esc_bandit_novice</class>
+		<community>bandit</community>
+		
+		<rank>0</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_02\</snd_config>
+		
+		<panic_threshold>0.2</panic_threshold>
+
+		<visual>actors\bandit\stalker_bandit_5</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pb \n
+			ammo_9x18_pmm = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"			
+		</supplies>
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+	
+	<!---------------------------STALKER NOVICE----------------------->
+	
+	<specific_character id="esc_stalker_novice_default1" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="0" y="2"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Новичок. Недавно в Зоне. Детальная информация отсутствует.</bio>
+
+		<class>esc_stalker_novice</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.1</panic_threshold>
+
+		<visual>actors\novice\green_stalker_2</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pm \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>
+					
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>escape_lager_access</actor_dialog>
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_stalker_novice_default2" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="0" y="2"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Новичок. Недавно в Зоне. Детальная информация отсутствует.</bio>
+
+		<class>esc_stalker_novice</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.1</panic_threshold>
+
+		<visual>actors\novice\green_stalker_2</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pb \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>
+			
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>escape_lager_access</actor_dialog>
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_stalker_novice_default3" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="0" y="2"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Новичок. Недавно в Зоне. Детальная информация отсутствует.</bio>
+
+		<class>esc_stalker_novice</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.1</panic_threshold>
+
+		<visual>actors\novice\green_stalker_3</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pm \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n
+			wpn_bm16 \n
+			ammo_12x70_buck \n
+#include "gameplay\character_items.xml"
+		</supplies>
+					
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>escape_lager_access</actor_dialog>	
+	</specific_character>
+
+	<specific_character id="esc_stalker_novice_default4" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="0" y="2"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Новичок. Недавно в Зоне. Детальная информация отсутствует.</bio>
+
+		<class>esc_stalker_novice</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+
+		<panic_threshold>0.1</panic_threshold>
+
+		<visual>actors\novice\green_stalker_3</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pm \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n		
+#include "gameplay\character_items.xml"
+		</supplies>
+
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>escape_lager_access</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_stalker_novice_default5" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="0" y="2"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Новичок. Недавно в Зоне. Детальная информация отсутствует.</bio>
+
+		<class>esc_stalker_novice</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.1</panic_threshold>
+
+		<visual>actors\novice\green_stalker_4</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pb \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>
+			
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>escape_lager_access</actor_dialog>
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_stalker_novice_default6" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="0" y="2"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Новичок. Недавно в Зоне. Детальная информация отсутствует.</bio>
+
+		<class>esc_stalker_novice</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.1</panic_threshold>
+
+		<visual>actors\novice\green_stalker_4</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pm \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n
+			wpn_bm16 \n
+			ammo_12x70_buck \n		
+#include "gameplay\character_items.xml"	
+		</supplies>
+			
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>escape_lager_access</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_stalker_novice_default9" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="28" y="10"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Новичок. Недавно в Зоне. Детальная информация отсутствует.</bio>
+
+		<class>esc_stalker_novice</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.1</panic_threshold>
+
+		<visual>actors\novice\green_stalker_5</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pm \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>
+			
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>escape_lager_access</actor_dialog>
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_stalker_novice_default10" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="28" y="10"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Новичок. Недавно в Зоне. Детальная информация отсутствует.</bio>
+
+		<class>esc_stalker_novice</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.1</panic_threshold>
+
+		<visual>actors\novice\green_stalker_5</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pb \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>
+			
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>escape_lager_access</actor_dialog>
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+	
+	<specific_character id="esc_ranger" team_default = "1">
+		<name>Петруха</name>
+		<icon x="22" y="2"></icon>
+		<map_icon x="0" y="0"></map_icon>
+		<bio>Новичок. Пользуется особым расположением Волка, который его частенько отправляет на важные задания.</bio>
+
+		<class>esc_ranger</class>
+		<community>stranger</community>
+		
+		<rank>20</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0.1</panic_threshold>
+
+		<visual>actors\novice\green_stalker_8</visual>
+		<supplies>
+			[spawn] \n
+			wpn_pm \n
+			ammo_9x18_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"	
+		</supplies>
+			
+		<start_dialog>hello_dialog</start_dialog>
+		<actor_dialog>escape_factory_assault_attack</actor_dialog>
+		<actor_dialog>escape_factory_assault_attack_now</actor_dialog>
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+	
+	<specific_character id="esc_soldier_commander" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="20" y="14"></icon>
+		<map_icon x="2" y="0"></map_icon>
+		<bio>Детальная информация отсутствует.</bio>
+
+		<class>esc_soldier_commander</class>
+		<community>military</community>
+		
+		<rank>60</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_02\</snd_config>
+
+		<visual>actors\soldier\soldier_beret_1</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74 \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>
+					
+		<start_dialog>esc_bridge_soldiers_start</start_dialog>
+		
+		<actor_dialog>esc_bridge_soldiers_pay</actor_dialog>
+	</specific_character>
+	
+	<specific_character id="esc_soldier_regular_default1" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="12" y="2"></icon>
+		<map_icon x="1" y="2"></map_icon>
+		<bio>Рядовой солдат. Детальная информация отсутствует.</bio>
+
+		<class>esc_soldier_regular</class>
+		<community>military</community>
+		
+		<rank>30</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+
+		<visual>actors\soldier\soldier_obichniy</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>	
+					
+		<start_dialog>esc_bridge_soldiers_start</start_dialog>
+		
+		<actor_dialog>esc_bridge_soldiers_pay</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_soldier_regular_default2" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="12" y="2"></icon>
+		<map_icon x="1" y="2"></map_icon>
+		<bio>Рядовой солдат. Детальная информация отсутствует.</bio>
+
+		<class>esc_soldier_regular</class>
+		<community>military</community>
+		
+		<rank>30</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_02\</snd_config>
+
+		<visual>actors\soldier\soldier_bandana_1</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>
+					
+		<start_dialog>esc_bridge_soldiers_start</start_dialog>
+		
+		<actor_dialog>esc_bridge_soldiers_pay</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_soldier_regular_default3" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="12" y="2"></icon>
+		<map_icon x="1" y="2"></map_icon>
+		<bio>Рядовой солдат. Детальная информация отсутствует.</bio>
+
+		<class>esc_soldier_regular</class>
+		<community>military</community>
+		
+		<rank>30</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+
+		<visual>actors\soldier\soldier_bandana_2</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>
+					
+		<start_dialog>esc_bridge_soldiers_start</start_dialog>
+		
+		<actor_dialog>esc_bridge_soldiers_pay</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_soldier_regular_default4" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="12" y="2"></icon>
+		<map_icon x="1" y="2"></map_icon>
+		<bio>Рядовой солдат. Детальная информация отсутствует..</bio>
+
+		<class>esc_soldier_regular</class>
+		<community>military</community>
+		
+		<rank>30</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_02\</snd_config>
+
+		<visual>actors\soldier\soldier_bandana_3</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>		
+					
+		<start_dialog>esc_bridge_soldiers_start</start_dialog>
+		
+		<actor_dialog>esc_bridge_soldiers_pay</actor_dialog>
+	</specific_character>
+
+	<specific_character id="esc_soldier_regular_default5" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="12" y="2"></icon>
+		<map_icon x="1" y="2"></map_icon>
+		<bio>Рядовой солдат. Детальная информация отсутствует.</bio>
+
+		<class>esc_soldier_regular</class>
+		<community>military</community>
+		
+		<rank>30</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+
+		<visual>actors\soldier\soldier_bandana_4</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>		
+					
+		<start_dialog>esc_bridge_soldiers_start</start_dialog>
+		
+		<actor_dialog>esc_bridge_soldiers_pay</actor_dialog>
+	</specific_character>
+	
+	<specific_character id="esc_soldier_blokpost_default1" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="12" y="2"></icon>
+		<map_icon x="1" y="2"></map_icon>
+		<bio>Рядовой солдат. Детальная информация отсутствует.</bio>
+
+		<class>esc_soldier_blokpost</class>
+		<community>military</community>
+		
+		<rank>30</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+
+		<visual>actors\soldier\soldier_obichniy</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>	
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+	<specific_character id="esc_soldier_blokpost_default2" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="12" y="2"></icon>
+		<map_icon x="1" y="2"></map_icon>
+		<bio>Рядовой солдат. Детальная информация отсутствует.</bio>
+
+		<class>esc_soldier_blokpost</class>
+		<community>military</community>
+		
+		<rank>30</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+
+		<visual>actors\soldier\soldier_bandana_5</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>	
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+	<specific_character id="esc_soldier_blokpost_default3" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="12" y="2"></icon>
+		<map_icon x="1" y="2"></map_icon>
+		<bio>Рядовой солдат. Детальная информация отсутствует.</bio>
+
+		<class>esc_soldier_blokpost</class>
+		<community>military</community>
+		
+		<rank>30</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_01\</snd_config>
+
+		<visual>actors\soldier\soldier_bandana</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74u \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>	
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+	<specific_character id="esc_soldier_specnaz_default1" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="14" y="2"></icon>
+		<map_icon x="2" y="2"></map_icon>
+		<bio>Армейский спецназ. Хорошо экипирован. Детальная информация недоступна.</bio>
+
+		<class>esc_soldier_specnaz</class>
+		<community>military</community>
+		
+		<rank>80</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_02\</snd_config>
+
+		<visual>actors\soldier\soldier_spetsnaz</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74 = 1, silencer \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>		
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+		<specific_character id="esc_soldier_specnaz_default2" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="14" y="2"></icon>
+		<map_icon x="2" y="2"></map_icon>
+		<bio>Армейский спецназ. Хорошо экипирован. Детальная информация недоступна.</bio>
+		
+		<class>esc_soldier_specnaz</class>
+		<community>military</community>
+		
+		<rank>80</rank>
+		<reputation>0</reputation>
+		
+		<snd_config>characters_voice\human_02\</snd_config>
+
+		<visual>actors\soldier\soldier_spetsnaz</visual>		
+		<supplies>
+			[spawn] \n
+			wpn_fort \n
+			ammo_9x18_fmj = 1 \n
+			wpn_ak74 = 1, silencer \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+#include "gameplay\character_items.xml"
+		</supplies>		
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+	
+	<specific_character id="esc_killer_master" team_default = "1">
+		<name>GENERATE_NAME</name>
+		<icon x="4" y="2"></icon>
+		<map_icon x="2" y="0"></map_icon>
+		<bio>Неизвестный наемник. Хорошо вооружен и очень опасен. Детальная информация отсутствует.</bio>
+
+		<class>esc_killer_master</class>
+		<community>killer</community>
+		
+		<rank>90</rank>
+		<reputation>-50</reputation>
+	
+		<snd_config>characters_voice\human_01\</snd_config>
+		
+		<panic_threshold>0</panic_threshold>
+
+		<visual>actors\killer\stalker_ki_antigas</visual>
+		<supplies>
+			[spawn] \n
+			wpn_hpsa \n
+			ammo_9x19_pbp = 1 \n
+			wpn_ak74 \n
+			ammo_5.45x39_fmj = 1 \n
+			device_torch \n
+		</supplies>
+					
+		<start_dialog>hello_dialog</start_dialog>
+		
+		<actor_dialog>esc_stalker_talk_level</actor_dialog>
+	</specific_character>
+	
+	
+</xml>

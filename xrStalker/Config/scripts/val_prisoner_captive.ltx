@@ -1,0 +1,145 @@
+[logic]
+active          = walker@wander
+;meet            = meet@ignore
+on_death        = death
+combat_ignore   = combat_ignore
+
+[death]
+on_info         = %+val_prisoner_dead%
+
+;--------------------------------------------------------------------------
+; встреча отключена
+;--------------------------------------------------------------------------
+[meet@ignore]
+meet_state      = 1|wait
+meet_state_wpn  = 1|wait
+victim          = 1|actor
+victim_wpn      = 1|actor
+use             = false
+use_wpn         = false
+
+;--------------------------------------------------------------------------
+; стандартная встреча
+;--------------------------------------------------------------------------
+[meet@def]
+meet_state      = 10|wait
+meet_state_wpn  = 10|wait
+victim          = 10|actor
+victim_wpn      = 10|actor
+use             = false
+use_wpn         = false
+
+;--------------------------------------------------------------------------
+; основной диалог
+;--------------------------------------------------------------------------
+[meet@main]
+meet_dialog     = val_prisoner_hello
+meet_state      = 5|wait
+meet_state_wpn  = 5|wait
+victim          = 7|actor
+victim_wpn      = 7|actor
+use             = true
+use_wpn         = true
+
+;--------------------------------------------------------------------------
+; режим ожидания
+;--------------------------------------------------------------------------
+[walker@wander]
+path_walk                           = val_prisoner_captive_cage_walk
+path_look                           = val_prisoner_captive_cage_look
+meet                                = meet@ignore
+on_info                             = {+val_prisoner_sit} walker@sit
+on_info2                            = {+val_prisoner_door_unlocked} walker@outside
+on_actor_in_zone                    = val_prisoner_window_zone | walker@near_window
+on_actor_in_zone2                   = val_prisoner_near_door_zone | walker@near_door %+val_prisoner_near_door%
+on_actor_dist_ge                    = 30 | walker@actor_far
+combat_ignore_cond                  = always
+combat_ignore_keep_when_attacked    = true
+
+;--------------------------------------------------------------------------
+; игрок отошел дальше 30 метров
+;--------------------------------------------------------------------------
+[walker@actor_far]
+path_walk                           = val_prisoner_captive_sit_walk
+path_look                           = val_prisoner_captive_sit_look
+meet                                = meet@ignore
+on_actor_dist_le                    = 30 | walker@wander
+combat_ignore_cond                  = always
+combat_ignore_keep_when_attacked    = true
+
+;--------------------------------------------------------------------------
+; игрок стоит возле окна. диалог с просьбой о помощи
+;--------------------------------------------------------------------------
+[walker@near_window]
+path_walk                           = val_prisoner_captive_window_walk
+path_look                           = val_prisoner_captive_window_look
+meet                                = meet@main
+on_info                             = {+val_prisoner_sit} walker@sit
+on_info2                            = {+val_prisoner_door_unlocked} walker@outside
+on_actor_not_in_zone                = val_prisoner_window_zone | walker@wander
+on_actor_in_zone                    = val_prisoner_near_door_zone | walker@near_door %+val_prisoner_near_door%
+combat_ignore_cond                  = always
+combat_ignore_keep_when_attacked    = true
+
+;--------------------------------------------------------------------------
+; сидим, ждем когда игрок освободит нас
+;--------------------------------------------------------------------------
+[walker@sit]
+path_walk                           = val_prisoner_captive_sit_walk
+path_look                           = val_prisoner_captive_sit_look
+meet                                = meet@ignore
+on_info                             = {+val_prisoner_door_unlocked} walker@outside
+on_actor_in_zone                    = val_prisoner_near_door_zone | walker@near_door %+val_prisoner_near_door%
+combat_ignore_cond                  = always
+combat_ignore_keep_when_attacked    = true
+
+;--------------------------------------------------------------------------
+; игрок возле двери
+;--------------------------------------------------------------------------
+[walker@near_door]
+path_walk                           = val_prisoner_captive_near_door_walk
+path_look                           = val_prisoner_captive_near_door_look
+meet                                = meet@main
+def_state_moving1                   = run
+def_state_moving2                   = run
+def_state_moving3                   = run
+on_info                             = {+val_prisoner_door_unlocked} walker@outside %-val_prisoner_near_door%
+on_actor_not_in_zone                = val_prisoner_near_door_zone | {+val_prisoner_sit} walker@sit %-val_prisoner_near_door%, walker@wander %-val_prisoner_near_door%
+combat_ignore_cond                  = always
+combat_ignore_keep_when_attacked    = true
+
+;--------------------------------------------------------------------------
+; выходим за двери
+;--------------------------------------------------------------------------
+[walker@outside]
+path_walk                           = val_prisoner_captive_outside_door_walk
+path_look                           = val_prisoner_captive_outside_door_look
+meet                                = meet@ignore
+on_signal                           = arrived | remark@outside
+on_info                             = {-val_prisoner_door_unlocked} walker@sit
+combat_ignore_cond                  = always
+combat_ignore_keep_when_attacked    = true
+
+;--------------------------------------------------------------------------
+; благодарим игрока
+;--------------------------------------------------------------------------
+[remark@outside]
+no_move                             = true
+anim                                = wait
+meet                                = meet@main
+;on_info                             = {-val_prisoner_door_unlocked} walker@sit
+on_info                             = {+val_prisoner_raid} walker@escape
+combat_ignore_cond                  = always ;{=check_fighting(403)}
+
+;--------------------------------------------------------------------------
+; идем мочить братву
+;--------------------------------------------------------------------------
+[walker@escape]
+path_walk                           = val_prisoner_captive_escape_walk
+path_look                           = val_prisoner_captive_escape_look
+meet                                = meet@ignore
+def_state_moving1                   = assault
+def_state_moving2                   = assault
+def_state_moving3                   = assault
+on_signal                           = arrived | nil
+combat_ignore_cond                  = {=check_fighting(403)}

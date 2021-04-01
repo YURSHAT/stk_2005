@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding="windows-1251"?>
+<game_information_portions>
+
+<!-- FAKE: main task -->
+<info_portion id="val_give_main_task">
+</info_portion>
+
+<info_portion id="val_x18_door_open"></info_portion>
+
+<!-- Нападение на игрока около входа на уровень -->
+<info_portion id="val_ambush_kill_plr"></info_portion>
+<info_portion id="val_ambush_t1_started"></info_portion>
+<info_portion id="val_ambush_t1_plr_near"></info_portion>
+<info_portion id="val_ambush_t2_started"></info_portion>
+<info_portion id="val_ambush_t2_plr_near"></info_portion>
+<info_portion id="val_ambush_t3_started"></info_portion>
+<info_portion id="val_ambush_t3_plr_near"></info_portion>
+
+<!-- Сцена 2 - кровосос падает с обрыва -->
+<info_portion id="val_bs_deactivate"></info_portion>
+<info_portion id="val_bs_start"></info_portion>
+<info_portion id="val_bs_victim_killed"></info_portion>
+
+<!-- Сцена 3 - транспортировка пленного -->
+<info_portion id="val_escort_begin"></info_portion>
+<info_portion id="val_escort_show_tip"></info_portion>
+<info_portion id="val_escort_start"></info_portion>
+<info_portion id="val_escort_combat"></info_portion>
+<info_portion id="val_escort_actor_helped"></info_portion>
+<info_portion id="val_escort_nap1_phrase3"></info_portion>
+<info_portion id="val_escort_nap1_phrase1_end"></info_portion>
+<info_portion id="val_escort_nap1_phrase2_end"></info_portion>
+<info_portion id="val_escort_nap1_start_combat"></info_portion>
+<info_portion id="val_escort_actor_start_combat"></info_portion>
+<info_portion id="val_escort_guard1_combat"></info_portion>
+<info_portion id="val_escort_guard2_combat"></info_portion>
+<info_portion id="val_escort_guard3_combat"></info_portion>
+<info_portion id="val_escort_nap1_dead"></info_portion>
+<info_portion id="val_escort_captive_dead"></info_portion>
+<info_portion id="val_escort_captive_phrase1_end"></info_portion>
+<info_portion id="val_escort_guard1_dead"></info_portion>
+<info_portion id="val_escort_guard2_dead"></info_portion>
+<info_portion id="val_escort_guard3_dead"></info_portion>
+<info_portion id="val_escort_captive_fight"></info_portion>
+<info_portion id="val_escort_captive_offline"></info_portion>
+<info_portion id="val_escort_captive_can_leave"></info_portion>
+<info_portion id="val_escort_got_reward"></info_portion>
+<info_portion id="val_escort_nap1_join"></info_portion>
+<info_portion id="val_escort_captive_join"></info_portion>
+<info_portion id="val_escort_help_prisoner_task">
+	<task>val_prisoner_help</task>
+</info_portion>
+
+<!-- Напарник 1 -->
+<info_portion id="val_escort_nap1_go_rescue"></info_portion>
+<info_portion id="val_escort_nap1_no_thanx"></info_portion>
+<info_portion id="val_show_zones"></info_portion>
+
+<!-- Жертвоприношение -->
+<info_portion id="val_sacrifice_not_spawn"></info_portion>
+<info_portion id="val_sacrifice_spawn"></info_portion>
+<info_portion id="val_sacrifice_start"></info_portion>
+<info_portion id="val_sacrifice_finish"></info_portion>
+<info_portion id="val_sacrifice_plr_detected"></info_portion>
+<info_portion id="val_sacrifice_victim_free"></info_portion>
+<info_portion id="val_sacrifice_victim_dead"></info_portion>
+<info_portion id="val_sacrifice_guard1_dead"></info_portion>
+<info_portion id="val_sacrifice_guard2_dead"></info_portion>
+<info_portion id="val_sacrifice_victim_phrase1_end"></info_portion>
+<info_portion id="val_sacrifice_victim_phrase2_end"></info_portion>
+<info_portion id="val_sacrifice_guard1_phrase1_end"></info_portion>
+<info_portion id="val_sacrifice_guard1_phrase3_end"></info_portion>
+<info_portion id="val_sacrifice_guard1_phrase5_end"></info_portion>
+<info_portion id="val_sacrifice_guard2_phrase2_end"></info_portion>
+
+<!-- Стартует машина около бензоколонки -->
+<info_portion id="val_truck_actor_near_gas_st"></info_portion>
+<info_portion id="val_truck_start"></info_portion>
+<info_portion id="val_truck_arrived"></info_portion>
+
+<!-- SOS на бензоколонке -->
+<info_portion id="val_sos_actor_near_wounded"></info_portion>
+<info_portion id="val_sos_give_tip"></info_portion>
+<info_portion id="val_sos_start_task">
+	<task>val_sos_help</task>
+</info_portion>
+<info_portion id="val_sos_got_medkit"></info_portion>
+<info_portion id="val_sos_dead"></info_portion>
+<info_portion id="val_sos_task_finish"></info_portion>
+
+<!-- Гулаг Монолита -->
+<info_portion id="val_monolith_actor_detected"></info_portion>
+<info_portion id="val_monolith_password_ok"></info_portion>
+
+<!-- Начало рейда солдат на монолит -->
+<info_portion id="val_raid_start"></info_portion>
+
+<!-- Заключенный бандитов -->
+<info_portion id="val_prisoner_sit"></info_portion>
+<info_portion id="val_prisoner_near_door"></info_portion>
+<info_portion id="val_prisoner_raid"></info_portion>
+<info_portion id="val_prisoner_wait_actor"></info_portion>
+<info_portion id="val_prisoner_door_unlocked"></info_portion>
+<info_portion id="val_prisoner_door_unlocked_demo"></info_portion>
+<info_portion id="val_prisoner_free"></info_portion>
+<info_portion id="val_prisoner_dead"></info_portion>
+<info_portion id="val_prisoner_give_info"></info_portion>
+<info_portion id="val_prisoner_join"></info_portion>
+<info_portion id="val_prisoner_plr_captured"></info_portion>
+<info_portion id="val_prisoner_task_finish"></info_portion>
+
+<!-- Монолог возле трубы -->
+<info_portion id="val_tunnel_talk_start"></info_portion>
+<info_portion id="val_tunnel_bandit_leave"></info_portion>
+<info_portion id="val_tunnel_plr_detected"></info_portion>
+
+<!-- Матюгальник -->
+<info_portion id="val_matugalnik_off"></info_portion>
+
+<!-- Лестница -->
+<info_portion id="val_stairs_start"></info_portion>
+<info_portion id="val_stairs_heli_arrived"></info_portion>
+
+<!-- Ворота -->
+<info_portion id="val_gate_start"></info_portion>
+<info_portion id="val_gate_plr_detected"></info_portion>
+<info_portion id="val_gate_btr_arrived"></info_portion>
+<info_portion id="val_gate_btr_end_fire"></info_portion>
+<info_portion id="val_gate_btr_enter"></info_portion>
+<info_portion id="val_gate_chase_soldier_raid_start"></info_portion>
+
+
+<!-- Открытие дверей -->
+<info_portion id="val_opendoor_start"></info_portion>
+<info_portion id="val_opendoor_soldier_start"></info_portion>
+<info_portion id="val_opendoor_victim_start"></info_portion>
+<info_portion id="val_opendoor_plr_detected"></info_portion>
+<info_portion id="val_opendoor_chase_start"></info_portion>
+<info_portion id="val_opendoor_chase_check"></info_portion>
+<info_portion id="val_opendoor_end"></info_portion>
+<info_portion id="val_opendoor_monolith_chase_start"></info_portion>
+
+<!-- Типсы -->
+<info_portion id="val_exit_gate_show">
+    <task>val_come_to_trader</task>
+</info_portion>
+
+<!-- Раздавленный монолитовец -->
+<info_portion id="val_smashed_start"></info_portion>
+<info_portion id="val_smashed_btr_start"></info_portion>
+<info_portion id="val_smashed_kill_victim"></info_portion>
+
+<!-- Взрыв -->
+<info_portion id="val_explosion_check"></info_portion>
+<info_portion id="val_explosion_start"></info_portion>
+<info_portion id="val_explosion_victim_dead"></info_portion>
+<info_portion id="val_explosion_killer_dead"></info_portion>
+<info_portion id="val_explosion_wait"></info_portion>
+<info_portion id="val_explosion_bad"></info_portion>
+
+<!-- Игрок нашел флешку Борова -->
+<info_portion id="val_player_knows_password">
+	<article>storyline_borov_flash_info</article>
+</info_portion>
+
+<!-- Развод лоха -->
+<info_portion id="val_rob_buying"></info_portion>
+<info_portion id="val_rob_no_thanx"></info_portion>
+<info_portion id="val_rob_no_money"></info_portion>
+
+<!-- Погоня -->
+<info_portion id="val_chase_plr_in_car"></info_portion>
+<info_portion id="val_chase_soldier_start"></info_portion>
+
+</game_information_portions>

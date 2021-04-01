@@ -1,0 +1,333 @@
+function proceed()
+    local actor = db.actor
+
+    if actor:has_info ("mil_lukash_dead") and 
+       actor:has_info ("mil_sniper_dead") and
+       actor:has_info ("mil_dolg_mission_complete") and 
+       actor:dont_has_info ("mil_dolg_task_complete") and
+       actor:dont_has_info ("mil_dolg_dead") then
+       news_manager.send_tip (db.actor, "mil_mission_complete", nil, "dolg")
+       db.actor:give_info_portion ("mil_dolg_task_complete")
+    end        
+    
+    --if db.actor:has_info ("mil_courier_report") then
+       --if level_tasks.is_map_spot_present (707, "mil_lukash_location") == true then
+          --level_tasks.remove_location (707, "mil_lukash_location")
+       --end   
+    --end
+    
+    if db.actor:has_info ("mil_fblockpost_spot") then
+       if db.actor:dont_has_info ("mil_fblockpost_spot_set") then
+          db.actor:give_info_portion ("mil_fblockpost_spot_set")
+          level_tasks.add_location (724, "mil_fblockpost_location")
+       end
+    end
+    
+    if db.actor:has_info ("mil_fblockpost_spot") then
+       if db.actor:has_info ("mil_fblockpost_spot_remove") then
+          level_tasks.remove_location_safe (724, "mil_fblockpost_location")
+          db.actor:disable_info_portion ("mil_fblockpost_spot_remove")
+       end
+    end      
+            
+    	
+	if actor:object ("bandit_flash") then 
+	   db.actor:give_info_portion("mil_bandit_flash_get")  
+	end
+
+	if actor:object ("ugrum_flash") then 
+	   db.actor:give_info_portion("mil_ugrum_flash_get")  
+	end
+
+	if actor:object ("max_flash") then 
+	   db.actor:give_info_portion("mil_max_owner_flash_get")  
+	end
+	
+	--if actor:dont_has_info ("mil_freedom_rg6_task_complete") then
+	   --if actor:object ("wpn_rg-6") and actor:has_info ("mil_freedom_rg6_task") then 
+	      --level_tasks.set_task_state (task.completed, "mil_freedom_rg6_task", 3) 
+	      --level_tasks.set_task_state (task.completed, "mil_freedom_rg6_task", 0) 
+	      --actor:give_info_portion ("mil_freedom_rg6_task_complete")
+	   --end   
+	--end	
+	
+	process_khutor () 
+end
+
+
+function process_khutor ()
+    -- если квест был выполнен или провален, то выйдем    
+    if db.actor:has_info ("mil_courier_quest_failed") or db.actor:has_info ("mil_courier_quest_complete") then
+       return
+    end    
+    -- если не стартован квест стукача, то выходим
+    if db.actor:dont_has_info ("mil_courier_quest") then 
+       return 
+    end
+    
+    --if level_tasks.is_map_spot_present (710, "mil_courier_location") == false then
+       --level_tasks.add_location (710, "mil_courier_location")
+       --level_tasks.remove_location (707, "mil_lukash_location")
+    --end   
+    
+    if db.actor:has_info ("mil_courier_in_khutor_zone") then -- если курьер на хуторе, то...
+       --if db.actor:dont_has_info ("mil_courier_khutor_leave") then  -- если он его не покинул...
+          if db.actor:has_info ("mil_actor_in_khutor_zone") then --если и актер на хуторе
+             if db.actor:dont_has_info ("mil_courier_quest_part1") then   
+                if db.actor:has_info ("mil_courier_call") then
+                   level_tasks.set_task_state (task.completed, "mil_courier_job", 1) -- первая часть выполнена
+                   printf ("COURIER OBJECTIVE 1 COMPLETED")
+                   db.actor:give_info_portion ("mil_courier_quest_part1")
+                end   
+             end   
+             if db.actor:has_info ("mil_ara_entered") then --если в это время явился Ара, то и вторая часть выполнена
+                if db.actor:dont_has_info ("mil_courier_quest_part2") then   
+                   level_tasks.set_task_state (task.completed, "mil_courier_job", 2)
+                   printf ("COURIER OBJECTIVE 2 COMPLETED")
+                   db.actor:give_info_portion ("mil_courier_quest_part2")
+                end
+             end   
+          end 
+       --end
+    end
+    
+    if db.actor:has_info ("mil_courier_dead") then  -- если курьер умер
+       if db.actor:has_info ("mil_courier_quest_part1") then -- если первая часть задачи выполнена
+          if db.actor:dont_has_info ("mil_courier_quest_part3") then   
+             level_tasks.set_task_state (task.completed, "mil_courier_job", 3) -- третья часть выполнена
+             printf ("COURIER OBJECTIVE 3 COMPLETED")
+             db.actor:give_info_portion ("mil_courier_quest_part3")
+          end   
+       else   
+          level_tasks.set_task_state (task.fail, "mil_courier_job", 0) --иначе, задача провалена
+          printf ("COURIER TASK FAILED")
+          db.actor:give_info_portion ("mil_courier_quest_failed")
+          --level_tasks.remove_location (710, "mil_courier_location")
+          --level_tasks.add_location (707, "mil_lukash_location")
+       end
+    end   
+    
+    if db.actor:has_info ("mil_ara_dead") then
+       if db.actor:has_info ("mil_courier_quest_part2") then -- если вторая часть задачи выполнена
+          if db.actor:dont_has_info ("mil_courier_quest_part4") then   
+             level_tasks.set_task_state (task.completed, "mil_courier_job", 4) -- третья часть выполнена
+             printf ("COURIER OBJECTIVE 4 COMPLETED")
+             db.actor:give_info_portion ("mil_courier_quest_part4")
+          end   
+       else
+          level_tasks.set_task_state (task.fail, "mil_courier_job", 0) --иначе, задача провалена
+          printf ("COURIER TASK FAILED")
+          db.actor:give_info_portion ("mil_courier_quest_failed")
+          --level_tasks.remove_location (710, "mil_courier_location")
+          --level_tasks.add_location (707, "mil_lukash_location")
+       end
+    end
+    
+    if db.actor:has_info ("mil_ara_leave") then      
+       level_tasks.set_task_state (task.fail, "mil_courier_job", 0) --если Ара ушел, то задача провалена
+       printf ("COURIER TASK FAILED")
+       db.actor:give_info_portion ("mil_courier_quest_failed")
+       --level_tasks.remove_location (710, "mil_courier_location")
+       --level_tasks.add_location (707, "mil_lukash_location")
+    end   
+          
+    if db.actor:has_info ("mil_courier_quest_part1") and 
+       db.actor:has_info ("mil_courier_quest_part2") and
+       db.actor:has_info ("mil_courier_quest_part3") and
+       db.actor:has_info ("mil_courier_quest_part4") then
+       level_tasks.set_task_state (task.completed, "mil_courier_job", 5)
+       level_tasks.set_task_state (task.completed, "mil_courier_job", 0)
+       printf ("COURIER TASK COMPLETED")
+       db.actor:give_info_portion ("mil_courier_quest_complete")
+       db.actor:disable_info_portion ("mil_courier_dead")
+       db.actor:disable_info_portion ("mil_ara_dead")
+       db.actor:disable_info_portion ("mil_courier_quest_part1")
+       db.actor:disable_info_portion ("mil_courier_quest_part2")
+       db.actor:disable_info_portion ("mil_courier_quest_part3")
+       db.actor:disable_info_portion ("mil_courier_quest_part4")
+       db.actor:disable_info_portion ("mil_courier_in_khutor_zone")
+       db.actor:disable_info_portion ("mil_actor_in_khutor_zone_inside")
+       db.actor:disable_info_portion ("mil_courier_khutor_leave")
+       --level_tasks.remove_location (710, "mil_courier_location")
+       --level_tasks.add_location (707, "mil_lukash_location")
+    end       
+       
+end
+
+function process_info_portion(info_id)
+	if info_id == "mil_rg6_gain" then       
+	       level_tasks.set_task_state (task.completed, "mil_freedom_rg6_task", 3) 
+	       level_tasks.set_task_state (task.completed, "mil_freedom_rg6_task", 0) 
+		return true   
+	elseif info_id == "mil_bandit_flash_get" and db.actor:dont_has_info ("mil_bandit_secret_found") then
+	       level_tasks.add_location (705, "mil_secret_location")
+	    return true
+	elseif info_id == "mil_bandit_secret_found" then
+           level_tasks.remove_location (705, "mil_secret_location")
+	    return true
+	--elseif info_id == "mil_lukash_go_to_max" then
+	       --level_tasks.add_location (702, "mil_max_location") 
+	       --level_tasks.remove_location (707, "mil_lukash_location")
+	    --return true
+	elseif info_id == "mil_max_arrive" then
+		   --level_tasks.remove_location (702, "mil_max_location")
+		   db.actor:disable_info_portion ("mil_lukash_go_to_max")
+		return true
+	--elseif info_id == "mil_max_lukash_call" then
+	       --level_tasks.add_location (707, "mil_lukash_location")
+	    --return true
+	--elseif info_id == "mil_lukash_arrive" or info_id == "mil_lukash_job_failed" then
+	       --level_tasks.remove_location (707, "mil_lukash_location")
+		--return true
+	--elseif info_id == "mil_leader_quest1_complete" then
+	       --if db.actor:dont_has_info ("mil_lukash_dead") and db.actor:has_info ("mil_leader_quest1_start") then
+	          --level_tasks.add_location (707, "mil_lukash_location")
+	       --end   
+	       --level_tasks.remove_location (708, "mil_dolg_location")
+	    --return true
+    elseif info_id == "mil_dolg_dead" then 	       
+	       --level_tasks.remove_location (704, "mil_sniper_location")
+	    return true  
+	--elseif info_id == "mil_lukash_arrive" or info_id == "mil_lukash_job_failed" then
+	       --level_tasks.remove_location (707, "mil_lukash_location")
+		--return true
+	--elseif info_id == "mil_freedom_attack" then
+	       --level_tasks.add_location (708, "mil_dolg_location")
+	       --level_tasks.remove_location (702, "mil_max_location")
+	    --return true
+    --elseif info_id == "mil_leader_quest2_start" then
+           --level_tasks.add_location (710, "mil_courier_location")
+           --level_tasks.remove_location (707, "mil_lukash_location")
+		--return true
+    --elseif info_id == "mil_leader_quest2_failed" then   
+           --if db.actor:has_info ("mil_leader_quest2_start") then
+              --level_tasks.set_task_state (task.fail, "mil_courier_job", 0)
+           --end   
+           --level_tasks.remove_location (710, "mil_courier_location")
+        --return true
+    --elseif info_id == "mil_leader_quest2_complete" then
+           --level_tasks.remove_location (710, "mil_courier_location")
+           --level_tasks.add_location (707, "mil_lukash_location")
+           --level_tasks.set_task_state (task.completed, "mil_courier_job", 2)
+	    --return true  
+    --end
+	end
+	return false
+end
+
+function set_cook_mapspot ()
+   level_tasks.add_location (728, "mil_cook_location")
+end
+
+function set_lukash_mapspot ()
+    --level_tasks.add_location (707, "mil_lukash_location")
+end
+
+function mil_lukash_test (npc1, npc2)
+    --if db.actor:has_info ("mil_lukash_map_spot") then
+       --level_tasks.remove_location (707, "mil_lukash_location")
+       --db.actor:disable_info_portion ("mil_lukash_map_spot")
+    --end   
+end
+
+-- test !!!
+function mil_test_task_rg6_have ()
+    return db.actor:object ("wpn_rg-6") ~= nil
+end
+
+function mil_test_task_l85_have ()
+    return db.actor:object ("wpn_l85") ~= nil
+end    
+
+function mil_test_task_lr300_have ()
+    return db.actor:object ("wpn_lr300") ~= nil
+end    
+
+function mil_task_rg6_have (task_id, subtask)
+    return db.actor:object ("wpn_rg-6") ~= nil 
+end
+
+function mil_task_crazy_flash_have (task_id, subtask)
+    if db.actor:object ("crazy_flash") ~= nil then
+       printf ("ACTOR HAVE A CRAZY FLASH CARD") 
+       db.actor:give_info_portion ("mil_max_flash_get")
+       return true
+    end
+    return false    
+end
+
+function switch_mutants_online (task_id, subtask)
+    db.actor:disable_info_portion ("mil_mutants_offline")
+end
+
+function fail_rg6_task (task_id, subtask)
+    if db.actor:has_info ("mil_dolg_after_explode") or
+       db.actor:has_info ("mil_cook_dead") or 
+       this.is_actor_enemy_freedom () then 
+       return true
+    end
+    return false   
+end
+
+function is_actor_enemy_freedom ()
+    local gulag = xr_gulag.fraction["mil_freedom"]
+    if gulag == nil then return false end
+    local member = gulag:get_member ()
+    if member == nil or member:alive () == false then return false end
+    return member:relation (db.actor) == game_object.enemy
+end
+
+function lukash_job_fail (task_id, subtask)
+    if db.actor:has_info ("mil_lukash_dolg_task_fail") or 
+       this.is_actor_enemy_freedom () then
+       return true
+    end
+    return false     
+end
+
+function max_job_failed (task_id, subtask)
+    if db.actor:has_info ("mil_max_dead") or 
+       this.is_actor_enemy_freedom () then
+       return true
+    end
+    return false     
+end
+
+function courier_job_failed (task_id, subtask)
+    if db.actor:has_info ("mil_leader_quest2_failed") then
+       return true
+    end
+    return false     
+end
+
+function fblockpost_job_failed (task_id, subtask)
+    if db.actor:has_info ("mil_fblockpost_quest_fail") or 
+       this.is_actor_enemy_freedom () then
+       return true
+    end
+    return false     
+end
+
+function fblockpost_job_failed2 (task_id, subtask)
+    if db.actor:has_info ("mil_fblockpost_commander_dead") or 
+       this.is_actor_enemy_freedom () then
+       return true
+    end
+    return false     
+end
+
+function miser_task_failed (task_id, subtask)
+    if db.actor:has_info ("mil_miser_task_failed") or 
+       this.is_actor_enemy_freedom () then
+       return true
+    end
+    return false     
+end
+
+
+function sniper_task_fail (task_id, subtask)
+    if db.actor:has_info ("mil_dolg_dead") or db.actor:has_info ("mil_dolg_collected") then
+       return true
+    end   
+    return false    
+end

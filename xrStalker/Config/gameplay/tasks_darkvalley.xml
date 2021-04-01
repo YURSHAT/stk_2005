@@ -1,0 +1,81 @@
+<game_task id="val_come_to_trader">
+    <title>
+        val_come_to_trader
+    </title>
+    <objective>
+        <text>
+            val_come_to_trader_0
+        </text>
+        <icon height="50" width="50" x="100" y="0">
+            ui\ui_icons_task
+        </icon>
+    </objective>
+    <objective>
+        <text>
+            val_come_to_trader_main
+        </text>
+        <icon height="50" width="50" x="100" y="0">
+            ui\ui_icons_task
+        </icon>
+        <map_location_type>
+            val_exit_gate_location
+        </map_location_type>
+        <object_story_id>
+            val_exit_gate
+        </object_story_id>
+    </objective>
+</game_task>
+<game_task id="val_sos_help">
+    <title>
+        val_sos_help
+    </title>
+    <objective>
+        <text>
+            val_sos_help_0
+        </text>
+        <icon height="50" width="50" x="100" y="100">
+            ui\ui_icons_task
+        </icon>
+    </objective>
+    <objective>
+        <text>
+            val_sos_help_main
+        </text>
+        <icon height="50" width="50" x="250" y="0">
+            ui\ui_icons_task
+        </icon>
+        <map_location_type>
+            green_location
+        </map_location_type>
+        <object_story_id>
+            val_sos_stalker
+        </object_story_id>
+    </objective>
+</game_task>
+<game_task id="val_prisoner_help">
+    <title>
+        val_prisoner_help
+    </title>
+    <objective>
+        <text>
+            val_prisoner_help_0
+        </text>
+        <icon height="50" width="50" x="100" y="100">
+            ui\ui_icons_task
+        </icon>
+    </objective>
+    <objective>
+        <text>
+            val_prisoner_help_main
+        </text>
+        <icon height="50" width="50" x="150" y="0">
+            ui\ui_icons_task
+        </icon>
+        <map_location_type>
+            green_location
+        </map_location_type>
+        <object_story_id>
+            val_prisoner
+        </object_story_id>
+    </objective>
+</game_task>

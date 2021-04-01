@@ -1,0 +1,115 @@
+--[[
+Изменения script_version:
+	2 - сохранение поля under_smart_terrain
+]]
+
+class "se_stalker"	(cse_alife_human_stalker)
+--------------------
+function se_stalker:__init (section) super (section)
+	self.ini = nil
+	self.ini_initialized = false
+
+	self.spawner_present = false
+
+	self.smart_terrain_conditions = nil
+	self.smart_terrain_conditions_initialized = false
+end
+--------------------
+function se_stalker:get_ini()
+	if not self.ini_initialized then
+		self.ini             = self:spawn_ini ()
+		self.ini_initialized = true
+
+		self.spawner_present = self.ini:section_exist ("spawner")
+	end
+end
+--------------------
+function se_stalker:can_switch_offline ()
+	if self.under_smart_terrain then
+		return false
+	else
+		return cse_alife_human_stalker.can_switch_offline (self)
+	end
+end
+--------------------
+function se_stalker:can_switch_online ()
+	if self.under_smart_terrain then
+		return true
+	end
+
+	self:get_ini()
+
+	if self.ini == nil or self.spawner_present == false	then
+		return cse_alife_human_stalker.can_switch_online (self)
+	end
+    
+    if db.actor ~= nil and db.actor:alive () == false then
+       return self.online
+    end    
+    
+	if self.online == false then
+   	    -- если игрока нет, то в оффлайн
+        if db.actor == nil then 
+			return false 
+		end
+	    return xr_spawner.check_spawn (self) and cse_alife_human_stalker.can_switch_online (self)
+    else
+        if db.actor == nil then 
+			return true 
+		end
+        if xr_spawner.check_spawn (self) == true then 
+           return true
+        end
+        return false --cse_alife_human_stalker.can_switch_online (self)
+    end    	    
+
+	--return xr_spawner.check_spawn (self)
+end
+--------------------
+function se_stalker:STATE_Write (packet)
+--	log ("se_stalker::STATE_Write called!")
+	cse_alife_human_stalker.STATE_Write (self, packet)
+
+	packet:w_bool (self.under_smart_terrain == true)
+end
+--------------------
+function se_stalker:STATE_Read (packet, size)
+--	log ("se_stalker::STATE_Read called!")
+	cse_alife_human_stalker.STATE_Read (self, packet, size)
+
+	if self.script_version >= 2 then
+		self.under_smart_terrain = packet:r_bool()
+	end
+end
+--------------------
+function se_stalker:read_smart_terrain_conditions()
+	if self.ini and self.ini:section_exist( smart_section ) then
+		local conds = {}
+		local accepts = false
+		local result, field, str
+		local n = ini:line_count( smart_section )
+
+		if n > 0 then
+			for i = 0, n-1 do
+				result, field, str = self.ini:r_line( smart_section, i, "", "" )
+
+				conds[field] = xr_logic.parse_condlist(self, smart_section, field, str)
+			end
+
+			return conds
+		end
+	end
+
+	return nil
+end
+--------------------
+function se_stalker:get_smart_terrain_conditions()
+	self:get_ini()
+
+	if not self.smart_terrain_conditions_initialized then
+		self.smart_terrain_conditions             = self:read_smart_terrain_conditions()
+		self.smart_terrain_conditions_initialized = true
+	end
+
+	return self.smart_terrain_conditions
+end

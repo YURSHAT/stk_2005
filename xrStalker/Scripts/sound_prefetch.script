@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------------------------------------------------
+--	Презагрузка звуков.
+--	автор:  Диденко Руслан  (Stohe)
+----------------------------------------------------------------------------------------------------------------------
+
+function prefetch_sounds()
+	local k,v,kk,vv = 0,0,0,0
+		
+	for k,v in pairs(sound_theme.ph_snd_themes) do
+		for kk,vv in pairs(v) do
+			level.prefetch_sound(vv)
+		end
+	end
+
+	function prefetch_theme_sound(tbl)
+		for k,v in pairs(tbl) do
+			if v.types == nil then
+				prefetch_section(sound_theme.snd_ini, k)
+			else
+				prefetch_theme_sound(v.types)
+			end
+		end
+	end
+
+	prefetch_theme_sound(sound_theme.theme)
+end
+
+
+function prefetch_section(ini, name)
+	if ini:section_exist(name.."_rnd") then
+		local n = ini:line_count(name.."_rnd")
+		local id, value = "", ""
+		for i=0,n-1 do
+			result, id, value	= ini:r_line(name.."_rnd",i,"","")
+			prefetch_snd_files(value)
+		end
+	end
+	if ini:section_exist(name.."_seq") then
+		local n = ini:line_count(name.."_seq")
+		local id, value = "", ""
+		for i=0,n-1 do
+			result, id, value	= ini:r_line(name.."_seq",i,"","")
+			prefetch_snd_files(value)
+		end
+	end
+end
+
+function prefetch_snd_files(path)
+	level.iterate_sounds(path, sound_theme.nstl, sound_prefetch.prefetch_file);
+end
+
+function prefetch_file(name)
+	level.prefetch_sound(name)
+end

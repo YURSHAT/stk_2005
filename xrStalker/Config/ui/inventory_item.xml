@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<!-- ITEM INFO IN THE INVENTORY MENU -->
+<window>
+
+	<!-- NAME -->
+	<static x="20" y="197" width="240" height="20">
+		<text x="0" y="0" font="letterica18" r="238" g="155" b="23"></text>
+	</static>
+
+	<!-- WEIGHT -->
+	<static x="210" y="130" width="200" height="20">
+		<text x="0" y="0" font="letterica18" r="240" g="217" b="182"></text>
+	</static>
+
+	<!-- COST -->
+	<static x="210" y="150" width="200" height="20">
+		<text x="0" y="0" font="letterica18" r="240" g="217" b="182"></text>
+	</static>
+
+	<!-- CONDITION -->
+	<static x="210" y="170" width="200" height="20">
+		<text x="0" y="0" font="letterica18" r="240" g="217" b="182"></text>
+	</static>
+
+	<!-- DESCRIPTION -->
+	<descr_list x="20" y="230" width="306" height="144" always_show_scroll="0">
+		<font font="letterica16" r="240" g="217" b="182"/>
+	</descr_list>
+
+	<!-- IMAGE STATIC -->
+	<image_static x="150" y="115" width="300" height="160" alignment="c"/>
+	
+    <!-- CONDITION BAR -->
+    <condition_progress x="10" y="175" length="200" broad="15" horz="1" min="0" max="100" pos="100">
+		<min_color r="255" g="0" b="0"></min_color>
+		<max_color r="0" g="255" b="0"></max_color>
+        <texture tile="0" width="120" height="30" length="200" r="255" g="0" b="0">ui\ui_mg_progress_efficiency_full</texture>
+        <background x="0" y="0"  width="120" height="30">ui\ui_mg_progress_efficiency_empty</background>
+    </condition_progress>
+	
+</window>
+
