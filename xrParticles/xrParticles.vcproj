@@ -265,7 +265,7 @@
 				AdditionalOptions=""
 				Optimization="0"
 				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories=".."
+				AdditionalIncludeDirectories="..;x:\xrCore"
 				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;XR_PARTICLES_EXPORTS"
 				StringPooling="false"
 				MinimalRebuild="true"

@@ -46,7 +46,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="dynasm\"
+				AdditionalIncludeDirectories="dynasm\;x:\xrCore;&quot;X:\External Library\luabind\luabind\luabind\luabind&quot;;&quot;X:\External Library\boost_1_30_0&quot;;X:\xrLUA_JIT\src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;LUA_BUILD_AS_DLL;LUABIND_BUILDING;DEBUG;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

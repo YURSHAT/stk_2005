@@ -51,9 +51,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="X:\xrCore"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;XRPROGRESSIVE_EXPORTS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				ForceConformanceInForLoopScope="false"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Debug/xrProgressive.pch"

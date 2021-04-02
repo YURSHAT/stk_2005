@@ -265,7 +265,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories=".."
+				AdditionalIncludeDirectories="..;x:\xrCore"
 				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;XRXMLPARSER_EXPORTS"
 				StringPooling="false"
 				MinimalRebuild="true"
