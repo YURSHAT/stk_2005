@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="8,00"
 	Name="ETools"
 	ProjectGUID="{65CBB9D0-FBC6-41A4-8316-F5E9B5D7FB33}"
 	RootNamespace="ETools"
 	SccProjectName="&quot;$/Editors/Tools/ETools&quot;, ADFAAAAA"
 	SccLocalPath="."
 	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
-	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -94,15 +93,13 @@
 				OutputFile="x:\ETools.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="false"
-				AdditionalLibraryDirectories="X:\;&quot;X:\External Library\Xiph\Libs&quot;"
+				AdditionalLibraryDirectories="X:\External Library\Xiph\Libs"
 				IgnoreDefaultLibraryNames="libcmt.lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="x:\$(ProjectName).pdb"
 				GenerateMapFile="false"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary="x:/ETools.lib"
 			/>
 			<Tool
@@ -122,6 +119,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -161,7 +161,6 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories="x:\xrCore;&quot;X:\External Library\Xiph\Include&quot;;X:\xrQSlim\src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ETOOLS_EXPORTS"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
@@ -204,14 +203,11 @@
 				OutputFile="x:\ETools.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="X:\;&quot;X:\External Library\Xiph\Libs&quot;"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/$(TargetName).pdb"
 				GenerateMapFile="true"
 				MapFileName="$(OutDir)/$(TargetName).map"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary="$(OutDir)/ETools.lib"
 			/>
 			<Tool
@@ -231,6 +227,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -276,7 +275,7 @@
 				AdditionalIncludeDirectories="x:\xrCore;&quot;X:\External Library\Xiph\Include&quot;;X:\xrQSlim\src"
 				PreprocessorDefinitions="WIN32;DEBUG;NDEBUG;_WINDOWS;_DEBUG;ETOOLS_EXPORTS"
 				StringPooling="true"
-				RuntimeLibrary="3"
+				RuntimeLibrary="2"
 				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="false"
 				ForceConformanceInForLoopScope="true"
@@ -311,7 +310,7 @@
 				OutputFile="x:\ETools.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="X:\;&quot;X:\External Library\Xiph\Libs&quot;"
+				AdditionalLibraryDirectories="X:\External Library\Xiph\Libs"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="x:\$(ProjectName).pdb"
 				GenerateMapFile="true"
@@ -319,8 +318,6 @@
 				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary="x:/ETools.lib"
 			/>
 			<Tool
@@ -340,6 +337,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

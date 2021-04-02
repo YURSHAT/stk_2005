@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="8,00"
 	Name="xrCDB"
 	ProjectGUID="{A19B1DF2-82EC-4364-8BDF-85D13A1C89B5}"
 	RootNamespace="xrCDB"
 	SccProjectName="&quot;$/xr_3da/xrCDB&quot;, XKFAAAAA"
 	SccLocalPath="."
 	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
-	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -100,8 +99,6 @@
 				SubSystem="0"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary="x:\xrCDB.lib"
 				TargetMachine="0"
 			/>
@@ -122,6 +119,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -201,8 +201,6 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/$(TargetName).pdb"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary="x:\xrCDB.lib"
 				TargetMachine="0"
 			/>
@@ -223,6 +221,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -264,7 +265,6 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="0"
 				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories="x:\xrCore"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;XRCDB_EXPORTS"
 				StringPooling="false"
 				MinimalRebuild="true"
@@ -310,8 +310,6 @@
 				GenerateMapFile="true"
 				MapFileName="x:\xrCDB.map"
 				MapExports="false"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary="x:\xrCDB.lib"
 				TargetMachine="0"
 			/>
@@ -332,6 +330,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -419,8 +420,6 @@
 				GenerateMapFile="true"
 				MapFileName="x:\xrCDB.map"
 				MapExports="false"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary="x:\xrCDB.lib"
 				TargetMachine="0"
 			/>
@@ -441,6 +440,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

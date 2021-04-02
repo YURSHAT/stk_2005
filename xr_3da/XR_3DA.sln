@@ -1,7 +1,5 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4436B012-53D0-4949-B81B-60D7F06FD3ED}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XR_3DA", "XR_3DA.vcproj", "{2578C6D8-660D-48AE-9322-7422F8664F06}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A0F7D1FB-59A7-4717-A7E4-96F37E91998E} = {A0F7D1FB-59A7-4717-A7E4-96F37E91998E}
@@ -120,6 +118,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrLUA_JIT", "..\xrLUA_JIT\x
 		{A0F7D1FB-59A7-4717-A7E4-96F37E91998E} = {A0F7D1FB-59A7-4717-A7E4-96F37E91998E}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4436B012-53D0-4949-B81B-60D7F06FD3ED}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrSound", "xrSound\xrSound.vcproj", "{CCCA7859-EB86-493E-9B53-C4235F45B3C5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A19B1DF2-82EC-4364-8BDF-85D13A1C89B5} = {A19B1DF2-82EC-4364-8BDF-85D13A1C89B5}
@@ -136,11 +136,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrCDB", "xrCDB\xrCDB.vcproj
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrLUA", "H:\src_25_10_05\xrLUA\xrLUA.vcproj", "{F496E4E3-22D5-4294-A0FB-A1EFDA7E2450}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrProgressive", "..\xrProgressive\xrProgressive.vcproj", "{0F45FA55-BACD-4D7B-A809-24F0104F5E57}"
-EndProject
 Global
 	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 12
+		SccNumberOfProjects = 11
 		SccProjectUniqueName0 = XR_3DA.vcproj
 		SccProjectName0 = \u0022$/XR_3DA\u0022,\u0020WABAAAAA
 		SccLocalPath0 = .
@@ -186,10 +184,6 @@ Global
 		SccProjectName10 = \u0022$/xr_3da/xrCDB\u0022,\u0020XKFAAAAA
 		SccLocalPath10 = xrCDB
 		SccProvider10 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
-		SccProjectUniqueName11 = ..\\xrProgressive\\xrProgressive.vcproj
-		SccProjectName11 = \u0022$/xrProgressive\u0022,\u0020LCCAAAAA
-		SccLocalPath11 = ..\\xrProgressive
-		SccProvider11 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -394,14 +388,6 @@ Global
 		{F496E4E3-22D5-4294-A0FB-A1EFDA7E2450}.Mixed|Win32.Build.0 = Mixed|Win32
 		{F496E4E3-22D5-4294-A0FB-A1EFDA7E2450}.Release|Win32.ActiveCfg = Release|Win32
 		{F496E4E3-22D5-4294-A0FB-A1EFDA7E2450}.Release|Win32.Build.0 = Release|Win32
-		{0F45FA55-BACD-4D7B-A809-24F0104F5E57}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0F45FA55-BACD-4D7B-A809-24F0104F5E57}.Debug|Win32.Build.0 = Debug|Win32
-		{0F45FA55-BACD-4D7B-A809-24F0104F5E57}.DebugNoExceptions|Win32.ActiveCfg = Debug|Win32
-		{0F45FA55-BACD-4D7B-A809-24F0104F5E57}.DebugNoExceptions|Win32.Build.0 = Debug|Win32
-		{0F45FA55-BACD-4D7B-A809-24F0104F5E57}.Mixed|Win32.ActiveCfg = Release|Win32
-		{0F45FA55-BACD-4D7B-A809-24F0104F5E57}.Mixed|Win32.Build.0 = Release|Win32
-		{0F45FA55-BACD-4D7B-A809-24F0104F5E57}.Release|Win32.ActiveCfg = Release|Win32
-		{0F45FA55-BACD-4D7B-A809-24F0104F5E57}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

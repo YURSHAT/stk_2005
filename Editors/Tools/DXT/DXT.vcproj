@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="8,00"
 	Name="DXT"
 	ProjectGUID="{EBF9B543-0830-4866-9B48-DC0740E87E8A}"
 	RootNamespace="DXT"
 	SccProjectName="&quot;$/Editors/Tools/DXT&quot;, DDFAAAAA"
 	SccLocalPath="."
 	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
-	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -57,7 +56,6 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories="x:\xrCore;&quot;X:\External Library\dxsdk_feb2005\Include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;DXT_EXPORTS"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -92,15 +90,12 @@
 				OutputFile="x:\dxt.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="x:\"
 				IgnoreDefaultLibraryNames="LIBCMT.lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="x:\$(ProjectName).pdb"
 				GenerateMapFile="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary="x:\$(ProjectName).lib"
 			/>
 			<Tool
@@ -120,6 +115,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -193,13 +191,11 @@
 				OutputFile="x:\dxt.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="x:\;"
+				AdditionalLibraryDirectories="x:\"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="x:\$(ProjectName).pdb"
 				GenerateMapFile="true"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary="x:\dxt.lib"
 			/>
 			<Tool
@@ -219,6 +215,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

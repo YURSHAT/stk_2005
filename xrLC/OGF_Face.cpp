@@ -344,7 +344,7 @@ void OGF::CalculateTB()
 
 	// retriving data
 	u32 o_idx		= 0;
-	for (face_it=faces.begin(); face_it!=faces.end(); face_it++){
+	for (itOGF_F face_it=faces.begin(); face_it!=faces.end(); face_it++){
 		OGF_Face	&iF = *face_it;
 		iF.v[0]		= o_indices[o_idx++];
 		iF.v[1]		= o_indices[o_idx++];
