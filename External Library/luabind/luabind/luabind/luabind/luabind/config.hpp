@@ -52,7 +52,7 @@ namespace std
 
 #endif
 
-// #define string_class std::string
+//#define string_class std::string
 #define string_class xr_string
 
 #if defined (BOOST_MSVC) && (BOOST_MSVC <= 1300)
@@ -132,7 +132,7 @@ namespace std
 // #define LUABIND_NO_EXCEPTIONS
 
 #define LUABIND_EXPORT __declspec(dllexport)
-#define LUABIND_IMPORT __declspec(dllimport)
+//#define LUABIND_IMPORT __declspec(dllimport)
 // If you're building luabind as a dll on windows with devstudio
 // you can set LUABIND_EXPORT to __declspec(dllexport)
 // and LUABIND_IMPORT to __declspec(dllimport)

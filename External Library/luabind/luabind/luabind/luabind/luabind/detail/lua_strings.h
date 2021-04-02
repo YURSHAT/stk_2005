@@ -4,12 +4,12 @@
 
 #ifndef USE_NATIVE_LUA_STRINGS
 #else
-#	include "lobject.h"
+#include "lobject.h"
 
-//#	define DEBUG_NATIVE_LUA_STRINGS
+//#define DEBUG_NATIVE_LUA_STRINGS
 
-//LUABIND_API 	int		luaL_ref				(lua_State *L, int t);
-//LUABIND_API 	void	luaL_unref				(lua_State *L, int t, int ref);
+LUABIND_API 	int		luaL_ref				(lua_State *L, int t);
+LUABIND_API 	void	luaL_unref				(lua_State *L, int t, int ref);
 extern "C" 	{
 LUA_API 	void		lua_push_string_object		(lua_State *L, TString *string);
 LUA_API 	int			luaV_strcmp					(const TString *ls, const TString *rs);
