@@ -295,7 +295,8 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 		_RELEASE		(pShaderBuf);
 		_RELEASE		(pErrorBuf);
 		pConstants		= NULL;
-		R_CHK			(_hr);
+                Msg(name);
+		//R_CHK			(_hr);
 		return			_ps;
 	}
 }

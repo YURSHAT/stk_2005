@@ -105,7 +105,7 @@ bool CEditableMesh::RayPick(float& distance, const Fvector& start, const Fvector
 
     if (ETOOLS::r_count()){
 		CDB::RESULT* I	= ETOOLS::r_begin	();
-		if (I->range<distance) {
+		if (I && I->range<distance) {
 	        if (pinf){
             	pinf->SetRESULT	(m_CFModel,I);
     	        pinf->e_obj 	= m_Parent;

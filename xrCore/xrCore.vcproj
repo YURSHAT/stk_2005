@@ -49,14 +49,15 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="0"
 				EnableFiberSafeOptimizations="true"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;XRCORE_EXPORTS"
+				PreprocessorDefinitions="WIN32;DEBUG;_WINDOWS;_USRDLL;XRCORE_EXPORTS"
 				StringPooling="false"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
-				RuntimeLibrary="3"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
+				ForceConformanceInForLoopScope="false"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
 				AssemblerListingLocation="Debug\"
@@ -67,6 +68,7 @@
 				SuppressStartupBanner="true"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -162,6 +164,7 @@
 				WarningLevel="4"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
