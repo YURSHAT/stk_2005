@@ -85,10 +85,6 @@ void clean_game_globals()
 	// Очищение таблицы идентификаторов рангов и отношений сталкеров
 	InventoryUtilities::ClearCharacterInfoStrings	();
 
-				CSProblemSolver::const_iterator	I = problem_solver.operators().begin();
-			CSProblemSolver::const_iterator	E = problem_solver.operators().end();
-
-	std::lower_bound(problem
 	xr_delete										(g_sound_collection_storage);
 	
 #ifdef DEBUG
