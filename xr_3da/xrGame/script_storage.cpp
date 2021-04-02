@@ -61,7 +61,7 @@ static void *lua_alloc		(void *ud, void *ptr, size_t osize, size_t nsize) {
     return	NULL;
   }
   else
-#ifdef DEBUG
+#ifdef DEBUG_MEMORY_NAME
     return Memory.mem_realloc		(ptr, nsize, "LUA");
 #else
     return Memory.mem_realloc		(ptr, nsize);

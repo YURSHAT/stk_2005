@@ -70,14 +70,17 @@ void	xrMemory::_initialize	(BOOL bDebug)
 	g_pSharedMemoryContainer	= xr_new<smem_container>	();
 }
 
-extern void dbg_dump_leaks();
+#ifdef DEBUG_MEMORY_MANAGER
+	extern void dbg_dump_leaks();
+#endif // DEBUG_MEMORY_MANAGER
+
 void	xrMemory::_destroy()
 {
 	xr_delete					(g_pSharedMemoryContainer);
 	xr_delete					(g_pStringContainer);
 
 #ifndef M_BORLAND
-#ifdef DEBUG
+#ifdef DEBUG_MEMORY_MANAGER
 	if (debug_mode)				dbg_dump_leaks	();
 #endif
 #endif
@@ -213,7 +216,7 @@ char*			xr_strdup		(const char* string)
 	VERIFY	(string);
 	u32		len			= u32(xr_strlen(string))+1	;
 	char *	memory		= (char*)	Memory.mem_alloc( len
-#ifdef DEBUG
+#ifdef DEBUG_MEMORY_NAME
 		, "strdup"
 #endif
 		);

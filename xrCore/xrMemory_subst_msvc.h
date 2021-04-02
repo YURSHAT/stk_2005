@@ -1,4 +1,4 @@
-#ifdef DEBUG
+#ifdef DEBUG_MEMORY_NAME
 // new(0)
 template <class T>
 IC	T*		xr_new		()

@@ -39,7 +39,7 @@ smem_value*			smem_container::dock			(u32 dwCRC, u32 dwLength, void* ptr)
 	if (0==result)
 	{
 		result					= (smem_value*)	Memory.mem_alloc	(4*sizeof(u32) + dwLength
-#ifdef DEBUG
+#ifdef DEBUG_MEMORY_NAME
 			, "storage: smem"
 #endif
 			);

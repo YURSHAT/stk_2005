@@ -2,6 +2,16 @@
 #define xrDebug_macrosH
 #pragma once
 
+#ifndef __BORLANDC__
+	#ifndef _ANONYMOUS_BUILD
+		#	define DEBUG_INFO					__FILE__,__LINE__,__FUNCTION__
+	#else
+		#	define DEBUG_INFO					"",__LINE__,""
+	#endif
+#else // __BORLANDC__
+#	define DEBUG_INFO					__FILE__,__LINE__,__FILE__
+#endif // __BORLANDC__
+
 // ---==( Extended Debugging Support (R) )==---
 #define R_ASSERT(expr) if (!(expr)) ::Debug.fail(#expr,__FILE__, __LINE__)
 #define R_ASSERT2(expr,e2) if (!(expr)) ::Debug.fail(#expr,e2,__FILE__, __LINE__)
@@ -13,6 +23,7 @@
 #define VERIFY(expr) if (!(expr)) ::Debug.fail(#expr,__FILE__, __LINE__)
 #define VERIFY2(expr, e2) if (!(expr)) ::Debug.fail(#expr,e2,__FILE__, __LINE__)
 #define VERIFY3(expr, e2, e3) if (!(expr)) ::Debug.fail(#expr,e2,e3,__FILE__, __LINE__)
+#define VERIFY4(expr, e2) do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(#expr,e2,DEBUG_INFO,ignore_always);} while(0)
 #define CHK_DX(expr) { HRESULT hr = expr; if (FAILED(hr)) ::Debug.error(hr,#expr,__FILE__, __LINE__); }
 #else
 	#ifdef __BORLANDC__
