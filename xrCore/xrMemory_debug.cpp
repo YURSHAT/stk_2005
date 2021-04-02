@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #pragma hdrstop
 
-#ifndef DEBUG
+#ifndef DEBUG_MEMORY_MANAGER
 void	xrMemory::dbg_register		(void* _p, size_t _size, const char* _name)	{ }
 void	xrMemory::dbg_unregister	(void* _p)									{ }
 void	xrMemory::dbg_check			()											{ }
@@ -21,7 +21,7 @@ void	dbg_header			(xrMemory::mdbg& dbg, bool _debug)
 {
 	//. check header
 	u32 t1 = get_header	(dbg._p);
-	u32 t2 = get_pool	(dbg._size+(_debug?4:0));
+	u32 t2 = get_pool	(1+dbg._size+(_debug?4:0));
 	R_ASSERT2			(t1==t2,"CorePanic: Memory block header corrupted");
 }
 

@@ -225,6 +225,11 @@ CUIListItem* CUIListWnd::GetClickedItem(){
 
 void CUIListWnd::UpdateList()
 {
+	if (m_ItemList.empty()) {
+		UpdateScrollBar	();
+		return;
+	}
+
 	LIST_ITEM_LIST_it it=m_ItemList.begin();
 	
 	//спрятать все элементы до участка 

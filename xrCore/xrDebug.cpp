@@ -113,6 +113,51 @@ void xrDebug::backend(const char* reason, const char *file, int line)
 	CS.Leave			();
 }
 
+void xrDebug::backend(const char* reason, const char* expression, const char *argument0, const char *argument1, const char* file, int line, const char *function, bool &ignore_always)
+{
+	static	xrCriticalSection	CS;
+
+	CS.Enter			();
+
+	// Log
+	string1024			tmp;
+	sprintf				(tmp,"***STOP*** file '%s', line %d.\n***Reason***: %s\n %s",file,line,reason,expression);
+	Msg					(tmp);
+	FlushLog			();
+	if (handler)		handler	();
+
+	// Call the dialog
+	dlgExpr				= reason;
+	dlgFile				= file;
+	sprintf				(dlgLine,"%d",line);
+	INT_PTR res			= -1;
+#ifdef XRCORE_STATIC
+	MessageBox			(NULL,tmp,"X-Ray error",MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
+#else
+	res	= DialogBox
+		(
+		GetModuleHandle(MODULE_NAME),
+		MAKEINTRESOURCE(IDD_STOP),
+		NULL,
+		DialogProc 
+		);
+#endif
+	switch (res) 
+	{
+	case -1:
+	case IDC_STOP:
+		if (bException)		TerminateProcess(GetCurrentProcess(),3);
+		else				RaiseException	(0, 0, 0, NULL);
+		break;
+	case IDC_DEBUG:
+ 		DEBUG_INVOKE;
+		break;
+	}
+
+	CS.Leave			();
+}
+
+
 LPCSTR xrDebug::error2string	(long code)
 {
 	LPCSTR				result	= 0;
@@ -155,6 +200,17 @@ void xrDebug::fail		(const char *e1, const char *e2, const char *e3, const char 
 	sprintf		(reason,"*** Assertion failed ***\nExpression: %s\n%s\n%s",e1,e2,e3);
 	backend		(reason,file,line);
 }
+
+void xrDebug::fail		(const char *e1, const char *e2, const char *file, int line, const char *function, bool &ignore_always)
+{
+	backend		(e1,e2,0,0,file,line,function,ignore_always);
+}
+
+void xrDebug::fail		(const char *e1, const std::string &e2, const char *file, int line, const char *function, bool &ignore_always)
+{
+	backend		(e1,e2.c_str(),0,0,file,line,function,ignore_always);
+}
+
 void __cdecl xrDebug::fatal(const char* F,...)
 {
 	string1024	buffer;

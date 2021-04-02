@@ -48,7 +48,7 @@ str_value*	str_container::dock		(str_c value)
 	if (0==result)				{
 		// Insert string
 		result					= (str_value*)Memory.mem_alloc(HEADER+s_len_with_zero
-#ifdef DEBUG
+#ifdef DEBUG_MEMORY_NAME
 			, "storage: sstring"
 #endif
 			);
