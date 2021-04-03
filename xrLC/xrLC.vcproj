@@ -58,7 +58,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories="..\xrQSlim\src;x:\xrCore"
+				AdditionalIncludeDirectories="..\xrQSlim\src;x:\xrCore;&quot;X:\External Library\MagicSoftware\FreeMagic\Include&quot;"
 				PreprocessorDefinitions="_USE_MATH_DEFINES,WIN32,_WINDOWS"
 				StringPooling="true"
 				ExceptionHandling="0"

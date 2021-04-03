@@ -9,7 +9,7 @@
 
 #pragma once
 
-#define		DEBUG
+//#define		DEBUG
 #include	<xrCore.h>
 #include	<io.h>
 #include	<fcntl.h>

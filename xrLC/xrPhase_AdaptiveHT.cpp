@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "build.h"
+#include "xrThread.h"
 
 const	float	aht_max_edge	= c_SS_maxsize/2.5f;	// 2.0f;			// 2 m
 //const	float	aht_min_edge	= .2f;					// 20 cm
@@ -110,6 +111,43 @@ void GSaveAsSMF					(LPCSTR fname)
 	FS.w_close	(W);
 }
 */
+class CPrecalcBaseHemiThread: 
+public CThread
+{
+	u32 _from, _to;
+	CDB::COLLIDER	DB;
+	
+public:
+	CPrecalcBaseHemiThread(u32 ID, u32 from, u32 to ): CThread(ID), _from( from ), _to( to )
+	{
+		R_ASSERT(from!=u32(-1));
+		R_ASSERT(to!=u32(-1));
+		R_ASSERT( from < to );
+		R_ASSERT(from>=0);
+		R_ASSERT(to>0);
+	}
+virtual	void Execute()
+	{
+		DB.ray_options	(0);
+		for (u32 vit =_from; vit < _to; vit++)	
+		{
+			base_color_c		vC;
+			R_ASSERT( vit != u32(-1) );
+			R_ASSERT( vit>=0 );
+			R_ASSERT( vit<g_vertices.size() );
+			Vertex*		V		= g_vertices[vit];
+			
+			R_ASSERT( V );
+			V->normalFromAdj	();
+			LightPoint			(&DB, RCAST_Model, vC, V->P, V->N, pBuild->L_static, LP_dont_rgb+LP_dont_sun,0);
+			vC.mul				(0.5f);
+			V->C._set			(vC);
+		}
+	}
+};
+
+CThreadManager	precalc_base_hemi;
+
 void CBuild::xrPhase_AdaptiveHT	()
 {
 	CDB::COLLIDER	DB;
@@ -142,6 +180,7 @@ void CBuild::xrPhase_AdaptiveHT	()
 		Light_prepare				();
 
 		// calc approximate normals for vertices + base lighting
+/*
 		for (u32 vit=0; vit<g_vertices.size(); vit++)	
 		{
 			base_color_c		vC;
@@ -151,6 +190,17 @@ void CBuild::xrPhase_AdaptiveHT	()
 			vC.mul				(0.5f);
 			V->C._set			(vC);
 		}
+*/
+		u32	stride			= u32(-1);		
+		u32 threads			= u32(-1);
+		u32 rest			= u32(-1);
+		get_intervals( 8, g_vertices.size(), threads, stride, rest );
+		for (u32 thID=0; thID<threads; thID++)
+			precalc_base_hemi.start	( xr_new<CPrecalcBaseHemiThread> (thID,thID*stride,thID*stride + stride ) );
+		if(rest > 0)
+			precalc_base_hemi.start	( xr_new<CPrecalcBaseHemiThread> (threads,threads*stride,threads*stride + rest ) );
+		precalc_base_hemi.wait();
+		//precalc_base_hemi
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -229,7 +279,7 @@ void CBuild::u_Tesselate	(tesscb_estimator* cb_E, tesscb_face* cb_F, tesscb_vert
 		V->P.lerp			(V1->P, V2->P, .5f);
 
 		// iterate on faces which share this 'problematic' edge
-		for (u32 af_it=0; af_it<adjacent.size(); af_it++)
+		for (u32 af_it=0; af_it<adjacent.size(); ++af_it)
 		{
 			Face*	AF			= adjacent[af_it];
 			VERIFY				(false==AF->flags.bSplitted);
@@ -289,8 +339,8 @@ void CBuild::u_Tesselate	(tesscb_estimator* cb_E, tesscb_face* cb_F, tesscb_vert
 	}
 
 	// Cleanup
-	for (u32 I=0; I<g_faces.size(); I++)	if (0!=g_faces[I] && g_faces[I]->flags.bSplitted)	FacePool.destroy	(g_faces[I]);
-	for (u32 I=0; I<g_vertices.size(); I++)	if (0==g_vertices[I]->adjacent.size())				VertexPool.destroy	(g_vertices[I]);
+	for (u32 I=0; I<g_faces.size(); ++I)	if (0!=g_faces[I] && g_faces[I]->flags.bSplitted)	FacePool.destroy	(g_faces[I]);
+	for (u32 I=0; I<g_vertices.size(); ++I)	if (0==g_vertices[I]->adjacent.size())				VertexPool.destroy	(g_vertices[I]);
 	g_faces.erase		(std::remove(g_faces.begin(),g_faces.end(),(Face*)0),g_faces.end());
 	g_vertices.erase	(std::remove(g_vertices.begin(),g_vertices.end(),(Vertex*)0),g_vertices.end());
 	g_bUnregister		= true;
@@ -298,17 +348,17 @@ void CBuild::u_Tesselate	(tesscb_estimator* cb_E, tesscb_face* cb_F, tesscb_vert
 
 void CBuild::u_SmoothVertColors(int count)
 {
-	for (int iteration=0; iteration<count; iteration++)
+	for (int iteration=0; iteration<count; ++iteration)
 	{
 		// Gather
 		xr_vector<base_color>	colors;
 		colors.resize			(g_vertices.size());
-		for (u32 it=0; it<g_vertices.size(); it++)
+		for (u32 it=0; it<g_vertices.size(); ++it)
 		{
 			// Circle
 			xr_vector<Vertex*>	circle;
 			Vertex*		V		= g_vertices[it];
-			for (u32 fit=0; fit<V->adjacent.size(); fit++)	{
+			for (u32 fit=0; fit<V->adjacent.size(); ++fit)	{
 				Face*	F		= V->adjacent[fit];
 				circle.push_back(F->v[0]);
 				circle.push_back(F->v[1]);
@@ -319,7 +369,7 @@ void CBuild::u_SmoothVertColors(int count)
 
 			// Average
 			base_color_c		avg,tmp;
-			for (u32 cit=0; cit<circle.size(); cit++)
+			for (u32 cit=0; cit<circle.size(); ++cit)
 			{
 				circle[cit]->C._get	(tmp);
 				avg.add				(tmp);
@@ -329,7 +379,7 @@ void CBuild::u_SmoothVertColors(int count)
 		}
 
 		// Transfer
-		for (u32 it=0; it<g_vertices.size(); it++)
+		for (u32 it=0; it<g_vertices.size(); ++it)
 			g_vertices[it]->C	= colors[it];
 	}
 }

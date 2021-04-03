@@ -262,7 +262,7 @@ int oe_encode(oe_enc_opt *opt)
 		ogg_stream_packetin(&os,&header_comments);
 		ogg_stream_packetin(&os,&header_codebooks);
 
-		while((result = ogg_stream_flush(&os, &og)))
+		while((result = ogg_stream_flush(&os, &og)) != 0)
 		{
 			if(!result) break;
 			ret = oe_write_page(&og, opt->out);
@@ -398,8 +398,8 @@ void update_statistics_notime(char *fn, long total, long done, double time)
 int oe_write_page(ogg_page *page, FILE *fp)
 {
 	int written;
-	written = fwrite(page->header,1,page->header_len, fp);
-	written += fwrite(page->body,1,page->body_len, fp);
+	written = (int)fwrite(page->header,1,page->header_len, fp);
+	written += (int)fwrite(page->body,1,page->body_len, fp);
 
 	return written;
 }
