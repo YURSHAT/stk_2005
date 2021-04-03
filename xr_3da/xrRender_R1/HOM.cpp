@@ -256,6 +256,7 @@ IC	BOOL	_visible	(Fbox& B, Fmatrix& m_xform_01)
 BOOL CHOM::visible		(Fbox3& B)
 {
 	if (!bEnabled)		return TRUE;
+	if (B.contains(Device.vCameraPosition))	return TRUE;
 	return _visible		(B,m_xform_01);
 }
 

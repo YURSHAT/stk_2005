@@ -10,6 +10,7 @@
 #include "..\GameFont.h"
 #include "..\SkeletonCustom.h"
 
+u32 g_r = 1;
 // #include "xr_effsun.h"
 
 const float W_DIST_FADE		= 15.f;

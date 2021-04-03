@@ -230,6 +230,10 @@ void R_dsgraph_structure::r_dsgraph_render_graph	(u32	_priority, bool _clear)
 	// Sorting by SSA and changes minimizations
 	{
 		RCache.set_xform_world			(Fidentity);
+		// Render several passes
+		for ( u32 iPass = 0; iPass<SHADER_PASSES_MAX; ++iPass)
+		{
+
 		mapNormalVS&	vs				= mapNormal	[_priority];
 		vs.getANY_P						(nrmVS);
 		std::sort						(nrmVS.begin(), nrmVS.end(), cmp_vs_nrm);
@@ -290,12 +294,15 @@ void R_dsgraph_structure::r_dsgraph_render_graph	(u32	_priority, bool _clear)
 		nrmVS.clear				();
 		if(_clear) vs.clear		();
 	}
+}
 
 	// **************************************************** MATRIX
 	// Perform sorting based on ScreenSpaceArea
 	// Sorting by SSA and changes minimizations
+	// Render several passes
+	for ( u32 iPass = 0; iPass<SHADER_PASSES_MAX; ++iPass)
 	{
-		mapMatrixVS&	vs				= mapMatrix	[_priority];
+		mapMatrixVS&	vs				= mapMatrix[_priority];
 		vs.getANY_P						(matVS);
 		std::sort						(matVS.begin(), matVS.end(), cmp_vs_mat);
 		for (u32 vs_id=0; vs_id<matVS.size(); vs_id++)	{
@@ -548,7 +555,8 @@ void	R_dsgraph_structure::r_dsgraph_render_R1_box	(IRender_Sector* _S, Fbox& BB,
 			{
 				// Renderable visual
 				ShaderElement* E	= V->shader->E[sh]._get();
-				if (E) {
+				if (E && !(E->flags.bDistort))
+				{
 					for (u32 pass=0; pass<E->passes.size(); pass++)
 					{
 						RCache.set_Element			(E,pass);
