@@ -6,7 +6,7 @@
 XRCORE_API CInifile *pSettings	= NULL;
 
 CInifile* CInifile::Create(const char* szFileName, BOOL ReadOnly)
-{	return xr_new<CInifile>(szFileName,ReadOnly); }
+{	return new CInifile(szFileName,ReadOnly); }
 
 void CInifile::Destroy(CInifile* ini)
 {	xr_delete(ini); }

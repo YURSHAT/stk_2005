@@ -66,8 +66,8 @@ void	xrMemory::_initialize	(BOOL bDebug)
 #else
 	mem_initialized				= TRUE;
 #endif
-	g_pStringContainer			= xr_new<str_container>		();
-	g_pSharedMemoryContainer	= xr_new<smem_container>	();
+	g_pStringContainer			= new str_container();
+	g_pSharedMemoryContainer	= new smem_container();
 }
 
 extern void dbg_dump_leaks();

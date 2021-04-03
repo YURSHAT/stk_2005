@@ -40,8 +40,8 @@ int getTriByEdge	(xrMU_Model::_vertex *V1, xrMU_Model::_vertex *V2, xrMU_Model::
 void xrMU_Reference::export_cform_game(CDB::CollectorPacked& CL)
 {
 	// Collecting data
-	xrMU_Model::v_faces*	cfFaces		= xr_new<xrMU_Model::v_faces>		();
-	xrMU_Model::v_vertices*	cfVertices	= xr_new<xrMU_Model::v_vertices>	();
+	xrMU_Model::v_faces*	cfFaces		= new xrMU_Model::v_faces();
+	xrMU_Model::v_vertices*	cfVertices	= new xrMU_Model::v_vertices();
 	{
 		xr_vector<bool>	cfVertexMarks;
 		cfVertexMarks.assign(model->m_vertices.size(),false);

@@ -88,8 +88,8 @@ void edge(Vertex* vE1, Vertex* vE2)
 void CBuild::CorrectTJunctions()
 {
 	Status					("Processing...");
-	vecJunctions			= xr_new<xr_vector<record> > (); vecJunctions->reserve	(1024);
-	vecEdges				= xr_new<xr_vector<record> > (); vecEdges->reserve		(1024);
+	vecJunctions			= new xr_vector<record>(); vecJunctions->reserve	(1024);
+	vecEdges				= new xr_vector<record>(); vecEdges->reserve		(1024);
 
 	for (u32 I=0; I<g_faces.size(); I++)
 	{
