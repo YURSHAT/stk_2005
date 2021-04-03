@@ -77,6 +77,7 @@ public:
 	cl_light_C													r1_dlight_binder_color	;
 	cl_light_XFORM												r1_dlight_binder_xform	;
 	shared_str													c_ldynamic_props		;
+	bool														m_bFirstFrameAfterReset;
 private:
 	// Loading / Unloading
 	void								LoadBuffers				(IReader	*fs);

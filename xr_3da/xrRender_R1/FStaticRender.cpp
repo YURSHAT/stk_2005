@@ -45,6 +45,10 @@ ShaderElement*			CRender::rimp_select_sh_static	(IRender_Visual	*pVisual, float 
 //////////////////////////////////////////////////////////////////////////
 void					CRender::create					()
 {
+	L_DB				= 0;
+	L_Shadows			= 0;
+	L_Projector			= 0;
+
 	Device.seqFrame.Add	(this,REG_PRIORITY_HIGH+0x12345678);
 
 	// c-setup
@@ -66,6 +70,9 @@ void					CRender::create					()
 	o.forceskinw				= (strstr(Core.Params,"-skinw"))?		TRUE	:FALSE	;
 	c_ldynamic_props			= "L_dynamic_props";
 
+//---------
+	Target						= xr_new<CRenderTarget>		();
+//---------
 	//
 	Models						= xr_new<CModelPool>		();
 	L_Dynamic					= xr_new<CLightR_Manager>	();
@@ -83,7 +90,11 @@ void					CRender::destroy				()
 	PSLibrary.OnDestroy			();
 	xr_delete					(L_Dynamic);
 	xr_delete					(Models);
+
+	xr_delete					(Target);
 	Device.seqFrame.Remove		(this);
+
+	r_dsgraph_destroy			();
 }
 
 void					CRender::reset_begin			()
@@ -98,6 +109,10 @@ void					CRender::reset_end				()
 	HWOCC.occq_create			(occq_size);
 	Target						=	xr_new<CRenderTarget>	();
 	if (L_Projector)			L_Projector->invalidate		();
+
+	// Set this flag true to skip the first render frame,
+	// that some data is not ready in the first frame (for example device camera position)
+	m_bFirstFrameAfterReset = true;
 }
 
 void					CRender::OnFrame				()
@@ -232,6 +247,7 @@ IC		void			gm_SetNearer		(BOOL bNearer)
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 CRender::CRender	()
+:m_bFirstFrameAfterReset(false)
 {
 }
 
@@ -298,7 +314,8 @@ void CRender::Calculate				()
 		}
 	}
 	//
-	L_DB->Update	();
+	if (L_DB)
+		L_DB->Update();
 
 	// Main process
 	marker	++;
@@ -361,15 +378,19 @@ void CRender::Calculate				()
 			{
 				ISpatial*	spatial		= lstRenderables[o_it];		spatial->spatial_updatesector	();
 				CSector*	sector		= (CSector*)spatial->spatial.sector	;
-				if	(0==sector)										continue;	// disassociated from S/P structure
+				if	(0==sector)										
+					continue;	// disassociated from S/P structure
 				if	(PortalTraverser.i_marker != sector->r_marker)	continue;	// inactive (untouched) sector
-				for (u32 v_it=0; v_it<sector->r_frustums.size(); v_it++)
+
+				if (spatial->spatial.type & STYPE_RENDERABLE)
 				{
+					for (u32 v_it=0; v_it<sector->r_frustums.size(); v_it++)
+					{
 					CFrustum&	view	= sector->r_frustums[v_it];
+
 					if (!view.testSphere_dirty(spatial->spatial.center,spatial->spatial.radius))	continue;
 
-					if (spatial->spatial.type & STYPE_RENDERABLE)
-					{
+
 						// renderable
 						IRenderable*	renderable		= spatial->dcast_Renderable	();
 						if (0==renderable)	{
@@ -399,7 +420,12 @@ void CRender::Calculate				()
 							renderable->renderable_Render	();
 							set_Object						(0);	//? is it needed at all
 						}
-					} else {
+						break;	// exit loop on frustums
+					} 
+				} 
+				else
+				{
+					{ 
 						VERIFY								(spatial->spatial.type & STYPE_LIGHTSOURCE);
 						// lightsource
 						light*			L					= (light*)	spatial->dcast_Light	();
@@ -409,7 +435,6 @@ void CRender::Calculate				()
 							if	(HOM.visible(vis))	L_DB->add_light		(L);
 						}
 					}
-					break;	// exit loop on frustums
 				}
 			}
 		}
@@ -454,8 +479,15 @@ void	CRender::rmNormal	()
 	CHK_DX				(HW.pDevice->SetViewport(&VP));
 }
 
+extern u32 g_r;
 void	CRender::Render		()
 {
+	if( m_bFirstFrameAfterReset )
+	{
+		m_bFirstFrameAfterReset = false;
+		return;
+	}
+	g_r											= 1;
 	Device.Statistic.RenderDUMP.Begin();
 
 	// Begin
@@ -464,7 +496,7 @@ void	CRender::Render		()
 	phase										= PHASE_NORMAL	;
 	r_dsgraph_render_hud						();				// hud
 	r_dsgraph_render_graph						(0);			// normal level
-	Details->Render								();				// grass / details
+	if(Details)Details->Render					();				// grass / details
 	r_dsgraph_render_lods						(true,false);	// lods - FB
 	g_pGamePersistent->Environment.RenderSky	();				// sky / sun
 	g_pGamePersistent->Environment.RenderClouds	();				// clouds
@@ -472,23 +504,26 @@ void	CRender::Render		()
 	o.vis_intersect								= TRUE			;
 	HOM.Disable									();
 	L_Dynamic->render							();				// addititional light sources
-	Wallmarks->Render							();				// wallmarks has priority as normal geometry
+	if(Wallmarks){
+		g_r										 = 0;
+		Wallmarks->Render						();				// wallmarks has priority as normal geometry
+	}
 	HOM.Enable									();
 	o.vis_intersect								= FALSE			;
 	phase										= PHASE_NORMAL	;
 	r_pmask										(true,true);	// enable priority "0" and "1"
-	L_Shadows->render							();				// ... and shadows
+	if(L_Shadows)L_Shadows->render							();				// ... and shadows
 	r_dsgraph_render_lods						(false,true);	// lods - FB
 	r_dsgraph_render_graph						(1);			// normal level, secondary priority
 	PortalTraverser.fade_render					();				// faded-portals
 	r_dsgraph_render_sorted						();				// strict-sorted geoms
-	L_Glows->Render								();				// glows
+	if(L_Glows)L_Glows->Render					();				// glows
 	g_pGamePersistent->Environment.RenderFlares	();				// lens-flares
 	g_pGamePersistent->Environment.RenderLast	();				// rain/thunder-bolts
 
 	// Postprocess, if necessary
-	Target->End						();
-	L_Projector->finalize			();
+	Target->End										();
+	if (L_Projector)L_Projector->finalize			();
 
 	// HUD
 	Device.Statistic.RenderDUMP.End	();
