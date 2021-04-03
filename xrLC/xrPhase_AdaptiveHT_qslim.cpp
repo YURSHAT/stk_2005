@@ -224,7 +224,7 @@ void CBuild::xrPhase_AdaptiveHT	()
 	}
 
 	// prepare model
-	MxStdModel* mdl			= new<MxStdModel>(g_vertices.size(),g_faces.size());
+	MxStdModel* mdl			= xr_new<MxStdModel>(g_vertices.size(),g_faces.size());
 
 	// transfer vertices
 	mdl->color_binding	(MX_PERVERTEX);
@@ -245,7 +245,7 @@ void CBuild::xrPhase_AdaptiveHT	()
 	}
 
 	// create and initialize qslim
-	MxPropSlim* slim		= new<MxPropSlim>(mdl);
+	MxPropSlim* slim		= xr_new<MxPropSlim>(mdl);
 	slim->boundary_weight	= 1000.f;
 	slim->compactness_ratio	= 0;
 	slim->meshing_penalty	= 1000.f;

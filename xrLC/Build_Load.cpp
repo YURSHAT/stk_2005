@@ -126,7 +126,7 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 	{
 		while (!F->eof())
 		{
-			mu_models.push_back				(new xrMU_Model());
+			mu_models.push_back				(xr_new<xrMU_Model>());
 			mu_models.back()->Load			(*F);
 		}
 		F->close				();
@@ -136,7 +136,7 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 	{
 		while (!F->eof())
 		{
-			mu_refs.push_back				(new xrMU_Reference());
+			mu_refs.push_back				(xr_new<xrMU_Reference>());
 			mu_refs.back()->Load			(*F);
 		}		
 		F->close				();
