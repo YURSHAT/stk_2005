@@ -70,7 +70,7 @@ files = ui_common, ui_old_textures, ui_ingame, ui_mp_icon_rank, ui_map_descripti
 
 [info_portions]
 ;список xml файлов, содержащих info_portions
-files = info_portions, info_portions_test, info_lchanger_ico, info_level_tips, info_l01escape, info_l02garbage, info_l03agroprom, info_l04agroprom_u, info_l05dark_valley, info_l06dark_valley_u, info_l07rostok, info_l08yantar, info_l08deadcity, info_l08rostok_bar, info_l09marshes, info_l09rostok_dolg, info_l10military, info_l11pripyat, info_l11yantar, info_l12yantar_u, info_l13deadcity, info_l14swamp, info_l10radar, info_l16radar_antena, info_l17monolith_control, info_l19stanciya, info_l12u_sarcofag, info_l21generators, info_l22warlab
+files = info_portions, info_portions_test, info_lchanger_ico, info_level_tips, info_known_objects, info_l01escape, info_l02garbage, info_l03agroprom, info_l04agroprom_u, info_l05dark_valley, info_l06dark_valley_u, info_l07rostok, info_l08yantar, info_l08deadcity, info_l08rostok_bar, info_l09marshes, info_l09rostok_dolg, info_l10military, info_l11pripyat, info_l11yantar, info_l12yantar_u, info_l13deadcity, info_l14swamp, info_l10radar, info_l16radar_antena, info_l17monolith_control, info_l19stanciya, info_l12u_sarcofag, info_l21generators, info_l22warlab
 
 [encyclopedia]
 files = encyclopedia_infos, storyline_info_to_diary, encyclopedia_weapons, encyclopedia_mutants, encyclopedia_zone, encyclopedia_vehicles, encyclopedia_social, encyclopedia_equipment
@@ -82,7 +82,7 @@ files = dialogs_test, dialogs, dialogs_escape, dialogs_garbage, dialogs_agroprom
 ;список xml файлов, содержащих профили сталкеров и торговцев
 files =  npc_profile
 ;список xml файлов, содержащих описания конкретных сталкеров и торговцев
-specific_characters_files = character_desc_general, character_desc_escape, character_desc_garbage, character_desc_agroprom, character_desc_darkvalley, character_desc_bar, character_desc_yantar, character_desc_military, character_desc_radar, character_desc_pripyat, character_desc_aes, character_desc_kishka, character_desc_sarcofag
+specific_characters_files = character_desc_general, character_desc_escape, character_desc_garbage, character_desc_agroprom, character_desc_darkvalley, character_desc_deadcity, character_desc_bar, character_desc_yantar, character_desc_military, character_desc_radar, character_desc_pripyat, character_desc_aes, character_desc_kishka, character_desc_sarcofag
 
 [artefacts_tasks]
 ;имя скриптовой функции, которая вызывается для создания
@@ -500,6 +500,15 @@ class                       = SCRPTOBJ										; AI class
 [maingame_ui]
 pda_msgs_max_show_time = 20000
 info_msgs_max_show_time = 10000
+snd_new_contact					= detectors\contact_1
+snd_new_contact1				= detectors\contact_2
+snd_new_contact2				= detectors\contact_3
+snd_new_contact3				= detectors\contact_4
+snd_new_contact4				= detectors\contact_5
+snd_new_contact5				= detectors\contact_6
+snd_new_contact6				= detectors\contact_7
+snd_new_contact7				= detectors\contact_8
+snd_new_contact8				= detectors\contact_9
 
 [attachable_item]
 GroupControlSection		= spawn_group

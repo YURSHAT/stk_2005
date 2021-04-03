@@ -292,6 +292,13 @@ states = {
 				animstate = "sleep",
 				animation = "sleeping"
 			},
+	sleep_sit = {	weapon = "strapped",
+				movement = move.stand,
+				mental = anim.free,
+				bodystate = move.standing,
+				animstate = "sit_ass",
+				animation = "sleep_sit"
+			},
 	eat_bread	= {	weapon = "strapped",
 				movement = move.stand,
 				mental = anim.free,
@@ -623,6 +630,15 @@ states = {
 				bodystate = move.standing,
 				animstate = "stand",
 				animation = "barman_talk"
+			},
+
+	--  Доктор в мертвом городе
+	doctor_wakeup = {weapon = "none",
+				movement = move.stand,
+				mental = anim.free,
+				bodystate = move.standing,
+				animstate = "stand",
+				animation = "doctor_wakeup"
 			}
 
 			
