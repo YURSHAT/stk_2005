@@ -112,12 +112,17 @@ void Phase			(const char *phase_name)
 	// Release focus
 	csLog.Leave			();
 	Msg("\n* New phase started: %s",phase_name);
+	csLog.Leave			();
 }
 
 HWND logWindow=0;
 void logThread(void *dummy)
 {
-	SetProcessPriorityBoost	(GetCurrentProcess(),TRUE);
+	#if (_MSC_VER >= 1500)
+		SetThreadPriorityBoost(GetCurrentThread(), TRUE);
+	#else
+		SetProcessPriorityBoost(GetCurrentProcess(), TRUE);
+	#endif
 
 	logWindow = CreateDialog(
 		HINSTANCE(GetModuleHandle(0)),
@@ -149,14 +154,15 @@ void logThread(void *dummy)
 	unsigned long		u_size	= sizeof(u_name)-1;
 	GetUserName	(u_name,&u_size);
 	_strlwr		(u_name);
-	if ((0==xr_strcmp(u_name,"oles"))||(0==xr_strcmp(u_name,"alexmx")))	bHighPriority	= TRUE;
+
+	if (strstr(GetCommandLine(), "-p") != NULL)	bHighPriority	= TRUE;
 
 	// Main cycle
 	u32		LogSize = 0;
 	float	PrSave	= 0;
 	while (TRUE)
 	{
-		SetPriorityClass	(GetCurrentProcess(),IDLE_PRIORITY_CLASS);	// bHighPriority?NORMAL_PRIORITY_CLASS:IDLE_PRIORITY_CLASS
+		SetPriorityClass	(GetCurrentProcess(),bHighPriority?NORMAL_PRIORITY_CLASS:IDLE_PRIORITY_CLASS);
 
 		// transfer data
 		while (!csLog.TryEnter())	{
@@ -168,18 +174,20 @@ void logThread(void *dummy)
 
 		BOOL bWasChanges = FALSE;
 		char tbuf		[256];
-		if (LogSize!=LogFile.size())
+		csLog.Enter		();
+		if (LogSize!=LogFile->size())
 		{
-			bWasChanges = TRUE;
-			for (; LogSize<LogFile.size(); LogSize++)
+			bWasChanges		= TRUE;
+			for (; LogSize<LogFile->size(); LogSize++)
 			{
-				const char *S = *LogFile[LogSize];
+				const char *S = *(*LogFile)[LogSize];
 				if (0==S)	S = "";
 				SendMessage	( hwLog, LB_ADDSTRING, 0, (LPARAM) S);
 			}
 			SendMessage		( hwLog, LB_SETTOPINDEX, LogSize-1, 0);
 			FlushLog		( );
 		}
+		csLog.Leave		();
 		if (_abs(PrSave-progress)>EPS_L) {
 			bWasChanges = TRUE;
 			PrSave = progress;
@@ -234,7 +242,9 @@ void __cdecl clMsg( const char *format, ...)
 	va_start	( mark, format );
 	vsprintf	( buf, format, mark );
 
-	char _out_	[4*256];
-	strconcat	(_out_,"    |    | ", buf );   
-	Log			(_out_);
+	csLog.Enter		();
+	string1024		_out_;
+	strconcat		(sizeof(_out_), _out_,"    |    | ", buf );   
+	Log				(_out_);
+	csLog.Leave		();
 }
