@@ -94,7 +94,7 @@ void CDetailManager::hw_Load	()
 	{
 		u16*			pI;
 		R_CHK			(hw_IB->Lock(0,0,(void**)(&pI),0));
-		for (u32 o=0; o<objects.size(); o++)
+		for (o=0; o<objects.size(); o++)
 		{
 			CDetail& D		=	*objects[o];
 			u16		offset	=	0;
