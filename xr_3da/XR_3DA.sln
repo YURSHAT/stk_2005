@@ -126,9 +126,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrSound", "xrSound\xrSound.
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DXT", "..\Editors\Tools\DXT\DXT.vcproj", "{EBF9B543-0830-4866-9B48-DC0740E87E8A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0F7D1FB-59A7-4717-A7E4-96F37E91998E} = {A0F7D1FB-59A7-4717-A7E4-96F37E91998E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ETools", "..\Editors\Tools\ETools\ETools.vcproj", "{65CBB9D0-FBC6-41A4-8316-F5E9B5D7FB33}"
 	ProjectSection(ProjectDependencies) = postProject
+		{F1836CE2-59EF-4189-8B9C-D103A511CB27} = {F1836CE2-59EF-4189-8B9C-D103A511CB27}
 		{A0F7D1FB-59A7-4717-A7E4-96F37E91998E} = {A0F7D1FB-59A7-4717-A7E4-96F37E91998E}
 	EndProjectSection
 EndProject
@@ -140,6 +144,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrLUA", "H:\src_25_10_05\xrLUA\xrLUA.vcproj", "{F496E4E3-22D5-4294-A0FB-A1EFDA7E2450}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xrProgressive", "..\xrProgressive\xrProgressive.vcproj", "{0F45FA55-BACD-4D7B-A809-24F0104F5E57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{B0714B49-FB9D-4094-801F-9C5492AA472B}"
 EndProject
 Global
 	GlobalSection(SourceCodeControl) = preSolution
@@ -166,10 +172,12 @@ Global
 		SccLocalPath4 = ..\\xrCompress
 		SccProvider4 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
 		SccProjectUniqueName5 = ..\\xrLC\\xrLC.vcproj
+		SccProjectTopLevelParentUniqueName5 = XR_3DA.sln
 		SccProjectName5 = \u0022$/xrLC\u0022,\u0020TLAAAAAA
 		SccLocalPath5 = ..\\xrLC
 		SccProvider5 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
 		SccProjectUniqueName6 = ..\\xrLC\\xrDO_Light\\xrDO_Light.vcproj
+		SccProjectTopLevelParentUniqueName6 = XR_3DA.sln
 		SccProjectName6 = \u0022$/xrLC/xrDO_Light\u0022,\u0020CHEAAAAA
 		SccLocalPath6 = ..\\xrLC\\xrDO_Light
 		SccProvider6 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
@@ -178,6 +186,7 @@ Global
 		SccLocalPath7 = ..\\xrAI
 		SccProvider7 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
 		SccProjectUniqueName8 = ..\\Editors\\Tools\\DXT\\DXT.vcproj
+		SccProjectTopLevelParentUniqueName8 = XR_3DA.sln
 		SccProjectName8 = \u0022$/Editors/Tools/DXT\u0022,\u0020DDFAAAAA
 		SccLocalPath8 = ..\\Editors\\Tools\\DXT
 		SccProvider8 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
@@ -408,6 +417,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B0714B49-FB9D-4094-801F-9C5492AA472B} = {4436B012-53D0-4949-B81B-60D7F06FD3ED}
+		{EBF9B543-0830-4866-9B48-DC0740E87E8A} = {B0714B49-FB9D-4094-801F-9C5492AA472B}
+		{A4ABD75E-825B-4D09-B3B2-2709682E40C8} = {B0714B49-FB9D-4094-801F-9C5492AA472B}
+		{B730F54D-1199-481A-AAD0-5DB684E067C0} = {B0714B49-FB9D-4094-801F-9C5492AA472B}
+		{67276AC3-3221-442E-9760-BA349C6880EA} = {B0714B49-FB9D-4094-801F-9C5492AA472B}
 	EndGlobalSection
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}

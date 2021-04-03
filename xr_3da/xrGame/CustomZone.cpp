@@ -906,9 +906,9 @@ void  CCustomZone::Hit(float P, Fvector &dir,
 {
 	Fmatrix M;
 	M.identity();
-	M.translate_over(position_in_object_space);
-	M.mulA(XFORM());
-	PlayBulletParticles(M.c);	
+	M.translate_over	(position_in_object_space);
+	M.mulA_43			(XFORM());
+	PlayBulletParticles	(M.c);	
 }
 
 void CCustomZone::StartBlowoutLight		()
@@ -1426,4 +1426,12 @@ void CCustomZone::GoEnabledState()
 		u_EventGen		(P,GE_ZONE_STATE_CHANGE,ID());
 		P.w_u8			(u8(eZoneStateIdle));
 		u_EventSend		(P);
+}
+
+BOOL CCustomZone::feel_touch_on_contact	(CObject *O)
+{
+	if ((spatial.type | STYPE_VISIBLEFORAI) != spatial.type)
+		return			(FALSE);
+
+	return				(inherited::feel_touch_on_contact(O));
 }

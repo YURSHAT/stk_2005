@@ -4,6 +4,7 @@
 	Version="9,00"
 	Name="xrDO_Light"
 	ProjectGUID="{B730F54D-1199-481A-AAD0-5DB684E067C0}"
+	RootNamespace="xrDO_Light"
 	SccProjectName="&quot;$/xrLC/xrDO_Light&quot;, CHEAAAAA"
 	SccLocalPath="."
 	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
@@ -50,6 +51,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="x:\xrCore"
 				PreprocessorDefinitions="WIN32,_DEBUG,_WINDOWS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -148,6 +150,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="x:\xrCore"
 				PreprocessorDefinitions="WIN32,NDEBUG,_WINDOWS"
 				StringPooling="true"
 				ExceptionHandling="0"
@@ -252,6 +255,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
 				EnableFiberSafeOptimizations="true"
+				AdditionalIncludeDirectories="x:\xrCore"
 				PreprocessorDefinitions="MIXED,WIN32,NDEBUG,_WINDOWS"
 				StringPooling="true"
 				RuntimeLibrary="2"

@@ -24,7 +24,6 @@ typedef u32																				_condition_type;
 typedef bool																			_value_type;
 typedef u16																				_edge_value_type;
 typedef u32																				_operator_id_type;
-
 typedef COperatorConditionAbstract<_condition_type,_value_type>							CCondition;
 typedef CConditionState<CCondition>														CState;
 typedef COperatorAbstract<CCondition,_edge_value_type>									COperator;
@@ -119,13 +118,11 @@ public:
 	}
 };
 
-
 void test_goap	()
 {
 	CGraphEngine						*graph_engine	= xr_new<CGraphEngine>(0);
 	xr_vector<_edge_type>				path;
 	u32 vertex_count					= 0;
-
 #ifdef SEED_TEST
 	u32	max_length						= 0;
 	u32 best_test						= 0;
@@ -265,7 +262,6 @@ void test_goap	()
 	{
 		CSProblemSolver						problem_solver;
 		CSProblemSolver::CState				start_condition;
-
 		FILE								*f = fopen("x:\\goap.dat","rt");
 		{
 			u32								count;

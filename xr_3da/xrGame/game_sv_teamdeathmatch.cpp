@@ -74,7 +74,7 @@ void	game_sv_TeamDeathmatch::AutoBalanceTeams()
 		///////// get lowest score player from MaxTeam
 		u32 LowestPlayer = 0;
 		s16 LowestScore = 32767;
-		for(u32 it=0; it<cnt; it++)	{
+		for(it=0; it<cnt; it++)	{
 			xrClientData *l_pC = (xrClientData*)	m_server->client_Get	(it);
 			game_PlayerState* ps	= l_pC->ps;
 			if (!l_pC->net_Ready) continue;
@@ -108,7 +108,7 @@ void game_sv_TeamDeathmatch::OnPlayerConnect	(ClientID id_who)
 
 	game_PlayerState*	ps_who	=	get_id	(id_who);
 	LPCSTR	options				=	get_name_id	(id_who);
-	ps_who->team				=	u8(get_option_i(options,"team",0));
+	ps_who->team				=	u8(get_option_i(options,"team",AutoTeam()));
 
 
 	if (ps_who->Skip) return;
