@@ -49,6 +49,7 @@ void Startup(LPSTR     lpCmdLine)
 	if (strstr(cmd,"-gi"))								b_radiosity		= TRUE;
 	if (strstr(cmd,"-noise"))							b_noise			= TRUE;
 	if (strstr(cmd,"-nosun"))							b_nosun			= TRUE;
+	if (strstr(cmd, "-skipinvalid"))					b_skipinvalid 	= TRUE;
 	
 	// Give a LOG-thread a chance to startup
 	//_set_sbh_threshold(1920);

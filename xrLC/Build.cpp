@@ -13,6 +13,8 @@ BOOL					b_R2		= FALSE;
 BOOL					b_noise		= FALSE;
 BOOL					b_radiosity	= FALSE;
 BOOL					b_nosun		= FALSE;
+BOOL					b_skipinvalid = FALSE;
+
 CThreadManager			mu_base;
 CThreadManager			mu_secondary;
 #define		MU_THREADS	4

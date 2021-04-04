@@ -115,7 +115,10 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 		if (dwInvalidFaces)	
 		{
 			err_save		();
-			Debug.fatal		("* FATAL: %d invalid faces. Compilation aborted",dwInvalidFaces);
+			if (!b_skipinvalid)
+				Debug.fatal		("* FATAL: %d invalid faces. Compilation aborted",dwInvalidFaces);
+			else
+				clMsg("* Total %d invalid faces. Do something.", dwInvalidFaces);
 		}
 	}
 
