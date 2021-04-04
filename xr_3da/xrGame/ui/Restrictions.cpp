@@ -121,7 +121,7 @@ void CRestrictions::AddRestriction4rank(int rank, LPCSTR lst){
 
 RESTR CRestrictions::GetRestr(LPCSTR item){
 	RESTR ret;
-	char* pos = strstr((char*)item,":");
+	char* pos = strstr((char*)item, ":");
 	R_ASSERT(pos);
 	pos[0]=0;
 

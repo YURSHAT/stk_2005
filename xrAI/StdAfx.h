@@ -29,6 +29,7 @@
 #include <sys/stat.h>
 #include <io.h>
 #include <stdio.h>
+#include <functional>
 
 #ifdef AI_COMPILER
 #	include "smart_cast.h"

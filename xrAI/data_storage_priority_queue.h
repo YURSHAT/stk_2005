@@ -33,15 +33,15 @@ struct CPriorityQueue {
 		template <typename _T> class _vertex = CEmptyClassTemplate,
 		template <typename _T1, typename _T2> class index_vertex = CEmptyClassTemplate2
 	>
-	class CDataStorage : public _data_storage::CDataStorage<PriorityQueue<_vertex>::_vertex> 
+	class CDataStorage : public _data_storage::template CDataStorage<PriorityQueue<_vertex>::_vertex>
 	{
 	public:
-		typedef typename _data_storage::CDataStorage<PriorityQueue<_vertex>::_vertex> inherited;
+		typedef typename _data_storage::template CDataStorage<PriorityQueue<_vertex>::_vertex> inherited;
 		typedef typename inherited::CGraphVertex		CGraphVertex;
 		typedef typename inherited::CGraphIndexVertex	CGraphIndexVertex;
 		typedef typename CGraphVertex::_dist_type		_dist_type;
 		typedef typename CGraphVertex::_index_type		_index_type;
-		typedef typename PriorityQueue<_vertex>::_vertex<CGraphVertex>::_priority_queue	_priority_queue;
+		typedef typename PriorityQueue<_vertex>::template _vertex<CGraphVertex>::_priority_queue	_priority_queue;
 
 	protected:
 		_priority_queue			m_priority_queue;

@@ -155,7 +155,7 @@ void CInput::KeyUpdate	( )
 		if ( KBState[key])	cbStack.back()->IR_OnKeyboardPress	( key );
 		if (!KBState[key])	cbStack.back()->IR_OnKeyboardRelease	( key );
 	}
-	for (u32 i = 0; i < COUNT_KB_BUTTONS; i++ )
+	for ( i = 0; i < COUNT_KB_BUTTONS; i++ )
 		if (KBState[i]) cbStack.back()->IR_OnKeyboardHold( i );
 }
 

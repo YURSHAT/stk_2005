@@ -852,7 +852,7 @@ void	game_sv_mp::OnPlayerChangeName		(NET_Packet& P, ClientID sender)
 			strcpy(tmpName, pClient->Name.c_str());
 			*(strstr(tmpName, "name=")+5) = 0;
 			sprintf(tmpName, "%s%s", tmpName, NewName);
-			char* ptmp = (char*)strstr(strstr(pClient->Name.c_str(), "name="), "/");
+			const char* ptmp = strstr(strstr(pClient->Name.c_str(), "name="), "/");
 			if (ptmp)
 				sprintf(tmpName, "%s%s", tmpName, ptmp);
 			pClient->Name._set(tmpName);

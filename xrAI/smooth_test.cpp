@@ -684,18 +684,18 @@ void test_smooth_path(LPCSTR name)
 //	SetThreadPriority			(GetCurrentThread(),THREAD_PRIORITY_TIME_CRITICAL);
 	Sleep						(1);
 	
-	s							= CPU::GetCycleCount();
+	s							= CPU::GetCLK();
 	for (int i=0; i<TEST_COUNT; ++i) {
 		build_detail_path		(*level_graph,start,dest,start_set,dest_set,m_tpaNodes);
 	}
-	f							= CPU::GetCycleCount();
+	f							= CPU::GetCLK();
 	
 	SetThreadPriority			(GetCurrentThread(),THREAD_PRIORITY_NORMAL);
 	SetPriorityClass			(GetCurrentProcess(),NORMAL_PRIORITY_CLASS);
 
 	PRINT_TIMERS;
 
-	Msg							("Total time %f (%d tests : %f)",CPU::cycles2seconds*float(f - s),TEST_COUNT,CPU::cycles2microsec*float(f - s)/float(TEST_COUNT));
+	Msg							("Total time %f (%d tests : %f)",CPU::clk_to_seconds*float(f - s),TEST_COUNT,CPU::clk_to_microsec*float(f - s)/float(TEST_COUNT));
 
 	xr_delete					(level_graph);
 	xr_delete					(graph_engine);

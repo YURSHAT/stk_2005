@@ -71,7 +71,7 @@ bool  CPhraseScript::CheckInfo		(const CInventoryOwner* pOwner) const
 		}
 	}
 
-	for(u32 i=0; i<m_DontHasInfo.size(); i++) {
+	for(i=0; i<m_DontHasInfo.size(); i++) {
 /*		INFO_INDEX	result = CInfoPortion::IdToIndex(m_DontHasInfo[i],NO_INFO_INDEX,true);
 		if (result == NO_INFO_INDEX) {
 			ai().script_engine().script_log(eLuaMessageTypeError,"XML item not found : \"%s\"",*m_DontHasInfo[i]);
@@ -97,7 +97,7 @@ void  CPhraseScript::TransferInfo	(const CInventoryOwner* pOwner) const
 	for(u32 i=0; i<m_GiveInfo.size(); i++)
 		pOwner->TransferInfo(m_GiveInfo[i], true);
 
-	for(u32 i=0; i<m_DisableInfo.size(); i++)
+	for(i=0; i<m_DisableInfo.size(); i++)
 		pOwner->TransferInfo(m_DisableInfo[i],false);
 }
 
