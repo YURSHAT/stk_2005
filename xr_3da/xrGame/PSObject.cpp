@@ -7,8 +7,10 @@
 #include "PSObject.h"
 #include "../render.h"
 
-CPSObject::CPSObject	(LPCSTR ps_name, IRender_Sector* S, BOOL bAutoRemove)
+CPSObject::CPSObject(LPCSTR ps_name, IRender_Sector* S, BOOL bAutoRemove, bool destroy_on_game_load) :
+	inherited(destroy_on_game_load)
 {
+
 	m_bAutoRemove		= bAutoRemove;
 
 	// create visual

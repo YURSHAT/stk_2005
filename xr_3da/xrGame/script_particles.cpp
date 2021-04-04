@@ -10,7 +10,7 @@
 #include "script_particles.h"
 #include "../objectanimator.h"
 
-CScriptParticlesCustom::CScriptParticlesCustom(LPCSTR caParticlesName):CParticlesObject(caParticlesName,FALSE)
+CScriptParticlesCustom::CScriptParticlesCustom(LPCSTR caParticlesName) :CParticlesObject(caParticlesName, FALSE, true)
 {
 	m_animator					= 0;
 }

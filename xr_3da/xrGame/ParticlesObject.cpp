@@ -12,7 +12,8 @@
 
 const Fvector zero_vel		= {0.f,0.f,0.f};
 
-CParticlesObject::CParticlesObject	(LPCSTR p_name, BOOL bAutoRemove)
+CParticlesObject::CParticlesObject	(LPCSTR p_name, BOOL bAutoRemove, bool destroy_on_game_load) :
+	inherited				(destroy_on_game_load)
 {
 	Init					(p_name,0,bAutoRemove);
 }
@@ -138,7 +139,7 @@ void CParticlesObject::shedule_Update	(u32 _dt)
 	if (m_bDead)					return;
 	u32 dt							= Device.dwTimeGlobal - dwLastTime;
 	if (dt)							{
-		if (psDeviceFlags.test(mtParticles))	{
+		if (0){//.psDeviceFlags.test(mtParticles))	{    //. AlexMX comment this line// NO UNCOMMENT - DON'T WORK PROPERLY
 			mt_dt					= dt;
 			fastdelegate::FastDelegate0<>		delegate	(this,&CParticlesObject::PerformAllTheWork_mt);
 			Device.seqParallel.push_back		(delegate);

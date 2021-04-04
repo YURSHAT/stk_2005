@@ -9,7 +9,7 @@ class CPSObject			: public CPS_Instance
 public:
 	// PS::SEmitter		m_Emitter;
 public:
-						CPSObject			(LPCSTR ps_name, IRender_Sector* S=0, BOOL bAutoRemove=true);
+						CPSObject			(LPCSTR ps_name, IRender_Sector* S=0, BOOL bAutoRemove=true, bool destroy_on_game_load = true);
 	virtual				~CPSObject			();
 
 	virtual float		shedule_Scale		()	{ return 1; }

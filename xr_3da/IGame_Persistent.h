@@ -51,6 +51,8 @@ public:
 	xr_vector<CPS_Instance*>		ps_destroy;
 	xr_vector<CPS_Instance*>		ps_needtoplay;
 public:
+			void					destroy_particles	(const bool &all_particles);
+
 	virtual void					Start				(LPCSTR op);
 	virtual void					Disconnect			();
 

@@ -403,7 +403,7 @@ void CBaseMonster::set_action(EAction action)
 
 void CBaseMonster::PlayParticles(const shared_str& name, const Fvector &position, const Fvector &dir, BOOL auto_remove)
 {
-	CParticlesObject* ps = xr_new<CParticlesObject>(name.c_str(),auto_remove);
+	CParticlesObject* ps = xr_new<CParticlesObject>(name.c_str(),auto_remove,true);
 	
 	// вычислить позицию и направленность партикла
 	Fmatrix	matrix; 

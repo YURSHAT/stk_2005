@@ -20,7 +20,7 @@ protected:
 protected:
 	virtual				~CParticlesObject	();
 public:
-						CParticlesObject	(LPCSTR p_name, BOOL bAutoRemove);
+						CParticlesObject	(LPCSTR p_name, BOOL bAutoRemove, bool destroy_on_game_load);
 
 	virtual float		shedule_Scale		()	{ return Device.vCameraPosition.distance_to(Position())/200.f; }
 	virtual void		shedule_Update		(u32 dt);
@@ -45,9 +45,9 @@ public:
 
 	const shared_str			Name		();
 public:
-	static CParticlesObject*	Create		(LPCSTR p_name, BOOL bAutoRemove=TRUE)
+	static CParticlesObject*	Create		(LPCSTR p_name, BOOL bAutoRemove=TRUE, bool remove_on_game_load = true)
 	{
-		return xr_new<CParticlesObject>(p_name, bAutoRemove);
+		return xr_new<CParticlesObject>(p_name, bAutoRemove, remove_on_game_load);
 	}
 	static void					Destroy		(CParticlesObject*& p)
 	{

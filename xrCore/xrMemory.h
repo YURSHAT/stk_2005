@@ -91,7 +91,6 @@ extern XRCORE_API	xrMemory	Memory;
 
 XRCORE_API	char* 	xr_strdup	(const char* string);
 
-/*
 #ifdef DEBUG
 // Global new/delete override
 #	if !(defined(__BORLANDC__) || defined(NO_XRNEW))
@@ -108,7 +107,6 @@ XRCORE_API	char* 	xr_strdup	(const char* string);
 	IC void		operator delete[]	(void* p)			{	xr_free(p);											}
 #	endif
 #endif
-*/
 
 // POOL-ing
 const		u32			mem_pools_count			=	65;

@@ -73,15 +73,48 @@ void IGame_Persistent::Disconnect	()
 {
 #ifndef _EDITOR
 	// clear "need to play" particles
-	ps_needtoplay.clear				();
-	// delete destroyed particles
-	for (xr_vector<CPS_Instance*>::iterator d_it=ps_destroy.begin(); d_it!=ps_destroy.end(); d_it++)
-		(*d_it)->PSI_internal_delete();
-	ps_destroy.clear				();
+	destroy_particles(true);
+#endif
+}
+
+void IGame_Persistent::destroy_particles(const bool &all_particles)
+{
+#ifndef _EDITOR
+	ps_needtoplay.clear();
+
+	while (ps_destroy.size())
+	{
+		CPS_Instance*	psi = ps_destroy.back();
+		VERIFY(psi);
+		VERIFY(!psi->Locked());
+		ps_destroy.pop_back();
+		psi->PSI_internal_delete();
+	}
+
 	// delete active particles
-	while (!ps_active.empty())
-		(*ps_active.begin())->PSI_internal_delete();
-	VERIFY(ps_needtoplay.empty()&&ps_destroy.empty()&&ps_active.empty());
+	if (all_particles) {
+		for (; !ps_active.empty();)
+			(*ps_active.begin())->PSI_internal_delete();
+
+	}
+	else {
+		u32								active_size = ps_active.size();
+		CPS_Instance					**I = (CPS_Instance**)_alloca(active_size*sizeof(CPS_Instance*));
+		std::copy(ps_active.begin(), ps_active.end(), I);
+
+		struct destroy_on_game_load {
+			static IC bool predicate(CPS_Instance*const& object)
+			{
+				return					(!object->destroy_on_game_load());
+			}
+		};
+
+		CPS_Instance					**E = std::remove_if(I, I + active_size, &destroy_on_game_load::predicate);
+		for (; I != E; ++I)
+			(*I)->PSI_internal_delete();
+	}
+
+	VERIFY(ps_needtoplay.empty() && ps_destroy.empty() && (!all_particles || ps_active.empty()));
 #endif
 }
 
@@ -139,7 +172,7 @@ void IGame_Persistent::OnFrame		()
 		CPS_Instance*	psi		= ps_destroy.back	();
 		if (psi->Locked())		break;
 		ps_destroy.pop_back		();
-		psi->PSI_internal_delete();
+		//psi->PSI_internal_delete();
 	}
 #endif
 }
