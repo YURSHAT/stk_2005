@@ -81,8 +81,8 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		Debug._initialize	();
 
 		rtc_initialize		();
-		xr_FS				= new CLocatorAPI();
-		xr_EFS				= new EFS_Utils();
+		xr_FS				= xr_new<CLocatorAPI>	();
+		xr_EFS				= xr_new<EFS_Utils>		();
 	}
 	if (init_fs){
 		u32 flags			= 0;

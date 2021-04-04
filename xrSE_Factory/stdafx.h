@@ -9,6 +9,7 @@
 #pragma once
 
 #include <xrCore.h>
+#include <functional>
 
 #define WIN32_LEAN_AND_MEAN
 

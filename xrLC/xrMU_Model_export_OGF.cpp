@@ -10,7 +10,7 @@ void xrMU_Reference::export_ogf()
 	{
 		for (xrMU_Model::v_subdivs_it it=model->m_subdivs.begin(); it!=model->m_subdivs.end(); it++)
 		{
-			OGF_Reference*	pOGF	= new OGF_Reference();
+			OGF_Reference*	pOGF	= xr_new<OGF_Reference> ();
 			b_material*		M		= &(pBuild->materials[it->material]);	// and it's material
 			R_ASSERT		(M);
 
@@ -46,7 +46,7 @@ void xrMU_Reference::export_ogf()
 	{
 		// Create Node and fill it with information
 		b_lod&		LOD		= pBuild->lods	[model->m_lod_ID];
-		OGF_LOD*	pNode	= new OGF_LOD(1,sector);
+		OGF_LOD*	pNode	= xr_new<OGF_LOD> (1,sector);
 		pNode->lod_Material	= LOD.dwMaterial;
 		for (int lf=0; lf<8; lf++)
 		{

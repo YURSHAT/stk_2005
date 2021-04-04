@@ -47,8 +47,7 @@ void*  FileDownload(LPCSTR fn, u32* pdwSize)
 		,"FILE in memory"
 #endif
 		);
-	int r_bytes	= _read	(hFile,buf,size);
-	R_ASSERT3(r_bytes==(int)size,"Can't read file data:",fn);
+	_read	(hFile,buf,size);
 	_close	(hFile);
 	if (pdwSize) *pdwSize = size;
 	return buf;
@@ -56,7 +55,7 @@ void*  FileDownload(LPCSTR fn, u32* pdwSize)
 
 typedef char MARK[9];
 IC void mk_mark(MARK& M, const char* S)
-{	strncpy_s(M,sizeof(M),S,8); }
+{	strncpy(M,S,8); }
 
 void  FileCompress	(const char *fn, const char* sign, void* data, u32 size)
 {
@@ -201,9 +200,9 @@ IReader*	IReader::open_chunk(u32 ID)
 			BYTE*		dest;
 			unsigned	dest_sz;
 			_decompressLZ(&dest,&dest_sz,pointer(),dwSize);
-			return new CTempReader(dest,		dest_sz,		tell()+dwSize);
+			return xr_new<CTempReader>	(dest,		dest_sz,		tell()+dwSize);
 		} else {
-			return new IReader(pointer(),	dwSize,			tell()+dwSize);
+			return xr_new<IReader>		(pointer(),	dwSize,			tell()+dwSize);
 		}
 	} else return 0;
 };
@@ -231,10 +230,10 @@ IReader*	IReader::open_chunk_iterator	(u32& ID, IReader* _prev)
 		u8*				dest	;
 		unsigned		dest_sz	;
 		_decompressLZ	(&dest,&dest_sz,pointer(),_size);
-		return new CTempReader(dest,		dest_sz,	tell()+_size);
+		return xr_new<CTempReader>	(dest,		dest_sz,	tell()+_size);
 	} else {
 		// normal
-		return new IReader(pointer(),	_size,		tell()+_size);
+		return xr_new<IReader>		(pointer(),	_size,		tell()+_size);
 	}
 }
 
@@ -261,10 +260,8 @@ IC u32	IReader::advance_term_string()
 	while (!eof()) {
         Pos++;
         sz++;
-		if (!eof()&&is_term(src[Pos])) 
-		{
-        	while(!eof() && is_term(src[Pos])) 
-				Pos++;
+		if (!eof()&&is_term(src[Pos])) {
+        	while(!eof()&&is_term(src[Pos])) Pos++;
 			break;
 		}
 	}

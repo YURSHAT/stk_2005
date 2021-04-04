@@ -98,7 +98,7 @@ void CBuild::BuildRapid		(BOOL bSaveForOtherCompilers)
 
 	// "Building tree..
 	Status					("Building search tree...");
-	RCAST_Model				= new CDB::MODEL();
+	RCAST_Model				= xr_new<CDB::MODEL> ();
 	RCAST_Model->build		(CL.getV(),(int)CL.getVS(),CL.getT(),(int)CL.getTS());
 
 	extern void SaveAsSMF			(LPCSTR fname, CDB::CollectorPacked& CL);

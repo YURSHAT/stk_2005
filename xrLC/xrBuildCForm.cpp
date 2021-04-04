@@ -68,8 +68,8 @@ void CBuild::BuildCForm	()
 {
 	// Collecting data
 	Phase		("CFORM: creating...");
-	vecFace*	cfFaces		= new vecFace();
-	vecVertex*	cfVertices	= new vecVertex();
+	vecFace*	cfFaces		= xr_new<vecFace>	();
+	vecVertex*	cfVertices	= xr_new<vecVertex>	();
 	{
 		xr_vector<bool>			cfVertexMarks;
 		cfVertexMarks.assign	(g_vertices.size(),false);
