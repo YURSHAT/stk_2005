@@ -423,18 +423,18 @@ bool nv::ImageIO::saveTGA(Stream & s, const Image * img)
 	if(img->format() == Image::Format_ARGB) {
 		for(uint i = 0; i < n; i++) {
 			Color32 color = img->pixel(i);
-			tga.mem[4 * i + 0] = color.b;
+			tga.mem[4 * i + 0] = color.r;
 			tga.mem[4 * i + 1] = color.g;
-			tga.mem[4 * i + 2] = color.r;
+			tga.mem[4 * i + 2] = color.b;
 			tga.mem[4 * i + 3] = color.a;
 		}
 	}
 	else {
 		for(uint i = 0; i < n; i++) {
 			Color32 color = img->pixel(i);
-			tga.mem[3 * i + 0] = color.b;
+			tga.mem[3 * i + 0] = color.r;
 			tga.mem[3 * i + 1] = color.g;
-			tga.mem[3 * i + 2] = color.r;
+			tga.mem[3 * i + 2] = color.b;
 		}
 	}
 
