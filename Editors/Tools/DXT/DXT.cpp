@@ -296,7 +296,7 @@ int DXTCompressImage(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch, STe
 		
         for (u32 k = 0; k < w*2*h; k++, pixel += 4)
         {
-            pixels[k].set(pixel[2], pixel[1], pixel[0], pixel[3]);
+            pixels[k].set(pixel[0], pixel[1], pixel[2], pixel[3]);
         }
 		
         inOpt.setMipmapData(pixels, w, h);
@@ -314,7 +314,7 @@ int DXTCompressImage(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch, STe
 		Msg("DXTCompressImage: Alternative Stage: RGBAImage");
 		
         for (u32 k = 0; k<w*h; k++, pixel += 4)
-            pixels[k].set(pixel[2], pixel[1], pixel[0], pixel[3]);
+            pixels[k].set(pixel[0], pixel[1], pixel[2], pixel[3]);
 		
         inOpt.setMipmapData(pixels, w, h);
         result = nvtt::Compressor().process(inOpt, compOpt, outOpt);

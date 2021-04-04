@@ -328,7 +328,7 @@ Image * nv::ImageIO::loadTGA(Stream & s)
 		for( int y = 0; y < tga.height; y++ ) {
 			for( int x = 0; x < tga.width; x++ ) {
 				uint8 idx = *src++;
-				dst[x].setBGRA(palette[3*idx+0], palette[3*idx+1], palette[3*idx+2], 0xFF);
+				dst[x].setRGBA(palette[3*idx+0], palette[3*idx+1], palette[3*idx+2], 0xFF);
 			}
 			dst += lstep;
 		}
@@ -338,7 +338,7 @@ Image * nv::ImageIO::loadTGA(Stream & s)
 		
 		for( int y = 0; y < tga.height; y++ ) {
 			for( int x = 0; x < tga.width; x++ ) {
-				dst[x].setBGRA(*src, *src, *src, *src);
+				dst[x].setRGBA(*src, *src, *src, *src);
 				src++;
 			}
 			dst += lstep;
@@ -353,7 +353,7 @@ Image * nv::ImageIO::loadTGA(Stream & s)
 					uint8 b = (c.b << 3) | (c.b >> 2);					
 					uint8 g = (c.g << 3) | (c.g >> 2);
 					uint8 r = (c.r << 3) | (c.r >> 2);
-					dst[x].setBGRA(b, g, r, 0xFF);
+					dst[x].setRGBA(r, g, b, 0xFF);
 					src += 2;
 				}
 				dst += lstep;
@@ -362,7 +362,7 @@ Image * nv::ImageIO::loadTGA(Stream & s)
 		else if( tga.pixel_size == 24 ) {
 			for( int y = 0; y < tga.height; y++ ) {
 				for( int x = 0; x < tga.width; x++ ) {
-					dst[x].setBGRA(src[0], src[1], src[2], 0xFF);
+					dst[x].setRGBA(src[0], src[1], src[2], 0xFF);
 					src += 3;
 				}
 				dst += lstep;
@@ -373,7 +373,7 @@ Image * nv::ImageIO::loadTGA(Stream & s)
 			
 			for( int y = 0; y < tga.height; y++ ) {
 				for( int x = 0; x < tga.width; x++ ) {
-					dst[x].setBGRA(src[0], src[1], src[2], src[3]);
+					dst[x].setRGBA(src[0], src[1], src[2], src[3]);
 					src += 4;
 				}
 				dst += lstep;
