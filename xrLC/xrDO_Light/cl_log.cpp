@@ -175,12 +175,12 @@ void logThread(void *dummy)
 		BOOL bWasChanges = FALSE;
 		char tbuf		[256];
 		csLog.Enter		();
-		if (LogSize!=LogFile->size())
+		if (LogSize!=LogFile.size())
 		{
 			bWasChanges		= TRUE;
-			for (; LogSize<LogFile->size(); LogSize++)
+			for (; LogSize<LogFile.size(); LogSize++)
 			{
-				const char *S = *(*LogFile)[LogSize];
+				const char *S = *LogFile[LogSize];
 				if (0==S)	S = "";
 				SendMessage	( hwLog, LB_ADDSTRING, 0, (LPARAM) S);
 			}
@@ -244,7 +244,7 @@ void __cdecl clMsg( const char *format, ...)
 
 	csLog.Enter		();
 	string1024		_out_;
-	strconcat		(sizeof(_out_), _out_,"    |    | ", buf );   
+	strconcat(_out_, "    |    | ", buf);
 	Log				(_out_);
 	csLog.Leave		();
 }

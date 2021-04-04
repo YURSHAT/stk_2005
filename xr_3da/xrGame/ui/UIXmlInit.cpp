@@ -1153,7 +1153,7 @@ void CUIXmlInit::InitColorDefs()
 		b		= uiXml.ReadAttribInt("color", i, "b", 0);
 		a		= uiXml.ReadAttribInt("color", i, "a", 255);
 		
-		m_pColorDefs->push_back(std::make_pair<shared_str, u32>(name, (a<<24) | (r<<16) | (g<<8) | b));
+		m_pColorDefs->push_back(std::make_pair<shared_str, u32>(std::move(name), (a << 24) | (r << 16) | (g << 8) | b));
 	}
 }
 

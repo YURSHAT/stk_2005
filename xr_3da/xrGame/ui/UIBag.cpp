@@ -631,7 +631,7 @@ void CUIBag::InitWpnSectStorage()
 			if (armorSectionIndex == i)
 			{
 				iconName	= pSettings->r_string(m_StrSectionName, wpnSingleName);
-				m_ConformityTable.push_back(std::make_pair<shared_str, shared_str>(wpnSingleName, iconName));
+				m_ConformityTable.push_back(std::make_pair<shared_str, shared_str>(wpnSingleName, std::move(iconName)));
 			}
 		}
 
