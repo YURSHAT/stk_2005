@@ -167,6 +167,7 @@
       <ImportLibrary>$(OutDir)xrCore.lib</ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
       <AdditionalLibraryDirectories>X:\External Library\dxsdk_feb2005\Lib\x86</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">

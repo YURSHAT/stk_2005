@@ -2,6 +2,8 @@
 #include "net_client.h"
 #include "net_messages.h"
 
+#define BASE_PORT		5445
+
 void	dump_URL	(LPCSTR p, IDirectPlay8Address* A)
 {
 	string256	aaaa;
@@ -152,7 +154,7 @@ BOOL IPureClient::Connect	(LPCSTR options)
 	}
 
 	
-	int				psNET_Port	= 5445;
+	int				psNET_Port = BASE_PORT;
 	if (strstr(options, "port="))
 	{
 		string64	portstr;
@@ -236,7 +238,12 @@ BOOL IPureClient::Connect	(LPCSTR options)
 			dpAppDesc.pwszPassword	=	SessionPasswordUNICODE;
 		};
 
-		HRESULT res = NET->Connect(
+		u32 c_port = psNET_Port + 1;
+		HRESULT res = S_FALSE;
+		while (res != S_OK && c_port <= BASE_PORT + 100)
+		{
+			R_CHK(net_Address_device->AddComponent(DPNA_KEY_PORT, &c_port, sizeof(c_port), DPNA_DATATYPE_DWORD));
+			res = NET->Connect(
 			&dpAppDesc,				// pdnAppDesc
 			net_Address_server,		// pHostAddr
 			net_Address_device,		// pDeviceInfo
@@ -246,6 +253,15 @@ BOOL IPureClient::Connect	(LPCSTR options)
 			NULL,					// pvAsyncContext
 			NULL,					// pvAsyncHandle
 			DPNCONNECT_SYNC);		// dwFlags
+			if (res != S_OK)
+			{
+				//			xr_string res = Debug.error2string(HostSuccess);
+#ifdef DEBUG
+				Msg("IPureClient : port %d is BUSY!", c_port);
+#endif
+				c_port++;
+			};
+		};
 
 //		R_CHK(res);
 		if (res != S_OK) return FALSE;
@@ -276,7 +292,13 @@ BOOL IPureClient::Connect	(LPCSTR options)
 		strcat	(EnumData, "ToConnect");
 		DWORD	EnumSize = xr_strlen(EnumData) + 1;
 		// We now have the host address so lets enum
-		R_CHK(NET->EnumHosts(
+		u32 c_port = BASE_PORT;
+		HRESULT res = S_FALSE;
+		while (res != S_OK && c_port <= BASE_PORT + 100)
+		{
+			R_CHK(net_Address_device->AddComponent(DPNA_KEY_PORT, &c_port, sizeof(c_port), DPNA_DATATYPE_DWORD));
+
+			res = NET->EnumHosts(
 			&dpAppDesc,				// pApplicationDesc
 			net_Address_server,		// pdpaddrHost
 			net_Address_device,		// pdpaddrDeviceInfo
@@ -286,9 +308,19 @@ BOOL IPureClient::Connect	(LPCSTR options)
 			1500,					// dwTimeOut
 			NULL,					// pvUserContext
 			NULL,					// pAsyncHandle
-			DPNENUMHOSTS_SYNC)		// dwFlags
+			DPNENUMHOSTS_SYNC		// dwFlags
 			);
-		
+			if (res != S_OK)
+			{
+				//			xr_string res = Debug.error2string(HostSuccess);
+#ifdef DEBUG
+				Msg("! IPureClient : port %d is BUSY!", c_port);
+#endif
+				c_port++;
+			};
+
+		};
+
 		// ****** Connection
 		IDirectPlay8Address*        pHostAddress = NULL;
 		if (net_Hosts.empty())		return FALSE;
@@ -308,7 +340,7 @@ BOOL IPureClient::Connect	(LPCSTR options)
 		
 		R_CHK(net_Hosts.front().pHostAddress->Duplicate(&pHostAddress ) );
 		// dump_URL		("! c2s ",	pHostAddress);
-		HRESULT res = NET->Connect(
+		res = NET->Connect(
 			&dpAppDesc,				// pdnAppDesc
 			pHostAddress,			// pHostAddr
 			net_Address_device,		// pDeviceInfo
@@ -551,26 +583,28 @@ void	IPureClient::Send(NET_Packet& P, u32 dwFlags, u32 dwTimeout)
 
 	// first - compress message and setup buffer
 	NET_Buffer	Compressed;
-	Compressed.count	= net_Compressor.Compress	(Compressed.data,P.B.data,P.B.count);
+	Compressed.count = net_Compressor.Compress(Compressed.data, P.B.data, P.B.count);
 
 	net_Statistic.dwBytesSended += Compressed.count;
 	// send it
 	DPN_BUFFER_DESC		desc;
-	desc.dwBufferSize	= Compressed.count;
-	desc.pBufferData	= Compressed.data;
-	
-	// verify
-	VERIFY				(desc.dwBufferSize);
-	VERIFY				(desc.pBufferData);
+	desc.dwBufferSize = Compressed.count;
+	desc.pBufferData = Compressed.data;
 
-    DPNHANDLE	hAsync=0;
-	VERIFY		(NET);
-	R_CHK(NET->Send(
-		&desc,1,
+	// verify
+	VERIFY(desc.dwBufferSize);
+	VERIFY(desc.pBufferData);
+
+	DPNHANDLE	hAsync = 0;
+	HRESULT		hr_ = NET->Send(
+		&desc, 1,
 		dwTimeout,
-		0,&hAsync,
-		dwFlags
-		));
+		0, &hAsync,
+		dwFlags | DPNSEND_COALESCE
+		);
+	if (FAILED(hr_))	{
+		Msg("! ERROR: Failed to send net-packet, reason: %s", ::Debug.error2string(hr_));
+	}
 }
 
 BOOL	IPureClient::net_HasBandwidth	()
