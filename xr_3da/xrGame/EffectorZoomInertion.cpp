@@ -12,7 +12,7 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CEffectorZoomInertion::CEffectorZoomInertion	() : CCameraEffector(eCEZoom,100000.f)
+CEffectorZoomInertion::CEffectorZoomInertion	() : CCameraEffector(eCEZoom,100000.f,TRUE)
 {
 	Load();
 	SetRndSeed		(Device.TimerAsyncMM());

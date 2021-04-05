@@ -25,6 +25,18 @@ class CActorEffector
 	float					fFov;
 	float					fFar;
 	float					fAspect;
+
+	Fmatrix					unaffected_mView;
+	Fvector					unaffected_vPosition;
+	Fvector					unaffected_vDirection;
+	Fvector					unaffected_vNormal;
+	Fvector					unaffected_vRight;
+
+	Fvector					affected_vPosition;
+	Fvector					affected_vDirection;
+	Fvector					affected_vNormal;
+	Fvector					affected_vRight;
+
 public:
 							CActorEffector		();
 	virtual					~CActorEffector		();
@@ -34,9 +46,9 @@ public:
 	CCameraEffector*		GetEffector			(ECameraEffectorType type);
 	void					RemoveEffector		(ECameraEffectorType type);
 
-	IC void					camera_Matrix		(Fmatrix& M)
+	IC void					affected_Matrix		(Fmatrix& M)
 	{			
-		M.set(vRight,vNormal,vDirection,vPosition);	
+		M.set(affected_vRight,affected_vNormal,affected_vDirection,affected_vPosition);	
 	}
 	
 	void					Update				(const Fvector& P, const Fvector& D, const Fvector& N, float fFOV_Dest, float fASPECT_Dest, float fFAR_Dest, u32 flags=0);
@@ -70,7 +82,7 @@ protected:
 	virtual bool		Unlimited				() const		{return false;}
 	CObjectAnimator*							m_objectAnimator;
 public:
-						CAnimatorCamEffector	(ECameraEffectorType type);
+						CAnimatorCamEffector	(ECameraEffectorType type, BOOL affected);
 	virtual				~CAnimatorCamEffector	();
 			void		Start					(LPCSTR fn);
 	virtual	BOOL		Process					(Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect);
@@ -87,7 +99,7 @@ protected:
 	virtual bool		Unlimited					() const		{return false;}
 	
 public:
-						CAnimatorCamLerpEffector	(ECameraEffectorType type, GET_KOEFF_FUNC f);
+						CAnimatorCamLerpEffector	(ECameraEffectorType type, BOOL affected, GET_KOEFF_FUNC f);
 	virtual	BOOL		Process						(Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect);
 };
 

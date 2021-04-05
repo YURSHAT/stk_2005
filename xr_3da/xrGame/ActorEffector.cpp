@@ -84,6 +84,19 @@ void CActorEffector::Update(const Fvector& P, const Fvector& D, const Fvector& N
 	vRight.crossproduct		(vNormal,vDirection);
 	vNormal.crossproduct	(vDirection,vRight);
 
+	// Save affected matrix and vectors
+	affected_vPosition.set				(vPosition);
+	affected_vDirection.set				(vDirection);
+	affected_vNormal.set				(vNormal);
+	affected_vRight.crossproduct		(vNormal,vDirection);
+
+	// Save un-affected matrix and vectors
+	unaffected_mView.build_camera_dir	(vPosition,vDirection,vNormal);
+	unaffected_vPosition.set			(vPosition);
+	unaffected_vDirection.set			(vDirection);
+	unaffected_vNormal.set				(vNormal);
+	unaffected_vRight.crossproduct		(vNormal,vDirection);
+
 	float aspect				= Device.fHeight_2/Device.fWidth_2;
 	float src					= 10*Device.fTimeDelta;	clamp(src,0.f,1.f);
 	float dst					= 1-src;
@@ -97,7 +110,23 @@ void CActorEffector::Update(const Fvector& P, const Fvector& D, const Fvector& N
 		for (int i=m_Effectors.size()-1; i>=0; i--)
 		{
 			CCameraEffector* eff = m_Effectors[i];
-			if (!((eff->LifeTime()>0)&&eff->Process(vPosition,vDirection,vNormal,fFov,fFar,fAspect)))
+			Fvector sp=vPosition;
+			Fvector sd=vDirection;
+			Fvector sn=vNormal;
+			if ((eff->LifeTime()>0)&&eff->Process(vPosition,vDirection,vNormal,fFov,fFar,fAspect))
+			{
+				if (eff->Affected())
+				{
+					sp.sub(vPosition,sp);	
+					sd.sub(vDirection,sd);	
+					sn.sub(vNormal,sn);
+
+					affected_vPosition.add	(sp);
+					affected_vDirection.add	(sd);
+					affected_vNormal.add	(sn);
+				}
+			}
+			else
 			{
 				m_Effectors.erase(m_Effectors.begin()+i);
 				xr_delete(eff);
@@ -109,6 +138,10 @@ void CActorEffector::Update(const Fvector& P, const Fvector& D, const Fvector& N
 		vNormal.normalize		();
 		vRight.crossproduct		(vNormal,vDirection);
 		vNormal.crossproduct	(vDirection,vRight);
+		affected_vDirection.normalize	();
+		affected_vNormal.normalize		();
+		affected_vRight.crossproduct	(vNormal,vDirection);
+		affected_vNormal.crossproduct	(vDirection,vRight);
 	}
 }
 
@@ -198,8 +231,8 @@ void SndShockEffector::Update()
 	}
 }
 
-CAnimatorCamEffector::CAnimatorCamEffector	(ECameraEffectorType type)
-:inherited(type, 1000.0)
+CAnimatorCamEffector::CAnimatorCamEffector	(ECameraEffectorType type, BOOL affected)
+:inherited(type, 1000.0, affected)
 {
 	m_objectAnimator = xr_new<CObjectAnimator>();
 }
@@ -242,8 +275,8 @@ BOOL CAnimatorCamEffector::Process (Fvector &p, Fvector &d, Fvector &n, float& f
 	return						TRUE;
 }
 
-CAnimatorCamLerpEffector::CAnimatorCamLerpEffector(ECameraEffectorType type, GET_KOEFF_FUNC f)
-:inherited(type)
+CAnimatorCamLerpEffector::CAnimatorCamLerpEffector(ECameraEffectorType type, BOOL affected, GET_KOEFF_FUNC f)
+:inherited(type, affected)
 {
 	m_func		= f;
 }
@@ -292,13 +325,13 @@ BOOL CAnimatorCamLerpEffector::Process(Fvector &p, Fvector &d, Fvector &n, float
 #include "ActorCondition.h"
 
 CActorAlcoholCamEffector::CActorAlcoholCamEffector(CActorCondition* c)
-:inherited(eCEAlcohol, GET_KOEFF_FUNC(c, &CActorCondition::GetAlcohol))
+:inherited(eCEAlcohol, FALSE, GET_KOEFF_FUNC(c, &CActorCondition::GetAlcohol))
 {
 	Start			("camera_effects\\drunk.anm");
 }
 
 CFireHitCamEffector::CFireHitCamEffector	(ECameraEffectorType type,float power)
-:inherited(type, GET_KOEFF_FUNC(this, &CFireHitCamEffector::GetPower))
+:inherited(type, FALSE, GET_KOEFF_FUNC(this, &CFireHitCamEffector::GetPower))
 {
 	m_power			= power;
 	clamp			(m_power, 0.0f, 1.0f);

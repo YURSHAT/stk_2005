@@ -4,7 +4,7 @@
 #define STEP_EFFECTOR_TYPE_ID	8
 
 CPseudogigantStepEffector::CPseudogigantStepEffector(float time, float amp, float periods, float power) 
-					: CCameraEffector(ECameraEffectorType(STEP_EFFECTOR_TYPE_ID), time)
+					: CCameraEffector(ECameraEffectorType(STEP_EFFECTOR_TYPE_ID), time, FALSE)
 {
 	total			= time;
 
