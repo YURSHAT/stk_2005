@@ -41,6 +41,7 @@ public:
 	R_dsgraph::mapSorted_T										mapDistort;
 
 #if RENDER==R_R2
+	R_dsgraph::mapSorted_T										mapWmark;			// sorted
 	R_dsgraph::mapSorted_T										mapEmissive;
 #endif
 
@@ -148,6 +149,7 @@ public:
 	void		r_dsgraph_render_lods							(bool	_setup_zb,	bool _clear);
 	void		r_dsgraph_render_sorted							();
 	void		r_dsgraph_render_emissive						();
+	void		r_dsgraph_render_wmarks							();
 	void		r_dsgraph_render_distort						();
 	void		r_dsgraph_render_subspace						(IRender_Sector* _sector, CFrustum* _frustum, Fmatrix& mCombined, Fvector& _cop, BOOL _dynamic	);
 	void		r_dsgraph_render_subspace						(IRender_Sector* _sector, Fmatrix& mCombined, Fvector& _cop, BOOL _dynamic	);

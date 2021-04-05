@@ -90,6 +90,7 @@ public:
 		u32	bEmissive	:	1;
 		u32	bDistort	:	1;
 		u32	bElevation	:	1;
+		u32	bWmark		:	1;
 	};
 public:
 	Sflags								flags;

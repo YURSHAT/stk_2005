@@ -411,7 +411,16 @@ void	R_dsgraph_structure::r_dsgraph_render_emissive	()
 	mapEmissive.clear		();
 #endif
 }
-
+//////////////////////////////////////////////////////////////////////////
+// strict-sorted render
+void	R_dsgraph_structure::r_dsgraph_render_wmarks	()
+{
+#if	RENDER==R_R2
+	// Sorted (back to front)
+	mapWmark.traverseLR	(sorted_L1);
+	mapWmark.clear		();
+#endif
+}
 //////////////////////////////////////////////////////////////////////////
 // strict-sorted render
 void	R_dsgraph_structure::r_dsgraph_render_distort	()

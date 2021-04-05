@@ -63,6 +63,7 @@ ShaderElement::ShaderElement()
 	flags.bEmissive		= FALSE;
 	flags.bDistort		= FALSE;
 	flags.bElevation	= FALSE;
+	flags.bWmark		= FALSE;
 }
 
 BOOL ShaderElement::equal	(ShaderElement& S)
@@ -70,6 +71,7 @@ BOOL ShaderElement::equal	(ShaderElement& S)
 	if (flags.iPriority		!= S.flags.iPriority)	return FALSE;
 	if (flags.bStrictB2F	!= S.flags.bStrictB2F)	return FALSE;
 	if (flags.bEmissive		!= S.flags.bEmissive)	return FALSE;
+	if (flags.bWmark		!= S.flags.bWmark)		return FALSE;
 	if (flags.bDistort		!= S.flags.bDistort)	return FALSE;
 	if (flags.bElevation	!= S.flags.bElevation)	return FALSE;
 	if (passes.size() != S.passes.size())			return FALSE;
