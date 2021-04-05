@@ -11,7 +11,7 @@
 CHUDCrosshair::CHUDCrosshair	()
 {
 	hGeomLine.create			(FVF::F_TL0uv,RCache.Vertex.Buffer(),0);
-	hShader.create				("editor\\wire");
+	hShader.create				("hud\\cursor");
 
 	//вычислить и запомнить центр экрана
 //	center.set(int(Device.dwWidth)/2,int(Device.dwHeight)/2);
