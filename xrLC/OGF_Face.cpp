@@ -146,11 +146,19 @@ void OGF::Optimize	()
 	//////////////////////////////////////////////////////////////////////////
 	// x-vertices
 	try {
-		if (x_vertices.size() && x_faces.size())
+		u32 xv_size = x_vertices.size();
+		u32 v_size = vertices.size();
+		if (xv_size && v_size)
 		{
-			try {
-				VERIFY	(x_vertices.size()	<= vertices.size()	);
-				VERIFY	(x_faces.size()		== faces.size()		);
+			try {	
+				if (xv_size > v_size)
+				{
+					Msg("* There are more xVertices(%d) than Vertices(%d)", xv_size, v_size);
+				}
+				if (xv_size != v_size)
+				{
+					Msg("* xVertices size(%d) != Vertices size(%d)", xv_size, v_size);
+				}
 			} catch(...) {
 				Msg	("* ERROR: optimize: x-geom : verify: failed");
 			}
@@ -344,7 +352,7 @@ void OGF::CalculateTB()
 
 	// retriving data
 	u32 o_idx		= 0;
-	for (itOGF_F face_it=faces.begin(); face_it!=faces.end(); face_it++){
+	for (face_it=faces.begin(); face_it!=faces.end(); face_it++){
 		OGF_Face	&iF = *face_it;
 		iF.v[0]		= o_indices[o_idx++];
 		iF.v[1]		= o_indices[o_idx++];
@@ -386,7 +394,7 @@ void OGF::MakeProgressive	(float metric_limit)
 	{
 		// prepare progressive geom
 		VIPM_Init				();
-		//clMsg("--- append v start .");
+		clMsg("--- append v start: %d", vertices.size());
 		for (u32 v_idx=0;  v_idx<vertices.size(); v_idx++)	
 			VIPM_AppendVertex	(vertices[v_idx].P,	vertices[v_idx].UV[0]					);
 		//clMsg("--- append f start .");
