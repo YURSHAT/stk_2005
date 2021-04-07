@@ -3,6 +3,7 @@
 #include "tga.h"
 #include "xrThread.h"
 #include "hash2D.h"
+#include <thread>
 
 class ImplicitDeflector
 {
@@ -115,7 +116,7 @@ public:
 						
 						// World space
 						Fvector wP,wN,B;
-						for (vecFaceIt it=space.begin(); it!=space.end(); it++)
+						for (auto it=space.begin(); it!=space.end(); ++it)
 						{
 							Face	*F	= *it;
 							_TCF&	tc	= F->tc[0];
@@ -129,7 +130,7 @@ public:
 								wN.from_bary(V1->N,V2->N,V3->N,B);
 								wN.normalize();
 								LightPoint	(&DB, RCAST_Model, C, wP, wN, pBuild->L_static, (b_nosun?LP_dont_sun:0), F);
-								Fcount		++;
+								Fcount++;
 							}
 						}
 					} 
@@ -154,10 +155,11 @@ public:
 
 //#pragma optimize( "g", off )
 
-#define	NUM_THREADS	8
 void CBuild::ImplicitLighting()
 {
-	if (g_params.m_quality==ebqDraft) return;
+	if (g_params.m_quality == ebqDraft){ Msg("Skipped: Draft quality"); return; }
+
+	CTimer	start_time;	start_time.Start();
 
 	Implicit		calculator;
 	ImplicitHash	= xr_new<IHASH>	();
@@ -210,6 +212,24 @@ void CBuild::ImplicitLighting()
 		}
 
 		// Start threads
+		u32 NUM_THREADS = 8;
+		
+		if (strstr(Core.Params, "-t "))
+		{
+			if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
+			{
+				NUM_THREADS = (std::thread::hardware_concurrency() / 2) - 1; // one less than half
+
+				clamp(NUM_THREADS, (u32)1, NUM_THREADS); // minimum 1 thread for dual or single threaded cpu
+
+				Msg("Automatic threads count identification: threads num = %u", NUM_THREADS);
+			}
+			else
+				sscanf(strstr(Core.Params, "-t ") + 3, "%d", &NUM_THREADS);
+		}
+
+		Msg("^IMPLICID LIGHT THREADS %u", NUM_THREADS);
+		
 		CThreadManager			tmanager;
 		u32	stride				= defl.Height()/NUM_THREADS;
 		for (u32 thID=0; thID<NUM_THREADS; thID++)
@@ -285,4 +305,5 @@ void CBuild::ImplicitLighting()
 
 	xr_delete			(ImplicitHash);
 	calculator.clear	();
+	clMsg("%3.2f ms", start_time.GetElapsed_sec() * 1000.f);
 }

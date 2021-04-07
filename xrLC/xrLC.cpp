@@ -27,7 +27,9 @@ static const char* h_str =
 	"-nosun		== disable sun-lighting\n"
 	"-f<NAME>	== compile level in GameData\\Levels\\<NAME>\\\n"
 	"\n"
-	"NOTE: The last key is required for any functionality\n";
+	"NOTE: The last key is required for any functionality\n"
+	"-skipinvalid	== skip crash if invalid faces exists\n\n"
+	"-t<NUM>	== numbers of threads. Use '-t auto' for automatic threads count detection\n\n";
 
 void Help()
 {

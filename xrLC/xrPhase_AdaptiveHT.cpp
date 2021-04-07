@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "build.h"
 #include "xrThread.h"
+#include <thread>
 
 const	float	aht_max_edge	= c_SS_maxsize/2.5f;	// 2.0f;			// 2 m
 //const	float	aht_min_edge	= .2f;					// 20 cm
@@ -193,8 +194,25 @@ void CBuild::xrPhase_AdaptiveHT	()
 */
 		u32	stride			= u32(-1);		
 		u32 threads			= u32(-1);
+		u32 max_threads		= 8;
 		u32 rest			= u32(-1);
-		get_intervals( 8, g_vertices.size(), threads, stride, rest );
+
+		if (strstr(Core.Params, "-t "))
+		{
+			if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
+			{
+				max_threads = (std::thread::hardware_concurrency() - 1); // one less than all
+
+				clamp(max_threads, (u32)1, max_threads); // minimum 1 thread for dual or single threaded cpu
+
+				Msg("Automatic threads count identification: threads num = %u", max_threads);
+			}
+			else
+				sscanf(strstr(Core.Params, "-t ") + 3, "%d", &max_threads);
+		}
+		
+		get_intervals( max_threads, g_vertices.size(), threads, stride, rest );
+		
 		for (u32 thID=0; thID<threads; thID++)
 			precalc_base_hemi.start	( xr_new<CPrecalcBaseHemiThread> (thID,thID*stride,thID*stride + stride ) );
 		if(rest > 0)

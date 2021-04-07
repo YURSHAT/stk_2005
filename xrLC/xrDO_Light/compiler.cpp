@@ -8,8 +8,7 @@
 #include "cl_intersect.h"
 #include "Etextureparams.h"
 #include "r_light.h"
-
-#define NUM_THREADS		3
+#include <thread>
 
 enum
 {
@@ -678,7 +677,24 @@ public:
 
 void	xrLight			()
 {
-	u32	range				= dtH.size_z;
+	u32	range = dtH.size_z;
+
+	u32 NUM_THREADS = 3;
+	
+	if (strstr(Core.Params, "-t "))
+	{
+		if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
+		{
+			NUM_THREADS = std::thread::hardware_concurrency() - 1; // leave one thread unused for system and shits
+
+			clamp(NUM_THREADS, (u32)1, NUM_THREADS); // minimum 1 thread for dual or single threaded cpu
+
+			Msg("Automatic threads count identification: threads num = %u", NUM_THREADS);
+		}
+		else
+			sscanf(strstr(Core.Params, "-t ") + 3, "%d", &NUM_THREADS);
+
+	}
 
 	// Start threads, wait, continue --- perform all the work
 	CThreadManager		Threads;

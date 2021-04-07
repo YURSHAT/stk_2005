@@ -2,6 +2,7 @@
 #include "build.h"
 #include "xrThread.h"
 #include "xrSyncronize.h"
+#include <thread>
 
 xrCriticalSection	task_CS;
 xr_vector<int>		task_pool;
@@ -72,11 +73,26 @@ void CBuild::Light()
 		// Main process (4 threads)
 		Status			("Lighting...");
 		CThreadManager	threads;
-		const	u32	thNUM	= 6;
-		CTimer	start_time;	start_time.Start();				
-		for				(int L=0; L<thNUM; L++)	threads.start(xr_new<CLMThread> (L));
-		threads.wait	(500);
-		clMsg			("%f seconds",start_time.GetElapsed_sec());
+		u32	thNUM = 6;
+		
+		if (strstr(Core.Params, "-t "))
+		{
+			if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
+			{
+				thNUM = (std::thread::hardware_concurrency() / 2) - 1; // one less than half
+
+				clamp(thNUM, (u32)1, thNUM); // minimum 1 thread for dual or single threaded cpu
+
+				Msg("Automatic threads count identification: threads num = %u", thNUM);
+			}
+			else
+				sscanf(strstr(Core.Params, "-t ") + 3, "%d", &thNUM);
+		}
+		
+		CTimer	start_time;	start_time.Start();
+		for (u32 L = 0; L < thNUM; L++)	threads.start(xr_new<CLMThread>(L));
+		threads.wait(500);
+		clMsg("%3.2f ms", start_time.GetElapsed_sec() * 1000.f);
 	}
 
 	//****************************************** Vertex
@@ -220,7 +236,6 @@ public:
 	}
 };
 
-#define NUM_THREADS			4
 void CBuild::LightVertex	()
 {
 	g_trans				= xr_new<mapVert>	();
@@ -228,11 +243,30 @@ void CBuild::LightVertex	()
 	// Start threads, wait, continue --- perform all the work
 	Status				("Calculating...");
 	CThreadManager		Threads;
-	VLT.init			();
-	CTimer	start_time;	start_time.Start();				
-	for (u32 thID=0; thID<NUM_THREADS; thID++)	Threads.start(xr_new<CVertexLightThread>(thID));
-	Threads.wait		();
-	clMsg				("%f seconds",start_time.GetElapsed_sec());
+	VLT.init();
+	CTimer	start_time;	start_time.Start();
+
+	u32 NUM_THREADS = 4;
+	
+	if (strstr(Core.Params, "-t "))
+	{
+		if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
+		{
+			NUM_THREADS = (std::thread::hardware_concurrency() / 2) - 1; // one less than half
+
+			clamp(NUM_THREADS, (u32)1, NUM_THREADS); // minimum 1 thread for dual or single threaded cpu
+
+			Msg("Automatic threads count identification: threads num = %u", NUM_THREADS);
+		}
+		else
+			sscanf(strstr(Core.Params, "-t ") + 3, "%d", &NUM_THREADS);
+	}
+
+	Msg("^LIGHT VERTEX THREADS %u", NUM_THREADS);
+	
+	for (u32 thID = 0; thID < NUM_THREADS; thID++)	Threads.start(xr_new<CVertexLightThread>(thID));
+	Threads.wait();
+	clMsg("%3.2f ms", start_time.GetElapsed_sec() * 1000.f);
 
 	// Process all groups
 	Status				("Transluenting...");

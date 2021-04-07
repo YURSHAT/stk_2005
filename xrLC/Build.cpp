@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "xrThread.h"
 #include "xrSyncronize.h"
+#include <thread>
 
 using namespace			std;
 
@@ -17,7 +18,6 @@ BOOL					b_skipinvalid = FALSE;
 
 CThreadManager			mu_base;
 CThreadManager			mu_secondary;
-#define		MU_THREADS	4
 
 //////////////////////////////////////////////////////////////////////
 
@@ -76,9 +76,25 @@ public:
 			pBuild->mu_models[m]->calc_lighting	();
 		}
 
+		u32 MU_THREADS = 4;
+		
+		if (strstr(Core.Params, "-t "))
+		{
+			if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
+			{
+				MU_THREADS = std::thread::hardware_concurrency() / 2; // use half of processor threads
+
+				clamp(MU_THREADS, (u32)1, MU_THREADS); // minimum 1 thread for dual or single threaded cpu
+
+				Msg("Automatic threads count identification: threads num = %u", MU_THREADS);
+			}
+			else
+				sscanf(strstr(Core.Params, "-t ") + 3, "%d", &MU_THREADS);
+		}
 		// Light references
 		u32	stride			= pBuild->mu_refs.size()/MU_THREADS;
 		u32	last			= pBuild->mu_refs.size()-stride*(MU_THREADS-1);
+
 		for (u32 thID=0; thID<MU_THREADS; thID++)
 			mu_secondary.start	(xr_new<CMULight> (thID,thID*stride,thID*stride+((thID==(MU_THREADS-1))?last:stride)));
 	}
