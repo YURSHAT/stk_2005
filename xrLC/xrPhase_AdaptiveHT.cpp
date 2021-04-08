@@ -201,7 +201,7 @@ void CBuild::xrPhase_AdaptiveHT	()
 		{
 			if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
 			{
-				max_threads = (std::thread::hardware_concurrency() - 1); // one less than all
+				max_threads = std::thread::hardware_concurrency() - 1; // one less than all
 
 				clamp(max_threads, (u32)1, max_threads); // minimum 1 thread for dual or single threaded cpu
 

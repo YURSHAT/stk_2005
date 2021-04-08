@@ -79,7 +79,7 @@ void CBuild::Light()
 		{
 			if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
 			{
-				thNUM = (std::thread::hardware_concurrency() / 2) - 1; // one less than half
+				thNUM = std::thread::hardware_concurrency() - 1; // one less than half
 
 				clamp(thNUM, (u32)1, thNUM); // minimum 1 thread for dual or single threaded cpu
 
@@ -252,7 +252,7 @@ void CBuild::LightVertex	()
 	{
 		if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
 		{
-			NUM_THREADS = (std::thread::hardware_concurrency() / 2) - 1; // one less than half
+			NUM_THREADS = std::thread::hardware_concurrency() - 1; // one less than half
 
 			clamp(NUM_THREADS, (u32)1, NUM_THREADS); // minimum 1 thread for dual or single threaded cpu
 

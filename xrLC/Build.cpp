@@ -82,7 +82,7 @@ public:
 		{
 			if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
 			{
-				MU_THREADS = std::thread::hardware_concurrency() / 2; // use half of processor threads
+				MU_THREADS = std::thread::hardware_concurrency() - 1;
 
 				clamp(MU_THREADS, (u32)1, MU_THREADS); // minimum 1 thread for dual or single threaded cpu
 

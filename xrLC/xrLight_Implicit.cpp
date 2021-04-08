@@ -218,7 +218,7 @@ void CBuild::ImplicitLighting()
 		{
 			if (strstr(Core.Params, "-t auto")) // make number of threads depend on cpu threads num
 			{
-				NUM_THREADS = (std::thread::hardware_concurrency() / 2) - 1; // one less than half
+				NUM_THREADS = std::thread::hardware_concurrency() - 1; // one less than half
 
 				clamp(NUM_THREADS, (u32)1, NUM_THREADS); // minimum 1 thread for dual or single threaded cpu
 
