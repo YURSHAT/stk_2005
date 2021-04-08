@@ -905,13 +905,6 @@
 					RelativePath=".\Effector.h"
 					>
 				</File>
-				<File
-					RelativePath=".\EffectorFall.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\EffectorFall.h"
-					>
 				</File>
 				<File
 					RelativePath="EffectorPP.cpp"

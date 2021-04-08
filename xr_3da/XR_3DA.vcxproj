@@ -339,7 +339,6 @@
     <ClInclude Include="defines.h" />
     <ClInclude Include="device.h" />
     <ClInclude Include="Effector.h" />
-    <ClInclude Include="EffectorFall.h" />
     <ClInclude Include="EffectorPP.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineAPI.h" />
@@ -457,7 +456,6 @@
     <ClCompile Include="Device_overdraw.cpp" />
     <ClCompile Include="Device_wndproc.cpp" />
     <ClCompile Include="Effector.cpp" />
-    <ClCompile Include="EffectorFall.cpp" />
     <ClCompile Include="EffectorPP.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EngineAPI.cpp" />
