@@ -152,13 +152,13 @@
 #		undef cast_type_list
 #		define cast_type_list save_cast_list	(CWeaponAmmo,		CInventoryItem)
 
-		DECLARE_SPECIALIZATION	(CCameraShotEffector, CCameraEffector,		cast_effector_shot);
+		DECLARE_SPECIALIZATION(CCameraShotEffector, CEffectorCam, cast_effector_shot);
 #		undef cast_type_list
-#		define cast_type_list save_cast_list	(CCameraShotEffector,		CCameraEffector)
+#		define cast_type_list save_cast_list	(CCameraShotEffector,		CEffectorCam)
 
-		DECLARE_SPECIALIZATION	(CEffectorZoomInertion,	CCameraEffector,	cast_effector_zoom_inertion);
+		DECLARE_SPECIALIZATION(CEffectorZoomInertion, CEffectorCam, cast_effector_zoom_inertion);
 #		undef cast_type_list
-#		define cast_type_list save_cast_list	(CEffectorZoomInertion,	CCameraEffector)
+#		define cast_type_list save_cast_list	(CEffectorZoomInertion,	CEffectorCam)
 
 		DECLARE_SPECIALIZATION	(CParticlesPlayer,	CGameObject,	cast_particles_player);
 #		undef cast_type_list

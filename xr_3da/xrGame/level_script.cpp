@@ -382,15 +382,15 @@ void iterate_sounds2				(LPCSTR prefix, u32 max_count, luabind::object object, l
 #include "ai/monsters/ai_monster_effector.h"
 void actor_impact(float time, float amp, float periods, float power)
 {
-	Actor()->EffectorManager().AddEffector(xr_new<CMonsterEffectorHit>(time, amp, periods, power));
-//	Level().Cameras.AddEffector(xr_new<CMonsterEffector>(db().m_attack_effector.ppi, db().m_attack_effector.time, db().m_attack_effector.time_attack, db().m_attack_effector.time_release));
+	Actor()->Cameras().AddEffector(xr_new<CMonsterEffectorHit>(time, amp, periods, power));
+//	Level().Cameras().AddEffector(xr_new<CMonsterEffector>(db().m_attack_effector.ppi, db().m_attack_effector.time, db().m_attack_effector.time_attack, db().m_attack_effector.time_release));
 	
 }
 */
 #include "actoreffector.h"
-void add_cam_effector(CCameraEffector* e)
+void add_cam_effector(CEffectorCam* e)
 {
-	Actor()->EffectorManager().AddEffector(e);
+	Actor()->Cameras().AddCamEffector(e);
 }
 		
 float get_snd_volume()

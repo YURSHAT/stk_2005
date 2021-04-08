@@ -3,8 +3,8 @@
 #include "CameraEffector.h"
 #include "../cameramanager.h"
 
-class CExplodeEffector : public CCameraEffector {
-	typedef CCameraEffector inherited;	
+class CExplodeEffector : public CEffectorCam {
+	typedef CEffectorCam inherited;
 
 	float total;
 	float max_amp;

@@ -1236,6 +1236,7 @@
     <ClInclude Include="physic_item.h" />
     <ClInclude Include="physic_item_inline.h" />
     <ClInclude Include="ph_shell_interface.h" />
+    <ClInclude Include="PostprocessAnimator.h" />
     <ClInclude Include="pp_effector_custom.h" />
     <ClInclude Include="pp_effector_distance.h" />
     <ClInclude Include="problem_solver.h" />
@@ -2351,6 +2352,7 @@
     <ClCompile Include="PhysicsSkeletonObject.cpp" />
     <ClCompile Include="physics_game.cpp" />
     <ClCompile Include="physic_item.cpp" />
+    <ClCompile Include="PostprocessAnimator.cpp" />
     <ClCompile Include="pp_effector_custom.cpp" />
     <ClCompile Include="pp_effector_distance.cpp" />
     <ClCompile Include="profiler.cpp">

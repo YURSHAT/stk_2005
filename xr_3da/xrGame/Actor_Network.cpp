@@ -655,6 +655,8 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 		E->s_flags.set(M_SPAWN_OBJECT_LOCAL, TRUE);
 	}
 	
+	VERIFY(m_pActorEffector == NULL);
+	m_pActorEffector = xr_new<CCameraManager>(false);
 	// motions
 	m_bAnimTorsoPlayed			= false;
 	m_current_legs_blend		= 0;
@@ -764,8 +766,6 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 //	if (!GetDefaultVisualOutfit())
 	SetDefaultVisualOutfit(cNameVisual());
 
-	VERIFY(m_pActorEffector == NULL);
-	m_pActorEffector = xr_new<CActorEffector>();
 	smart_cast<CKinematics*>(Visual())->CalculateBones();
 
 	//--------------------------------------------------------------

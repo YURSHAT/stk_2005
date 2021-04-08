@@ -1,13 +1,12 @@
 #include "stdafx.h"
 #include "ShootingHitEffector.h"
-
-#define SHOOTING_EFFECTOR_TYPE_ID 7
+#include "CameraEffector.h"
 
 //////////////////////////////////////////////////////////////////////////
 // CMonsterEffector
 //////////////////////////////////////////////////////////////////////////
 CShootingHitEffectorPP::CShootingHitEffectorPP(const SPPInfo &ppi, float life_time, float attack_time, float release_time) 
-	: CEffectorPP(EEffectorPPType(SHOOTING_EFFECTOR_TYPE_ID), life_time)
+	: CEffectorPP(EEffectorPPType(eCEExplode), life_time)
 {
 	state		= ppi;
 	m_total		= life_time;
@@ -74,7 +73,7 @@ BOOL CShootingHitEffectorPP::Process(SPPInfo& pp)
 //////////////////////////////////////////////////////////////////////////
 
 CShootingHitEffector::CShootingHitEffector(float time, float amp, float periods, float power) 
-		: CEffector(EEffectorType(SHOOTING_EFFECTOR_TYPE_ID), time, FALSE)
+	: CEffectorCam(eCEExplode, time/*, FALSE*/)
 {
 	total			= time;
 

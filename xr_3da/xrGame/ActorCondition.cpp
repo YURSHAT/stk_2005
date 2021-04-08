@@ -141,14 +141,14 @@ void CActorCondition::UpdateCondition()
 
 	if (GameID() == GAME_SINGLE)
 	{	
-		CCameraEffector* ce = Actor()->EffectorManager().GetEffector(eCEAlcohol);
-		if	((m_fAlcohol>0.001) ){
+		CEffectorCam* ce = Actor()->Cameras().GetCamEffector((ECamEffectorType)effAlcohol);
+		if	((m_fAlcohol>0.0001f) ){
 			if(!ce){
-				Actor()->EffectorManager	().AddEffector				(xr_new<CActorAlcoholCamEffector>( this ));
+				Actor()->Cameras().AddCamEffector(xr_new<CActorAlcoholCamEffector>( this ));
 			}
 		}else{
 			if(ce)
-				Actor()->EffectorManager	().RemoveEffector			(eCEAlcohol);
+				Actor()->Cameras().RemoveCamEffector(eCEAlcohol);
 		}
 	};
 
@@ -243,13 +243,13 @@ EActorSleep CActorCondition::GoSleep(ALife::_TIME_ID sleep_time, bool without_ch
 
 	VERIFY	(m_object == smart_cast<CActor*>(Level().CurrentEntity()));
 
-	Level().Cameras.RemoveEffector(EEffectorPPType(SLEEP_EFFECTOR_TYPE_ID));
+	m_object->Cameras().RemovePPEffector(EEffectorPPType(SLEEP_EFFECTOR_TYPE_ID));
 	object().m_pSleepEffectorPP = xr_new<CSleepEffectorPP>(object().m_pSleepEffector->ppi,
 													object().m_pSleepEffector->time,
 													object().m_pSleepEffector->time_attack,
 													object().m_pSleepEffector->time_release);
 
-	Level().Cameras.AddEffector(object().m_pSleepEffectorPP);
+	m_object->Cameras().AddPPEffector(object().m_pSleepEffectorPP);
 
 	m_object->callback(GameObject::eActorSleep)( m_object->lua_game_object() );
 

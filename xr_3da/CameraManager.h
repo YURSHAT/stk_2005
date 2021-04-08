@@ -89,9 +89,40 @@ struct SPPInfo {
 		color_gray.set	(.333f, .333f,	.333f);
 		color_add.set	(0.f,	0.f,	0.f);
 	}
+	IC SPPInfo&	lerp(const SPPInfo& def, const SPPInfo& to, float factor)
+	{
+		SPPInfo& pp = *this;
+
+		pp.duality.h		+= def.duality.h		+ (to.duality.h			- def.duality.h)		* factor; 			
+		pp.duality.v		+= def.duality.v		+ (to.duality.v			- def.duality.v)		* factor;
+		pp.gray				+= def.gray				+ (to.gray				- def.gray)				* factor;
+		pp.blur				+= def.blur				+ (to.blur				- def.blur)				* factor;
+		pp.noise.intensity	+= def.noise.intensity	+ (to.noise.intensity	- def.noise.intensity)	* factor;
+		pp.noise.grain		+= def.noise.grain		+ (to.noise.grain		- def.noise.grain)		* factor;
+		pp.noise.fps		+= def.noise.fps		+ (to.noise.fps			- def.noise.fps)		* factor;	
+
+		pp.color_base.set	(
+			def.color_base.r	+ (to.color_base.r - def.color_base.r) * factor, 
+			def.color_base.g	+ (to.color_base.g - def.color_base.g) * factor, 
+			def.color_base.b	+ (to.color_base.b - def.color_base.b) * factor
+			);
+
+		pp.color_gray.set	(
+			def.color_gray.r	+ (to.color_gray.r - def.color_gray.r) * factor, 
+			def.color_gray.g	+ (to.color_gray.g - def.color_gray.g) * factor, 
+			def.color_gray.b	+ (to.color_gray.b - def.color_gray.b) * factor
+			);
+
+		pp.color_add.set	(
+			def.color_add.r	+ (to.color_add.r - def.color_add.r) * factor, 
+			def.color_add.g	+ (to.color_add.g - def.color_add.g) * factor, 
+			def.color_add.b	+ (to.color_add.b - def.color_add.b) * factor
+			);
+		return *this;
+	}
 };
 
-DEFINE_VECTOR				(CEffector*,EffectorVec,EffectorIt);
+DEFINE_VECTOR				(CEffectorCam*,EffectorCamVec,EffectorCamIt);
 DEFINE_VECTOR				(CEffectorPP*,EffectorPPVec,EffectorPPIt);
 
 class ENGINE_API CCameraManager
@@ -101,63 +132,43 @@ class ENGINE_API CCameraManager
 	Fvector					vNormal;
 	Fvector					vRight;
 
-	EffectorVec				m_Effectors;
+	EffectorCamVec			m_EffectorsCam;
 	EffectorPPVec			m_EffectorsPP;
 
 	float					fFov;
 	float					fFar;
 	float					fAspect;
-	
-	Fmatrix					unaffected_mView;
-	Fvector					unaffected_vPosition;
-	Fvector					unaffected_vDirection;
-	Fvector					unaffected_vNormal;
-	Fvector					unaffected_vRight;
-	
-	Fvector					affected_vPosition;
-	Fvector					affected_vDirection;
-	Fvector					affected_vNormal;
-	Fvector					affected_vRight;
+	bool					m_bAutoApply;
 
 	SPPInfo					pp_affected;
 public:
-	void					Dump				(void);
-	CEffector*				AddEffector			(CEffector*			ef);
-	CEffector*				GetEffector			(EEffectorType		type);
-	void					RemoveEffector		(EEffectorType		type);
+#ifdef DEBUG	
+	u32						dbg_upd_frame;
+#endif
 
-	CEffectorPP*			GetEffector			(EEffectorPPType	type);
-	CEffectorPP*			AddEffector			(CEffectorPP*		ef);
-	void					RemoveEffector		(EEffectorPPType	type);
+	void					Dump					(void);
+	CEffectorCam*			AddCamEffector			(CEffectorCam*			ef);
+	CEffectorCam*			GetCamEffector			(ECamEffectorType		type);
+	void					RemoveCamEffector		(ECamEffectorType		type);
 
-	IC Fmatrix&				unaffected_View		()	{ return unaffected_mView;		}
-	IC Fvector&				unaffected_Pos		()	{ return unaffected_vPosition;	}
-	IC Fvector&				unaffected_Dir		()	{ return unaffected_vDirection;	}
-	IC Fvector&				unaffected_Up		()	{ return unaffected_vNormal;	}
-	IC Fvector&				unaffected_Right	()	{ return unaffected_vRight;		}
-	IC void					unaffected_Matrix	(Fmatrix& M)	
-	{	M.set(unaffected_vRight,unaffected_vNormal,unaffected_vDirection,unaffected_vPosition);	}
+	CEffectorPP*			GetPPEffector			(EEffectorPPType	type);
+	CEffectorPP*			AddPPEffector			(CEffectorPP*		ef);
+	void					RemovePPEffector		(EEffectorPPType	type);
 
-	IC Fvector&				affected_Pos		()	{ return affected_vPosition;	}
-	IC Fvector&				affected_Dir		()	{ return affected_vDirection;	}
-	IC Fvector&				affected_Up			()	{ return affected_vNormal;		}
-	IC Fvector&				affected_Right		()	{ return affected_vRight;		}
-	IC void					affected_Matrix		(Fmatrix& M)	
-	{	M.set(affected_vRight,affected_vNormal,affected_vDirection,affected_vPosition);	}
 
-	IC Fmatrix&				render_View			()	{ return Device.mView; }
-	IC Fvector&				render_Pos			()	{ return vPosition;	}
-	IC Fvector&				render_Dir			()	{ return vDirection;}
-	IC Fvector&				render_Up			()	{ return vNormal;	}
-	IC Fvector&				render_Right		()	{ return vRight;	}
-	IC void					render_Matrix		(Fmatrix& M)	
-	{	M.set(vRight,vNormal,vDirection,vPosition);	}
-
+	IC Fvector				Pos					()	const { return vPosition;	}
+	IC Fvector				Dir					()	const { return vDirection;}
+	IC Fvector				Up					()	const { return vNormal;	}
+	IC Fvector				Right				()	const { return vRight;	}
+	
+	IC void					camera_Matrix		(Fmatrix& M){M.set(vRight,vNormal,vDirection,vPosition);}
 	void					Update				(const Fvector& P, const Fvector& D, const Fvector& N, float fFOV_Dest, float fASPECT_Dest, float fFAR_Dest, u32 flags=0);
 	void					Update				(const CCameraBase* C);
+	void					ApplyDevice			();
+	static void				ResetPP				();
 
-	CCameraManager();
-	~CCameraManager();
+							CCameraManager		(bool bApplyOnUpdate);
+							~CCameraManager		();
 };
 ENGINE_API extern SPPInfo					pp_identity;
 ENGINE_API extern SPPInfo					pp_zero;

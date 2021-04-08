@@ -10,6 +10,8 @@
 #include "../skeletonanimated.h"
 #include "gamemtllib.h"
 #include "level_bullet_manager.h"
+#include "../CameraManager.h"
+#include "CameraEffector.h"
 
 #define KNIFE_MATERIAL_NAME "objects\\knife"
 
@@ -227,7 +229,7 @@ void CWeaponKnife::switch2_Hiding	()
 	FireEnd					();
 	
 	m_pHUD->animPlay		(mhud_hide[Random.randI(mhud_hide.size())],TRUE,this);
-	if (Local())			Level().Cameras.RemoveEffector	(cefShot);
+	if (Local())						Actor()->Cameras().RemoveCamEffector(eCEShot);
 
 	m_bPending				= true;
 }

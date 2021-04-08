@@ -23,8 +23,8 @@ public:
 //////////////////////////////////////////////////////////////////////////
 // CMonsterEffectorHit
 //////////////////////////////////////////////////////////////////////////
-class CShootingHitEffector : public CEffector {
-	typedef CEffector inherited;	
+class CShootingHitEffector : public CEffectorCam {
+	typedef CEffectorCam inherited;
 
 	float total;
 	float max_amp;

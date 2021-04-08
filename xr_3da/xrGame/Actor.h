@@ -18,6 +18,7 @@
 #include "InventoryOwner.h"
 #include "../StatGraph.h"
 #include "PhraseDialogManager.h"
+#include "ShootingHitEffector.h"
 
 #include "step_manager.h"
 
@@ -45,7 +46,7 @@ struct SShootingEffector;
 struct SSleepEffector;
 class  CSleepEffectorPP;
 
-class  CActorEffector;
+//class  CActorEffector;
 
 class	CHudItem;
 class   CArtefact;
@@ -341,7 +342,7 @@ public:
 	// Cameras and effectors
 	//////////////////////////////////////////////////////////////////////////
 public:
-	CActorEffector&			EffectorManager		() 	{VERIFY(m_pActorEffector); return *m_pActorEffector;}
+	CCameraManager&			Cameras				() 	{VERIFY(m_pActorEffector); return *m_pActorEffector;}
 	IC CCameraBase*			cam_Active			()	{return cameras[cam_active];}
 	IC CCameraBase*			cam_FirstEye		()	{return cameras[eacFirstEye];}
 
@@ -369,7 +370,7 @@ protected:
 	CSleepEffectorPP*		m_pSleepEffectorPP;
 
 	//менеджер эффекторов, есть у каждого актрера
-	CActorEffector*			m_pActorEffector;
+	CCameraManager*			m_pActorEffector;
 	static float			f_Ladder_cam_limit;
 	////////////////////////////////////////////
 	// для взаимодействия с другими персонажами 

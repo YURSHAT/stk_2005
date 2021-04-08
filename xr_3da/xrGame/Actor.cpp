@@ -581,11 +581,11 @@ void CActor::HitMark	(float P,
 	if ( (hit_type==ALife::eHitTypeFireWound||hit_type==ALife::eHitTypeWound_2) && g_Alive() && Local() && /*(this!=who) && */(Level().CurrentEntity()==this) )	
 	{
 		HUD().Hit(0, P, dir);
-		Level().Cameras.AddEffector(xr_new<CShootingHitEffectorPP>(	m_pShootingEffector->ppi,		m_pShootingEffector->time,	m_pShootingEffector->time_attack,	m_pShootingEffector->time_release));
+//		Actor()->Cameras().AddPPEffector(xr_new<CShootingHitEffectorPP>(m_pShootingEffector));
 
 
 	if(psHUD_Flags.test(HUD_CAM_ANIM_HIT)){
-		CCameraEffector* ce = EffectorManager().GetEffector(eCEFireHit);
+		CEffectorCam* ce = Cameras().GetCamEffector((ECamEffectorType)effFireHit);
 		if(!ce)
 			{
 			int id						= -1;
@@ -627,7 +627,7 @@ void CActor::HitMark	(float P,
 			}
 
 
-			CAnimatorCamEffector* e		= xr_new<CFireHitCamEffector>(eCEFireHit, P/100.0f);
+			CAnimatorCamEffector* e		= xr_new<CFireHitCamEffector>((ECamEffectorType)effFireHit, P/100.0f);
 			string_path fn;
 			if(id==0)	sprintf(fn,"camera_effects\\hit_front.anm");
 			else
@@ -646,7 +646,7 @@ void CActor::HitMark	(float P,
 			if(id==7)	sprintf(fn,"camera_effects\\hit_back_right.anm");
 			
 			e->Start							(fn);
-			EffectorManager	().AddEffector		(e);
+			Cameras	().AddCamEffector			(e);
 			}
 		}
 	}
@@ -787,7 +787,8 @@ void CActor::g_Physics			(Fvector& _accel, float jump, float dt)
 
 		if (Local() && g_Alive()) {
 			if (m_PhysicMovementControl->gcontact_Was) 
-				g_pGameLevel->Cameras.AddEffector		(xr_new<CEffectorFall> (m_PhysicMovementControl->gcontact_Power));
+				
+				Cameras().AddCamEffector		(xr_new<CEffectorFall> (m_PhysicMovementControl->gcontact_Power));
 			if (!fis_zero(m_PhysicMovementControl->gcontact_HealthLost))	{
 				const ICollisionDamageInfo* di=m_PhysicMovementControl->CollisionDamageInfo();
 				Fvector hdir;di->HitDir(hdir);
@@ -896,7 +897,7 @@ void CActor::UpdateCL	()
 		{
 			float full_fire_disp = pWeapon->GetFireDispersion(false);
 
-			CEffectorZoomInertion* S = smart_cast<CEffectorZoomInertion*>	(EffectorManager().GetEffector(eCEZoom));
+			CEffectorZoomInertion* S = smart_cast<CEffectorZoomInertion*>	(Cameras().GetCamEffector(eCEZoom));
 			if(S) S->SetParams(full_fire_disp);
 
 			//помнить, что если m_bZoomAimingMode = true
@@ -939,7 +940,7 @@ void CActor::UpdateCL	()
 		{
 			m_sndShockEffector->Update();
 
-			if(!m_sndShockEffector->Active())
+			if(!m_sndShockEffector->Valid())
 				xr_delete(m_sndShockEffector);
 		}
 		else
@@ -1056,7 +1057,7 @@ void CActor::shedule_Update	(u32 DT)
 	if (!pCamBobbing)
 	{
 		pCamBobbing = xr_new<CEffectorBobbing>	();
-		EffectorManager().AddEffector			(pCamBobbing);
+		Cameras().AddCamEffector			(pCamBobbing);
 	}
 	pCamBobbing->SetState						(mstate_real, conditions().IsLimping(), IsZoomAimingMode());
 
@@ -1672,21 +1673,15 @@ void CActor::on_weapon_shot_start		(CWeapon *weapon)
 {	
 	CWeaponMagazined* pWM = smart_cast<CWeaponMagazined*> (weapon);
 	//*
-	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>	(EffectorManager().GetEffector(eCEShot)); 
+	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>	(Cameras().GetCamEffector(eCEShot)); 
 	if (!effector) {
 		effector					= 
-			(CCameraShotEffector*)EffectorManager().AddEffector(
-				xr_new<
-					CCameraShotEffector
-				>
-				(
-					weapon->camMaxAngle,
-					weapon->camRelaxSpeed,
-					weapon->camMaxAngleHorz,
-					weapon->camStepAngleHorz,
-					weapon->camDispertionFrac
-				)
-			);
+			(CCameraShotEffector*)Cameras().AddCamEffector(
+				xr_new<CCameraShotEffector>(weapon->camMaxAngle,
+											weapon->camRelaxSpeed,
+											weapon->camMaxAngleHorz,
+											weapon->camStepAngleHorz,
+											weapon->camDispertionFrac)	);
 	}
 	R_ASSERT						(effector);
 
@@ -1722,26 +1717,26 @@ void CActor::on_weapon_shot_start		(CWeapon *weapon)
 void CActor::on_weapon_shot_stop		(CWeapon *weapon)
 {
 	//---------------------------------------------
-	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>(EffectorManager().GetEffector(eCEShot)); 
+	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>(Cameras().GetCamEffector(eCEShot)); 
 	if (effector && effector->IsActive())
 	{
 		if (effector->IsSingleShot())
 			update_camera(effector);
 	}
 	//---------------------------------------------
-	EffectorManager().RemoveEffector(eCEShot);
+	Cameras().RemoveCamEffector(eCEShot);
 }
 
 void CActor::on_weapon_hide				(CWeapon *weapon)
 {
-	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>(EffectorManager().GetEffector(eCEShot)); 
+	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>(Cameras().GetCamEffector(eCEShot)); 
 	if (effector && !effector->IsActive())
 		effector->Clear				();
 }
 
 Fvector CActor::weapon_recoil_delta_angle	()
 {
-	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>(EffectorManager().GetEffector(eCEShot));
+	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>(Cameras().GetCamEffector(eCEShot));
 	Fvector							result = {0.f,0.f,0.f};
 
 	if (effector)
@@ -1752,7 +1747,7 @@ Fvector CActor::weapon_recoil_delta_angle	()
 
 Fvector CActor::weapon_recoil_last_delta()
 {
-	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>(EffectorManager().GetEffector(eCEShot));
+	CCameraShotEffector				*effector = smart_cast<CCameraShotEffector*>(Cameras().GetCamEffector(eCEShot));
 	Fvector							result = {0.f,0.f,0.f};
 
 	if (effector)

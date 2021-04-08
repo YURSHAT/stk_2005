@@ -109,7 +109,7 @@ bool CActor::use_Vehicle(CHolderCustom* object)
 //				if (pCamBobbing){Level().Cameras.RemoveEffector(cefBobbing); pCamBobbing=0;}
 				if (pCamBobbing)
 				{
-					EffectorManager().RemoveEffector(eCEBobbing);
+					Cameras().RemoveCamEffector(eCEBobbing);
 					pCamBobbing = NULL;
 				}
 

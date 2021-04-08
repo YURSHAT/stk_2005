@@ -239,11 +239,9 @@ void CAI_Bloodsucker::LookDirection(Fvector to_dir, float bone_turn_speed)
 
 void CAI_Bloodsucker::ActivateVampireEffector(float max_dist)
 {
-	CActor *pA = smart_cast<CActor *>(Level().CurrentEntity());
-	if (pA) {
-		pA->EffectorManager().AddEffector(xr_new<CVampireCameraEffector>(6.0f, 5.f, max_dist));
-		Level().Cameras.AddEffector(xr_new<CVampirePPEffector>(pp_vampire_effector, 6.0f));
-	}
+	//_abs(dist - 1.0f)
+	Actor()->Cameras().AddCamEffector(xr_new<CVampireCameraEffector>(6.0f, 5.f, max_dist));
+	Actor()->Cameras().AddPPEffector(xr_new<CVampirePPEffector>(pp_vampire_effector, 6.0f));
 }
 
 
