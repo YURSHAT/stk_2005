@@ -281,7 +281,7 @@ void CParticleEffect::Render(float )
                         if (m_RT_Flags.is(flRT_XFORM)){
                             Fvector p;
                             m_XFORM.transform_tiny(p,m.pos);
-	                        M.mulB_43		(m_XFORM);
+	                        M.mulA_43		(m_XFORM);
                             FillSprite		(pv,M.k,M.i,p,lt,rb,r_x,r_y,m.color,m.rot.x);
                         }else{
                             FillSprite		(pv,M.k,M.i,m.pos,lt,rb,r_x,r_y,m.color,m.rot.x);
@@ -295,7 +295,7 @@ void CParticleEffect::Render(float )
                         if (m_RT_Flags.is(flRT_XFORM)){
                             Fvector p;
                             m_XFORM.transform_tiny(p,m.pos);
-	                        M.mulB_43		(m_XFORM);
+	                        M.mulA_43		(m_XFORM);
                             FillSprite		(pv,M.j,M.i,p,lt,rb,r_x,r_y,m.color,m.rot.x);
                         }else{
                             FillSprite		(pv,M.j,M.i,m.pos,lt,rb,r_x,r_y,m.color,m.rot.x);
