@@ -1001,7 +1001,7 @@ void CWeaponMagazined::OnZoomOut		()
 
 	CActor* pActor = smart_cast<CActor*>(H_Parent());
 	if(pActor)
-		pActor->EffectorManager().RemoveEffector	(eCEZoom);
+		pActor->EffectorManager().RemoveEffector(eCEZoom);
 
 }
 

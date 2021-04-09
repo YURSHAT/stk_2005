@@ -2,6 +2,7 @@
 
 #include "../effectorPP.h"
 #include "../cameramanager.h"
+#include "Actor.h"
 
 class CZoneEffectPP : public CEffectorPP {
 	typedef CEffectorPP inherited;
@@ -19,18 +20,19 @@ private:
 	virtual	BOOL	Process			(SPPInfo& pp);
 };
 
-
+class CActor;
 class CZoneEffector {
 	SPPInfo			state;
 	float			r_min_perc;		// min_radius (percents [0..1])
 	float			r_max_perc;		// max_radius (percents [0..1])
 	float			radius;
-	
 	CZoneEffectPP	*p_effector;
 
 public:
 			CZoneEffector	();
 			~CZoneEffector	();
+
+	CActor*			m_pActor;
 
 	void	Load			(LPCSTR section);
 	void	SetRadius		(float r);

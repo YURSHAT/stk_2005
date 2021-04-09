@@ -766,6 +766,10 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 
 	VERIFY(m_pActorEffector == NULL);
 	m_pActorEffector = xr_new<CActorEffector>();
+
+	VERIFY(cc_pActorEffector == NULL);
+	cc_pActorEffector = xr_new<CCameraManager>(true);
+
 	smart_cast<CKinematics*>(Visual())->CalculateBones();
 
 	//--------------------------------------------------------------
@@ -837,6 +841,7 @@ void CActor::net_Destroy	()
 
 	xr_delete	(pStatGraph);
 	xr_delete	(m_pActorEffector);
+	xr_delete	(cc_pActorEffector);
 	pCamBobbing = NULL;
 	
 #ifdef DEBUG	

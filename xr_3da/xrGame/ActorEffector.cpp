@@ -198,7 +198,7 @@ SndShockEffector::SndShockEffector	()
 SndShockEffector::~SndShockEffector	()
 {
 	psSoundVFactor		= m_stored_volume;
-	Level().Cameras.RemoveEffector(cefppHit);
+	Level().Cameras().RemovePPEffector(cefppHit);
 }
 
 bool SndShockEffector::Active()
@@ -218,7 +218,7 @@ void SndShockEffector::Start(int snd_length, float power)
 	psSoundVFactor		= m_stored_volume*SND_MIN_VOLUME_FACTOR;
 	
 	static float		xxx = 6.0f/150.0f; //6sec on max power(150)
-	Level().Cameras.AddEffector(xr_new<CShockPPEffector>(power*xxx,this));
+	Level().Cameras().AddPPEffector(xr_new<CShockPPEffector>(power*xxx,this));
 }
 
 void SndShockEffector::Update()

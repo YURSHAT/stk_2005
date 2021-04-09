@@ -5,6 +5,7 @@
 #include "HUDManager.h"
 #include "../xr_IOConsole.h"
 #include "../IGame_Level.h"
+#include "../CameraManager.h"
 #include "xr_Level_controller.h"
 #include "ui\UITextureMaster.h"
 #include "ui\UIXmlInit.h"
@@ -170,6 +171,7 @@ void CMainUI::Activate	(bool bActivate)
 		if(g_pGameLevel){
 			Device.seqFrame.Remove	(g_pGameLevel);
 			Device.seqRender.Remove	(g_pGameLevel);
+			CCameraManager::ResetPP	();
 		};
 		Device.seqRender.Add		(this);
 	}else{

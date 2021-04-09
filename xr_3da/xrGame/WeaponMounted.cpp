@@ -229,8 +229,8 @@ void	CWeaponMounted::cam_Update			(float dt, float fov)
 		OwnerActor()->Orientation().yaw			= -Camera()->yaw;
 		OwnerActor()->Orientation().pitch		= -Camera()->pitch;
 	}
-	Camera()->Update					(P,Da);
-	Level().Cameras.Update				(Camera());
+	Camera()->Update							(P,Da);
+	Level().Cameras().Update					(Camera());
 }
 
 bool	CWeaponMounted::Use					(const Fvector& pos,const Fvector& dir,const Fvector& foot_pos)
@@ -316,8 +316,8 @@ void CWeaponMounted::OnShot		()
 	StartSmokeParticles(fire_pos, zero_vel);
 	OnShellDrop(fire_pos, zero_vel);
 
-	bool hud_mode = (Level().CurrentEntity() == smart_cast<CObject*>(Owner()));
-	HUD_SOUND::PlaySound(sndShot, fire_pos, Owner(), hud_mode);
+	bool b_hud_mode = (Level().CurrentEntity() == smart_cast<CObject*>(Owner()));
+	HUD_SOUND::PlaySound(sndShot, fire_pos, Owner(), b_hud_mode);
 
 	//добавить эффектор стрельбы
 	AddShotEffector		();

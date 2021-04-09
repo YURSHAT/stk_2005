@@ -3,6 +3,7 @@
 
 #include "CameraLook.h"
 #include "xr_level_controller.h"
+#include "../CameraManager.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

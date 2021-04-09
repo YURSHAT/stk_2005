@@ -342,6 +342,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 public:
 	CActorEffector&			EffectorManager		() 	{VERIFY(m_pActorEffector); return *m_pActorEffector;}
+	CCameraManager&			Cameras() 			{ VERIFY(cc_pActorEffector); return *cc_pActorEffector; }
 	IC CCameraBase*			cam_Active			()	{return cameras[cam_active];}
 	IC CCameraBase*			cam_FirstEye		()	{return cameras[eacFirstEye];}
 
@@ -370,6 +371,7 @@ protected:
 
 	//менеджер эффекторов, есть у каждого актрера
 	CActorEffector*			m_pActorEffector;
+	CCameraManager*			cc_pActorEffector;
 	static float			f_Ladder_cam_limit;
 	////////////////////////////////////////////
 	// для взаимодействия с другими персонажами 

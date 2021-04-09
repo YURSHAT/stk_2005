@@ -251,8 +251,8 @@ void CActor::cam_Update(float dt, float fFOV)
 
 	if (Level().CurrentEntity() == this)
 	{
-		Level().Cameras.Update	(C);
-		if(eacFirstEye == cam_active && !Level().Cameras.GetEffector(cefDemo)){
+		Level().Cameras().Update	(C);
+		if (eacFirstEye == cam_active && !Level().Cameras().GetCamEffector(cefDemo)){
 			EffectorManager().ApplyDevice();
 		}
 	}

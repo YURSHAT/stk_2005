@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "night_vision_effector.h"
 
-#include "level.h"
+#include "actor.h"
 #include "../CameraManager.h"
 
 
@@ -58,32 +58,7 @@ BOOL CNightVisionEffectorPP::Process(SPPInfo& pp)
 	clamp(factor,0.01f,1.0f);
 
 	SPPInfo	def;
-
-	pp.duality.h		+= def.duality.h			+ (state.duality.h			- def.duality.h)		* factor; 			
-	pp.duality.v		+= def.duality.v			+ (state.duality.v			- def.duality.v)		* factor;
-	pp.gray				+= def.gray				+ (state.gray				- def.gray)				* factor;
-	pp.blur				+= def.blur				+ (state.blur				- def.blur)				* factor;
-	pp.noise.intensity	+= def.noise.intensity	+ (state.noise.intensity	- def.noise.intensity)	* factor;
-	pp.noise.grain		+= def.noise.grain		+ (state.noise.grain		- def.noise.grain)		* factor;
-	pp.noise.fps		+= def.noise.fps			+ (state.noise.fps			- def.noise.fps)		* factor;	
-
-	pp.color_base.set	(
-		def.color_base.r	+ (state.color_base.r - def.color_base.r) * factor, 
-		def.color_base.g	+ (state.color_base.g - def.color_base.g) * factor, 
-		def.color_base.b	+ (state.color_base.b - def.color_base.b) * factor
-		);
-
-	pp.color_gray.set	(
-		def.color_gray.r	+ (state.color_gray.r - def.color_gray.r) * factor, 
-		def.color_gray.g	+ (state.color_gray.g - def.color_gray.g) * factor, 
-		def.color_gray.b	+ (state.color_gray.b - def.color_gray.b) * factor
-		);
-
-	pp.color_add.set	(
-		def.color_add.r	+ (state.color_add.r - def.color_add.r) * factor, 
-		def.color_add.g	+ (state.color_add.g - def.color_add.g) * factor, 
-		def.color_add.b	+ (state.color_add.b - def.color_add.b) * factor
-		);
+	pp.lerp(pp_identity, state, factor);
 
 	return TRUE;
 }
@@ -122,11 +97,11 @@ bool CNightVisionEffector::Start	()
 {
 	VERIFY(p_effector == NULL);
 
-	if(Level().Cameras.GetEffector(EEffectorPPType(NIGHT_VISION_EFFECTOR_TYPE_ID))) 
+	if(Actor()->Cameras().GetPPEffector(EEffectorPPType(NIGHT_VISION_EFFECTOR_TYPE_ID))) 
 		return false;
 
 	p_effector = xr_new<CNightVisionEffectorPP>(state, m_attack, m_release);
-	Level().Cameras.AddEffector(p_effector);
+	Actor()->Cameras().AddPPEffector(p_effector);
 
 	return true;
 }
@@ -136,6 +111,7 @@ bool CNightVisionEffector::Stop	()
 {
 	if(!p_effector) return false;
 	p_effector->m_status = CNightVisionEffectorPP::FADE_OUT;
+	Actor()->Cameras().RemovePPEffector(EEffectorPPType(NIGHT_VISION_EFFECTOR_TYPE_ID));
 	p_effector = NULL;
 
 	return true;
@@ -143,7 +119,7 @@ bool CNightVisionEffector::Stop	()
 
 bool CNightVisionEffector::IsActive	()
 {
-	if(Level().Cameras.GetEffector(EEffectorPPType(NIGHT_VISION_EFFECTOR_TYPE_ID)))
+	if(Actor()->Cameras().GetPPEffector(EEffectorPPType(NIGHT_VISION_EFFECTOR_TYPE_ID)))
 		return true;
 	else
 		return false;

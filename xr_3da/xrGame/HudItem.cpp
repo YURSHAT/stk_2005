@@ -215,8 +215,8 @@ void CHudItem::UpdateHudInertion		(Fmatrix& hud_trans, float actor_yaw, float ac
 	if (m_pHUD && m_bInertionAllow && m_bInertionEnable){
 		Fmatrix			xform,xform_orig; 
 		Fvector& origin	= hud_trans.c; 
-		Level().Cameras.affected_Matrix		(xform);
-		Level().Cameras.unaffected_Matrix	(xform_orig);
+		Level().Cameras().affected_Matrix		(xform);
+		Level().Cameras().unaffected_Matrix	(xform_orig);
 
 		static Fvector						m_last_dir={0,0,0};
 

@@ -41,8 +41,9 @@ void SPPInfo::normalize()
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CCameraManager::CCameraManager()
+CCameraManager::CCameraManager(bool bApplyOnUpdate)
 {
+	m_bAutoApply					= bApplyOnUpdate;
 	vPosition.set	(0,0,0);
 	vDirection.set	(0,0,1);
 	vNormal.set		(0,1,0);
@@ -62,11 +63,13 @@ CCameraManager::CCameraManager()
 	pp_identity.color_gray.set		(.333f,	.333f,	.333f);
 	pp_identity.color_add.set		(0,		0,		0);
 
-	pp_zero.blur = pp_zero.gray = pp_zero.duality.h = pp_zero.duality.v = 0;
-	pp_zero.noise.intensity=0;	pp_zero.noise.grain = 0.0f;	pp_zero.noise.fps = 0;
-	pp_zero.color_base.set		(0,0,0);
-	pp_zero.color_gray.set		(0,0,0);
-	pp_zero.color_add.set		(0,0,0);
+	pp_zero.blur = pp_zero.gray		= pp_zero.duality.h = pp_zero.duality.v = 0.0f;
+	pp_zero.noise.intensity			=0;
+	pp_zero.noise.grain				= 0.0f;	
+	pp_zero.noise.fps				= 0.0f;
+	pp_zero.color_base.set			(0,0,0);
+	pp_zero.color_gray.set			(0,0,0);
+	pp_zero.color_add.set			(0,0,0);
 }
 
 CCameraManager::~CCameraManager()
@@ -77,21 +80,21 @@ CCameraManager::~CCameraManager()
 		xr_delete(*it);
 }
 
-CEffector* CCameraManager::GetEffector(EEffectorType type)	
+CEffector* CCameraManager::GetCamEffector(EEffectorType type)	
 { 
 	for (EffectorIt it=m_Effectors.begin(); it!=m_Effectors.end(); it++ )
 		if ((*it)->eType==type) return *it;
 	return 0;
 }
 
-CEffector* CCameraManager::AddEffector(CEffector* ef)
+CEffector* CCameraManager::AddCamEffector(CEffector* ef)
 {
-	RemoveEffector(ef->eType);
+	RemoveCamEffector(ef->eType);
 	m_Effectors.push_back(ef);
 	return m_Effectors.back();
 }
 
-void CCameraManager::RemoveEffector(EEffectorType type){
+void CCameraManager::RemoveCamEffector(EEffectorType type){
 	for (EffectorIt it=m_Effectors.begin(); it!=m_Effectors.end(); it++ )
 		if ((*it)->eType==type){ 
 			xr_delete(*it);
@@ -100,26 +103,26 @@ void CCameraManager::RemoveEffector(EEffectorType type){
 		}
 }
 
-CEffectorPP* CCameraManager::GetEffector(EEffectorPPType type)	
+CEffectorPP* CCameraManager::GetPPEffector(EEffectorPPType type)	
 { 
 	for (EffectorPPIt it=m_EffectorsPP.begin(); it!=m_EffectorsPP.end(); it++ )
 		if ((*it)->eType==type) return *it;
 	return 0;
 }
 
-CEffectorPP* CCameraManager::AddEffector(CEffectorPP* ef) 
+CEffectorPP* CCameraManager::AddPPEffector(CEffectorPP* ef)
 {
-	RemoveEffector				(ef->eType);
-	m_EffectorsPP.push_back		(ef);
-	return m_EffectorsPP.back	();
+	RemovePPEffector(ef->eType);
+	m_EffectorsPP.push_back(ef);
+	return m_EffectorsPP.back();
 }
 
-void CCameraManager::RemoveEffector(EEffectorPPType type)
+void CCameraManager::RemovePPEffector(EEffectorPPType type)
 {
-	for (EffectorPPIt it=m_EffectorsPP.begin(); it!=m_EffectorsPP.end(); it++ )
-		if ((*it)->eType==type){ 
+	for (EffectorPPIt it = m_EffectorsPP.begin(); it != m_EffectorsPP.end(); it++)
+		if ((*it)->eType == type){
 			if ((*it)->bFreeOnRemove)	xr_delete(*it);
-			m_EffectorsPP.erase			(it);
+			m_EffectorsPP.erase(it);
 			return;
 		}
 }
@@ -216,7 +219,7 @@ void CCameraManager::Update(const Fvector& P, const Fvector& D, const Fvector& N
 				_count		+= 1;
 				pp_affected += l_PPInf;
 				pp_affected -= pp_identity;
-			} else RemoveEffector(eff->eType);
+			} else RemovePPEffector(eff->eType);
 			//Log					("camMMGR_gray_aff:",pp_affected.gray);
 		}
 		if (0==_count)	pp_affected				= pp_identity;
@@ -225,34 +228,53 @@ void CCameraManager::Update(const Fvector& P, const Fvector& D, const Fvector& N
 		pp_affected				=	pp_identity;
 	}
 	
-	if (FALSE==bOverlapped){
-		// Device params
-		Device.mView.build_camera_dir(vPosition,vDirection,vNormal);
+	if (FALSE==bOverlapped && m_bAutoApply)
+			ApplyDevice		();
+}
 
-		Device.vCameraPosition.set	( vPosition		);
-		Device.vCameraDirection.set	( vDirection	);
-		Device.vCameraTop.set		( vNormal		);
-		Device.vCameraRight.set		( vRight		);
+void CCameraManager::ApplyDevice ()
+{
+	// Device params
+	Device.mView.build_camera_dir(vPosition,vDirection,vNormal);
 
-		// projection
-		Device.fFOV					= fFov;
-		Device.fASPECT				= fAspect;
-		Device.mProject.build_projection(deg2rad(fFov*fAspect), fAspect, VIEWPORT_NEAR, fFar);
-	}
+	Device.vCameraPosition.set	( vPosition		);
+	Device.vCameraDirection.set	( vDirection	);
+	Device.vCameraTop.set		( vNormal		);
+	Device.vCameraRight.set		( vRight		);
+
+	// projection
+	Device.fFOV					= fFov;
+	Device.fASPECT				= fAspect;
+	Device.mProject.build_projection(deg2rad(fFov*fAspect), fAspect, VIEWPORT_NEAR, fFar);
+
 
 	// postprocess
+	IRender_Target*		T		= ::Render->getTarget();
+	T->set_duality_h			(pp_affected.duality.h);
+	T->set_duality_v			(pp_affected.duality.v);
+	T->set_blur					(pp_affected.blur);
+	T->set_gray					(pp_affected.gray);
+	T->set_noise				(pp_affected.noise.intensity);
+	T->set_noise_scale			(pp_affected.noise.grain);
+	T->set_noise_fps			(pp_affected.noise.fps);
+	T->set_color_base			(pp_affected.color_base);
+	T->set_color_gray			(pp_affected.color_gray);
+	T->set_color_add			(pp_affected.color_add);
+}
+
+void CCameraManager::ResetPP()
+{
 	IRender_Target*		T	= ::Render->getTarget();
-	T->set_duality_h		(pp_affected.duality.h);
-	T->set_duality_v		(pp_affected.duality.v);
-	T->set_blur				(pp_affected.blur);
-	T->set_gray				(pp_affected.gray);
-	//Log						("camMMGR_gray_set:",pp_affected.gray);
-	T->set_noise			(pp_affected.noise.intensity);
-	T->set_noise_scale		(pp_affected.noise.grain);
-	T->set_noise_fps		(pp_affected.noise.fps);
-	T->set_color_base		(pp_affected.color_base);
-	T->set_color_gray		(pp_affected.color_gray);
-	T->set_color_add		(pp_affected.color_add);
+	T->set_duality_h		(pp_identity.duality.h);
+	T->set_duality_v		(pp_identity.duality.v);
+	T->set_blur				(pp_identity.blur);
+	T->set_gray				(pp_identity.gray);
+	T->set_noise			(pp_identity.noise.intensity);
+	T->set_noise_scale		(pp_identity.noise.grain);
+	T->set_noise_fps		(pp_identity.noise.fps);
+	T->set_color_base		(pp_identity.color_base);
+	T->set_color_gray		(pp_identity.color_gray);
+	T->set_color_add		(pp_identity.color_add);
 }
 
 void CCameraManager::Dump()

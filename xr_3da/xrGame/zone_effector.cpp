@@ -23,34 +23,8 @@ BOOL CZoneEffectPP::Process(SPPInfo& pp)
 {
 	inherited::Process(pp);
 
-	SPPInfo	def;
-
-	pp.duality.h		= def.duality.h			+ (state.duality.h			- def.duality.h)		* factor; 			
-	pp.duality.v		= def.duality.v			+ (state.duality.v			- def.duality.v)		* factor;
-	pp.gray				= def.gray				+ (state.gray				- def.gray)				* factor;
-	pp.blur				= def.blur				+ (state.blur				- def.blur)				* factor;
-	pp.noise.intensity	= def.noise.intensity	+ (state.noise.intensity	- def.noise.intensity)	* factor;
-	pp.noise.grain		= def.noise.grain		+ (state.noise.grain		- def.noise.grain)		* factor;
-	pp.noise.fps		= def.noise.fps			+ (state.noise.fps			- def.noise.fps)		* factor;	
-	VERIFY(!fis_zero(pp.noise.fps));
-	
-	pp.color_base.set(
-		def.color_base.r	+ (state.color_base.r - def.color_base.r) * factor, 
-		def.color_base.g	+ (state.color_base.g - def.color_base.g) * factor, 
-		def.color_base.b	+ (state.color_base.b - def.color_base.b) * factor
-	);
-	
-	pp.color_gray.set(
-		def.color_gray.r	+ (state.color_gray.r - def.color_gray.r) * factor, 
-		def.color_gray.g	+ (state.color_gray.g - def.color_gray.g) * factor, 
-		def.color_gray.b	+ (state.color_gray.b - def.color_gray.b) * factor
-	);
-
-	pp.color_add.set(
-		def.color_add.r	+ (state.color_add.r - def.color_add.r) * factor, 
-		def.color_add.g	+ (state.color_add.g - def.color_add.g) * factor, 
-		def.color_add.b	+ (state.color_add.b - def.color_add.b) * factor
-	);
+	clamp(factor,0.01f,1.0f);
+	pp.lerp	(pp_identity, state, factor);
 
 	return TRUE;
 }
@@ -68,12 +42,14 @@ void CZoneEffectPP::Destroy()
 ////////////////////////////////////////////////////////////////////////////////////
 CZoneEffector::CZoneEffector() 
 {
-	p_effector  = 0;
 	radius		= 1;
+	p_effector  = NULL;
+	m_pActor	= NULL;
 }
 
 CZoneEffector::~CZoneEffector()
 {
+	Stop		();
 }
 
 void CZoneEffector::Load(LPCSTR section)
@@ -99,18 +75,19 @@ void CZoneEffector::Load(LPCSTR section)
 
 void CZoneEffector::Activate()
 {
+	m_pActor = smart_cast<CActor*>(Level().CurrentEntity());
+	if(!m_pActor) return;
 	p_effector = xr_new<CZoneEffectPP>(state, EEffectorPPType( u32(u64(this) & u32(-1)) ));
-	Level().Cameras.AddEffector(p_effector);
-
+	m_pActor->Cameras().AddPPEffector(p_effector);
 }
 
 void CZoneEffector::Stop()
 {
 	if (!p_effector) return;
-	
-	Level().Cameras.RemoveEffector(EEffectorPPType( u32(u64(this) & u32(-1)) ));
-	p_effector->Destroy();
-	p_effector = 0;
+	 
+	m_pActor->Cameras().RemovePPEffector(EEffectorPPType( u32(u64(this) & u32(-1)) ));
+	xr_delete	(p_effector);
+	m_pActor	= NULL;
 };
 
 void CZoneEffector::Update(float dist)
@@ -122,7 +99,7 @@ void CZoneEffector::Update(float dist)
 	bool camera_on_actor = (Level().CurrentEntity() && (Level().CurrentEntity()->CLS_ID == CLSID_OBJECT_ACTOR));
 	
 	if (p_effector) {
-		if ((dist > max_r) || !camera_on_actor)	Stop();
+		if ((dist > max_r) || !camera_on_actor || (m_pActor&&!m_pActor->g_Alive()))	Stop();
 	} else {
 		if ((dist < max_r) && camera_on_actor)	Activate();
 	}
