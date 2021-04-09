@@ -184,7 +184,7 @@ ICF static BOOL grenade_hit_callback(collide::rq_result& result, LPVOID params)
 
 
 
-float CExplosive::ExplosionEffect(collide::rq_results& storage, CExplosive*exp_obj,CPhysicsShellHolder*blasted_obj,  const Fvector &expl_centre, const float expl_radius) 
+float CExplosive::ExplosionEffect(collide::rq_results& storage, CExplosive*exp_obj, CPhysicsShellHolder*blasted_obj, const Fvector &expl_centre, const float expl_radius)
 {
 	
 	const Fmatrix	&obj_xform=blasted_obj->XFORM();
@@ -234,7 +234,7 @@ float CExplosive::ExplosionEffect(collide::rq_results& storage, CExplosive*exp_o
 		effect+=l_S/max_s*TestPassEffect(l_source_p,l_dir,mag,expl_radius,storage,blasted_obj);
 
 	}
-	return effect/TEST_RAYS_PER_OBJECT;
+	return 0; //effect/TEST_RAYS_PER_OBJECT;
 	
 }
 float CExplosive::TestPassEffect(const	Fvector	&source_p,	const	Fvector	&dir,float range,float ef_radius,collide::rq_results& storage, CObject* blasted_obj)
@@ -244,8 +244,6 @@ float CExplosive::TestPassEffect(const	Fvector	&source_p,	const	Fvector	&dir,flo
 	float shoot_factor=1.f;
 	if(range>EPS_L)
 	{
-
-		
 		collide::ray_defs	RD		(source_p,dir,range,CDB::OPT_CULL,collide::rqtBoth);
 #ifdef DEBUG
 		SExpQParams			ep		(source_p,dir);
