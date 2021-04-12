@@ -100,7 +100,7 @@ void CPsyDogAura::update_schedule()
 		if (need_be_active) {
 			// create effector
 			m_effector = xr_new<CPPEffectorPsyDogAura>(m_state, 5000);
-			Actor()->Cameras().AddPPEffector		(m_effector);
+			Level().Cameras().AddPPEffector		(m_effector);
 		}
 	}
 

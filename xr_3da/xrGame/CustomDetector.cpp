@@ -311,7 +311,7 @@ void CCustomDetector::UpdateMapLocations() // called on turn on/off only
 
 void CCustomDetector::UpdateNightVisionMode()
 {
-	bool bNightVision = ( Actor()->Cameras().GetPPEffector(EEffectorPPType(NIGHT_VISION_EFFECTOR_TYPE_ID))!=NULL );
+	bool bNightVision = ( Level().Cameras().GetPPEffector(EEffectorPPType(NIGHT_VISION_EFFECTOR_TYPE_ID))!=NULL );
 	bool bOn =	bNightVision && 
 				m_pCurrentActor &&
 				m_pCurrentActor==Level().CurrentViewEntity()&& 

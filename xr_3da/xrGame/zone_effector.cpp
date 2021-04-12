@@ -78,16 +78,17 @@ void CZoneEffector::Activate()
 	m_pActor = smart_cast<CActor*>(Level().CurrentEntity());
 	if(!m_pActor) return;
 	p_effector = xr_new<CZoneEffectPP>(state, EEffectorPPType( u32(u64(this) & u32(-1)) ));
-	m_pActor->Cameras().AddPPEffector(p_effector);
+	Level().Cameras().AddPPEffector(p_effector);
+
 }
 
 void CZoneEffector::Stop()
 {
 	if (!p_effector) return;
-	 
-	m_pActor->Cameras().RemovePPEffector(EEffectorPPType( u32(u64(this) & u32(-1)) ));
-	xr_delete	(p_effector);
-	m_pActor	= NULL;
+	
+	Level().Cameras().RemovePPEffector(EEffectorPPType( u32(u64(this) & u32(-1)) ));
+	p_effector->Destroy();
+	p_effector = 0;
 };
 
 void CZoneEffector::Update(float dist)

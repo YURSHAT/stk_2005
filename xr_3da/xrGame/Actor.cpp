@@ -584,8 +584,7 @@ void CActor::HitMark	(float P,
 	if ( (hit_type==ALife::eHitTypeFireWound||hit_type==ALife::eHitTypeWound_2) && g_Alive() && Local() && /*(this!=who) && */(Level().CurrentEntity()==this) )	
 	{
 		HUD().Hit(0, P, dir);
-		//Level().Cameras().AddPPEffector(xr_new<CShootingHitEffectorPP>(	m_pShootingEffector->ppi,		m_pShootingEffector->time,	m_pShootingEffector->time_attack,	m_pShootingEffector->time_release));
-		Actor()->Cameras().AddPPEffector(xr_new<CShootingHitEffectorPP>(m_pShootingEffector->ppi, m_pShootingEffector->time, m_pShootingEffector->time_attack, m_pShootingEffector->time_release));
+		Level().Cameras().AddPPEffector(xr_new<CShootingHitEffectorPP>(	m_pShootingEffector->ppi,		m_pShootingEffector->time,	m_pShootingEffector->time_attack,	m_pShootingEffector->time_release));
 
 
 	if(psHUD_Flags.test(HUD_CAM_ANIM_HIT)){
@@ -791,7 +790,7 @@ void CActor::g_Physics			(Fvector& _accel, float jump, float dt)
 
 		if (Local() && g_Alive()) {
 			if (m_PhysicMovementControl->gcontact_Was) 
-				Cameras().AddCamEffector		(xr_new<CEffectorFall> (m_PhysicMovementControl->gcontact_Power));
+				g_pGameLevel->Cameras().AddCamEffector		(xr_new<CEffectorFall> (m_PhysicMovementControl->gcontact_Power));
 			if (!fis_zero(m_PhysicMovementControl->gcontact_HealthLost))	{
 				const ICollisionDamageInfo* di=m_PhysicMovementControl->CollisionDamageInfo();
 				Fvector hdir;di->HitDir(hdir);

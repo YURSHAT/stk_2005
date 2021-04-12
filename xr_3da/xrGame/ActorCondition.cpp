@@ -243,13 +243,13 @@ EActorSleep CActorCondition::GoSleep(ALife::_TIME_ID sleep_time, bool without_ch
 
 	VERIFY	(m_object == smart_cast<CActor*>(Level().CurrentEntity()));
 
-	m_object->Cameras().RemovePPEffector(EEffectorPPType(SLEEP_EFFECTOR_TYPE_ID));
+	Level().Cameras().RemovePPEffector(EEffectorPPType(SLEEP_EFFECTOR_TYPE_ID));
 	object().m_pSleepEffectorPP = xr_new<CSleepEffectorPP>(object().m_pSleepEffector->ppi,
 													object().m_pSleepEffector->time,
 													object().m_pSleepEffector->time_attack,
 													object().m_pSleepEffector->time_release);
 
-	m_object->Cameras().AddPPEffector(object().m_pSleepEffectorPP);
+	Level().Cameras().AddPPEffector(object().m_pSleepEffectorPP);
 
 	m_object->callback(GameObject::eActorSleep)( m_object->lua_game_object() );
 

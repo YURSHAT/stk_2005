@@ -242,7 +242,7 @@ void CAI_Bloodsucker::ActivateVampireEffector(float max_dist)
 	CActor *pA = smart_cast<CActor *>(Level().CurrentEntity());
 	if (pA) {
 		pA->EffectorManager().AddEffector(xr_new<CVampireCameraEffector>(6.0f, 5.f, max_dist));
-		Actor()->Cameras().AddPPEffector(xr_new<CVampirePPEffector>(pp_vampire_effector, 6.0f));
+		Level().Cameras().AddPPEffector(xr_new<CVampirePPEffector>(pp_vampire_effector, 6.0f));
 	}
 }
 
