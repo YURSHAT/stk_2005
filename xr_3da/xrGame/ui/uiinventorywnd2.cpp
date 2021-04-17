@@ -366,6 +366,11 @@ void CUIInventoryWnd::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 	CUIWindow::SendMessage(pWnd, msg, pData);
 }
 
+void CUIInventoryWnd::InitInventory_delayed()
+{
+	m_b_need_reinit = true;
+}
+
 void CUIInventoryWnd::InitInventory() 
 {
 	CInventoryOwner *pInvOwner = smart_cast<CInventoryOwner*>(Level().CurrentEntity());
@@ -581,6 +586,8 @@ void CUIInventoryWnd::InitInventory()
 		}
 	}
 	UpdateWeight(UIBagWnd, true);
+
+	m_b_need_reinit		= false;
 }  
 
 bool CUIInventoryWnd::SlotProc0(CUIDragDropItem* pItem, CUIDragDropList* pList)
