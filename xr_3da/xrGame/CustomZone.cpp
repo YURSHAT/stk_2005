@@ -54,6 +54,7 @@ CCustomZone::CCustomZone(void)
 	m_owner_id					= u32(-1);
 
 	m_effector					= xr_new<CZoneEffector>();
+	m_bIdleObjectParticlesDontStop = FALSE;
 }
 
 CCustomZone::~CCustomZone(void) 
@@ -164,6 +165,8 @@ void CCustomZone::Load(LPCSTR section)
 		m_sIdleObjectParticlesBig = pSettings->r_string(section,"idle_big_particles");
 	if(pSettings->line_exist(section,"idle_big_particles")) 
 		m_sIdleObjectParticlesSmall = pSettings->r_string(section,"idle_small_particles");
+	if(pSettings->line_exist(section,"idle_particles_dont_stop"))
+		m_bIdleObjectParticlesDontStop=pSettings->r_bool(section,"idle_particles_dont_stop");
 
 	if(pSettings->line_exist(section,"postprocess")) 
 		m_effector->Load(pSettings->r_string(section,"postprocess"));
@@ -315,8 +318,17 @@ BOOL CCustomZone::net_Spawn(CSE_Abstract* DC)
 //	CSE_ALifeAnomalousZone		*C = smart_cast<CSE_ALifeAnomalousZone*>(e);
 	
 	m_fMaxPower					= Z->m_maxPower;
-	m_fAttenuation				= Z->m_attn;
-	m_dwPeriod					= Z->m_period;
+
+	if (pSettings->line_exist(cNameSect(), "attenuation"))
+		m_fAttenuation = pSettings->r_float(cNameSect(), "attenuation");
+	else
+		m_fAttenuation = Z->m_attn;
+
+	if (pSettings->line_exist(cNameSect(), "period"))
+		m_dwPeriod = pSettings->r_u32(cNameSect(), "period");
+	else
+		m_dwPeriod = Z->m_period;
+
 	m_owner_id					= Z->m_owner_id;
 	if(m_owner_id != u32(-1))
 		m_ttl					= Device.dwTimeGlobal + 40000;// 40 sec
@@ -865,6 +877,8 @@ void CCustomZone::PlayObjectIdleParticles(CGameObject* pObject)
 
 	
 	//запустить партиклы на объекте
+	//. new
+	PP->StopParticles (particle_str);
 	PP->StartParticles (particle_str, Fvector().set(0,1,0), ID());
 	if (!IsEnabled())
 		PP->StopParticles	(particle_str);
@@ -872,6 +886,9 @@ void CCustomZone::PlayObjectIdleParticles(CGameObject* pObject)
 
 void CCustomZone::StopObjectIdleParticles(CGameObject* pObject)
 {
+	if(m_bIdleObjectParticlesDontStop&&!pObject->cast_actor())
+		return;
+
 	CParticlesPlayer* PP = smart_cast<CParticlesPlayer*>(pObject);
 	if(!PP) return;
 
@@ -958,6 +975,8 @@ void CCustomZone::AffectObjects()
 	if(m_dwAffectFrameNum == Device.dwFrame) return;
 
 	m_dwAffectFrameNum = Device.dwFrame;
+	
+	if(Device.dwPrecacheFrame)	return;
 
 	OBJECT_INFO_VEC_IT it;
 	for(it = m_ObjectInfoMap.begin(); m_ObjectInfoMap.end() != it; ++it) 
@@ -965,7 +984,7 @@ void CCustomZone::AffectObjects()
 		if( !(*it).object->getDestroy() )
 			Affect( &(*it) );
 	}
-
+	m_dwDeltaTime = 0;
 }
 
 void CCustomZone::UpdateBlowout()

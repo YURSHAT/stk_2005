@@ -109,7 +109,7 @@ void CUIGameSP::StartCarBody(CInventory* pOurInv,    CGameObject* pOurObject,
 void CUIGameSP::ReInitInventoryWnd		() 
 { 
 	if (InventoryMenu->IsShown()) 
-		InventoryMenu->InitInventory(); 
+		InventoryMenu->InitInventory_delayed();
 };
 
 void CUIGameSP::ChangeLevel				(GameGraph::_GRAPH_ID game_vert_id, u32 level_vert_id, Fvector pos, Fvector ang)

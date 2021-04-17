@@ -236,6 +236,7 @@ protected:
 	//нахождение большого и мальнекого объекта в зоне
 	shared_str				m_sIdleObjectParticlesSmall;
 	shared_str				m_sIdleObjectParticlesBig;
+	BOOL					m_bIdleObjectParticlesDontStop;
 
 	ref_sound				m_idle_sound;
 	ref_sound				m_awaking_sound;

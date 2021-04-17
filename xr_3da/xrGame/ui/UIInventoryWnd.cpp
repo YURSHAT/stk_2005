@@ -49,7 +49,7 @@ const char * const INVENTORY_CHARACTER_XML	= "inventory_character.xml";
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-
+CUIInventoryWnd* g_pInvWnd = NULL;
 CUIInventoryWnd::CUIInventoryWnd()
 {
 	m_iCurrentActiveSlot = NO_ACTIVE_SLOT;
@@ -62,6 +62,8 @@ CUIInventoryWnd::CUIInventoryWnd()
 	SetCurrentItem(NULL);
 
 	SetFont(HUD().Font().pFontMedium);
+	g_pInvWnd			= this;	
+	m_b_need_reinit		= false;
 }
 
 void CUIInventoryWnd::Init()
@@ -236,6 +238,9 @@ void CUIInventoryWnd::Draw()
 
 void CUIInventoryWnd::Update()
 {
+	if(m_b_need_reinit)
+		InitInventory	();
+
 	//CActor *pActor = smart_cast<CActor*>(Level().CurrentEntity());
 	CEntityAlive *pEntityAlive = smart_cast<CEntityAlive*>(Level().CurrentEntity());
 
