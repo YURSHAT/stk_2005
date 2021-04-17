@@ -241,7 +241,14 @@ void xrServer::Process_event	(NET_Packet& P, ClientID sender)
 				};
 			};
 			SendTo(SV_Client->ID, P, net_flags(TRUE, TRUE));
-		}break;
+	}break;
+	case GE_MONEY:
+	{
+		CSE_Abstract                *e_dest = receiver;
+		CSE_ALifeTraderAbstract*    pTa = smart_cast<CSE_ALifeTraderAbstract*>(e_dest);
+		pTa->m_dwMoney = P.r_u32();
+
+	}break;
 //	case GEG_PLAYER_BUYMENU_OPEN:
 //	case GEG_PLAYER_BUYMENU_CLOSE:
 //	case GEG_PLAYER_INVENTORYMENU_OPEN:

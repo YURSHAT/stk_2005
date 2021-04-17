@@ -79,6 +79,14 @@ struct SSpecificCharacterData : CSharedResource
 	bool m_bNoRandom;
 	//если персонаж является заданым по умолчанию для своей команды
 	bool m_bDefaultForCommunity;
+#ifdef  XRGAME_EXPORTS
+	struct SMoneyDef{
+		u32				min_money;
+		u32				max_money;
+		bool			inf_money;
+	};
+	SMoneyDef			money_def;
+#endif
 };
 
 class CInventoryOwner;
@@ -122,6 +130,7 @@ public:
 	LPCSTR						Name		() const ;
 	LPCSTR						Bio			() const ;
 	const CHARACTER_COMMUNITY&	Community	() const ;
+	SSpecificCharacterData::SMoneyDef& MoneyDef			() 	{return data()->money_def;}
 #endif
 
 	CHARACTER_RANK_VALUE		Rank		() const ;

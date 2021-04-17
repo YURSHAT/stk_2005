@@ -8,7 +8,7 @@
 #include "pda_space.h"
 #include "attachment_owner.h"
 #include "script_space_forward.h"
-#include "character_info_defs.h"
+#include "character_info.h"
 #include "inventory_space.h"
 
 class CSE_Abstract;
@@ -58,6 +58,7 @@ public:
 	// свойства
 	u32					m_dwMoney;
 
+
 	CPda* GetPDA		() const;
 	bool IsActivePDA	() const;
 
@@ -88,7 +89,7 @@ public:
 	virtual void EnableTalk		()		{m_bAllowTalk = true;}
 	virtual void DisableTalk	()		{m_bAllowTalk = false;}
 	virtual bool IsTalkEnabled	()		{ return m_bAllowTalk;}
-
+	
 	void EnableTrade			()		{m_bAllowTrade = true;}
 	void DisableTrade			()		{m_bAllowTrade = false;}
 	bool IsTradeEnabled			()		{ return m_bAllowTrade;}
@@ -99,8 +100,10 @@ public:
 
 	//игровое имя 
 	virtual LPCSTR	Name        () const;
-
+	u32					get_money		() const				{return m_money;}
+	void				set_money		(u32 amount, bool bSendEvent);
 protected:
+	u32					m_money;
 	// торговля
 	CTrade*				m_pTrade;
 	bool				m_bTalking; 
@@ -146,6 +149,7 @@ public:
 public:
 	virtual CCharacterInfo&				CharacterInfo		() const {VERIFY(m_pCharacterInfo); return *m_pCharacterInfo;}
 	virtual const CSpecificCharacter&	SpecificCharacter	() const;
+	bool								InfinitiveMoney		()	{return CharacterInfo().m_SpecificCharacter.MoneyDef().inf_money;}
 
 	//установка группировки на клиентском и серверном объкте
 	virtual void			SetCommunity	(CHARACTER_COMMUNITY_INDEX);
