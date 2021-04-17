@@ -286,7 +286,7 @@ void CUIInventoryWnd::Update()
 		// update money
 		CInventoryOwner* pOurInvOwner = smart_cast<CInventoryOwner*>(pEntityAlive);
 		char sMoney[50];
-		int  iMoney(pOurInvOwner->m_dwMoney);
+		int  iMoney(pOurInvOwner->get_money());
 		itoa(iMoney, sMoney, 10);
 		strcat(sMoney,"$");	
 		UIMoneyWnd.SetText(sMoney);

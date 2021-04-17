@@ -528,7 +528,7 @@ void CUITradeWnd::PerformTrade()
 
 	if (m_uidata->UIOurTradeList.GetDragDropItemsList().empty() && m_uidata->UIOthersTradeList.GetDragDropItemsList().empty()) return;
 
-	int our_money = (int)m_pInvOwner->m_dwMoney;
+	int our_money = (int)m_pInvOwner->get_money();
 	int others_money = (int)m_pOthersInvOwner->m_dwMoney;
 
 	int delta_price = int(m_iOurTradePrice-m_iOthersTradePrice);
@@ -598,7 +598,7 @@ void CUITradeWnd::UpdatePrices()
 	sprintf(buf, "%d$", m_iOthersTradePrice);
 	m_uidata->UIOthersPriceCaption.GetPhraseByIndex(2)->str = buf;
 
-	sprintf(buf, "%d$", m_pInvOwner->m_dwMoney);
+	sprintf(buf, "%d$", m_pInvOwner->get_money());
 	m_uidata->UIOurBagWnd.SetText(buf);
 	sprintf(buf, "%d$", m_pOthersInvOwner->m_dwMoney);
 	m_uidata->UIOthersBagWnd.SetText(buf);

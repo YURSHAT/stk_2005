@@ -176,7 +176,7 @@
       <SubSystem>Windows</SubSystem>
       <StackReserveSize>0</StackReserveSize>
       <StackCommitSize>0</StackCommitSize>
-      <LargeAddressAware />
+      <LargeAddressAware>true</LargeAddressAware>
       <TargetMachine>NotSet</TargetMachine>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>

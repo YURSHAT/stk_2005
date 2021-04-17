@@ -47,7 +47,6 @@ CInventoryOwner::CInventoryOwner			()
 
 DLL_Pure *CInventoryOwner::_construct		()
 {
-	m_pTrade					= xr_new<CTrade>(this);
 	return						(0);
 }
 
@@ -70,6 +69,7 @@ void CInventoryOwner::reload				(LPCSTR section)
 	inventory().SetSlotsUseful (true);
 
 	m_dwMoney					= 0;
+	m_money						= 0;
 	m_bTalking					= false;
 	m_pTalkPartner				= NULL;
 
@@ -86,6 +86,8 @@ void CInventoryOwner::reinit				()
 //call this after CGameObject::net_Spawn
 BOOL CInventoryOwner::net_Spawn		(CSE_Abstract* DC)
 {
+	if (!m_pTrade)
+		m_pTrade				= xr_new<CTrade>(this);
 	//получить указатель на объект, InventoryOwner
 	m_inventory->setSlotsBlocked(false);
 	CGameObject			*pThis = smart_cast<CGameObject*>(this);
@@ -154,6 +156,7 @@ void	CInventoryOwner::save	(NET_Packet &output_packet)
 
 	CharacterInfo().save(output_packet);
 	save_data	(m_game_name, output_packet);
+	save_data	(m_money,	output_packet);
 }
 void	CInventoryOwner::load	(IReader &input_packet)
 {
@@ -165,6 +168,7 @@ void	CInventoryOwner::load	(IReader &input_packet)
 
 	CharacterInfo().load(input_packet);
 	load_data		(m_game_name, input_packet);
+	load_data		(m_money,	input_packet);
 }
 
 
@@ -493,4 +497,22 @@ void CInventoryOwner::on_weapon_shot_stop		(CWeapon *weapon)
 
 void CInventoryOwner::on_weapon_hide			(CWeapon *weapon)
 {
+}
+
+void CInventoryOwner::set_money		(u32 amount, bool bSendEvent)
+{
+
+	if(InfinitiveMoney())
+		m_money					= _max(m_money, amount);
+	else
+		m_money					= amount;
+
+	if(bSendEvent)
+	{
+		CGameObject				*object = smart_cast<CGameObject*>(this);
+		NET_Packet				packet;
+		object->u_EventGen		(packet,GE_MONEY,object->ID());
+		packet.w_u32			(m_money);
+		object->u_EventSend		(packet);
+	}
 }
