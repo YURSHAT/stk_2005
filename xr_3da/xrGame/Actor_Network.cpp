@@ -720,7 +720,7 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 	hit_slowmo				= 0.f;
 
 	CSE_ALifeTraderAbstract	 *pTA	= smart_cast<CSE_ALifeTraderAbstract*>(e);
-	m_dwMoney				= pTA->m_dwMoney;
+	set_money(pTA->m_dwMoney, false);
 
 	OnChangeVisual();
 	//----------------------------------

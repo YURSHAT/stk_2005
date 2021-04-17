@@ -322,7 +322,14 @@ void CScriptGameObject::TransferMoney(int money, CScriptGameObject* pForWho)
 	}
 
 	pOurOwner->set_money(pOurOwner->get_money() - money, true);
-	pOtherOwner->m_dwMoney	+= money;
+
+
+	CActor* pActor = smart_cast<CActor*>(&pForWho->object());
+
+	if (pActor)
+		pOtherOwner->set_money(pOtherOwner->get_money() + money, true);
+	else
+		pOtherOwner->m_dwMoney	+= money;
 }
 //////////////////////////////////////////////////////////////////////////
 
