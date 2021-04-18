@@ -33,11 +33,16 @@ protected:
 	HUD_SOUND		sndClose;
 	ESoundTypes		m_eSoundClose;
 
-	MotionSVec		mhud_show_empty;
-	MotionSVec		mhud_empty;
-	MotionSVec		mhud_shot_l;
-	MotionSVec		mhud_close;
-	MotionSVec		mhud_reload_empty;
+	struct WWPMotions{
+		MotionSVec		mhud_show_empty;
+		MotionSVec		mhud_empty;
+		MotionSVec		mhud_shot_l;
+		MotionSVec		mhud_close;
+		MotionSVec		mhud_reload_empty;
+	};
+	WWPMotions			mhud_pistol;
+	WWPMotions&			wwpm_current	();
+	SWMmotions&			swm_current	();
 
 	bool m_opened;
 };

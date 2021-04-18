@@ -64,7 +64,6 @@ extern void CheckPrivilegySlowdown		( );
 void CRenderDevice::End		(void)
 {
 	VERIFY	(HW.pDevice);
-	g_bRendering = 	FALSE;
 
 	if (HW.Caps.SceneMode)	overdrawEnd		();
 
@@ -81,6 +80,7 @@ void CRenderDevice::End		(void)
 		}
 	}
 
+	g_bRendering = 	FALSE;
 	// end scene
 	RCache.OnFrameEnd	();
     CHK_DX(HW.pDevice->EndScene());

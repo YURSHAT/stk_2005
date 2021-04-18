@@ -24,7 +24,7 @@
 #include "ai_object_location.h"
 #include "clsid_game.h"
 
-#define WEAPON_REMOVE_TIME		30000
+#define WEAPON_REMOVE_TIME		60000
 #define ROTATION_TIME			0.25f
 
 //////////////////////////////////////////////////////////////////////
@@ -150,7 +150,7 @@ void CWeapon::UpdateFireDependencies_internal()
 
 		UpdateXForm			();
 
-		if (hud_mode && (0!=H_Parent()))// && Local())
+		if (GetHUDmode() && (0!=H_Parent()))// && Local())
 		{
 			// 1st person view - skeletoned
 			CKinematics* V			= smart_cast<CKinematics*>(m_pHUD->Visual());
@@ -601,7 +601,7 @@ void CWeapon::OnH_B_Independent	()
 	SwitchState(eIdle);
 
 	m_strapped_mode				= false;
-	hud_mode					= FALSE;
+	SetHUDmode					(FALSE);
 	m_bZoomMode					= false;
 	UpdateXForm					();
 
@@ -1407,3 +1407,17 @@ bool CWeapon::unlimited_ammo()
 			m_DefaultCartridge.m_flags.test(CCartridge::cfCanBeUnlimited); 
 };
 
+void CWeapon::Hide		()
+{
+	if(IsGameTypeSingle())
+		SwitchState(eHiding);
+	else
+		SwitchState(eHidden);
+
+	OnZoomOut();
+}
+
+void CWeapon::Show		()
+{
+	SwitchState(eShowing);
+}

@@ -787,6 +787,8 @@ void CInventoryItem::make_Interpolation	()
 
 void CInventoryItem::renderable_Render	()
 {
+	::Render->set_Transform			(&object().XFORM());
+	::Render->add_Visual			(object().Visual());
 }
 
 void CInventoryItem::reload		(LPCSTR section)

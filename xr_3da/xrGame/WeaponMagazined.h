@@ -39,16 +39,17 @@ protected:
 	ESoundTypes		m_eSoundShot;
 	ESoundTypes		m_eSoundEmptyClick;
 	ESoundTypes		m_eSoundReload;
-					
-	// HUD :: Animations
-	MotionSVec		mhud_idle;
-	MotionSVec		mhud_idle_aim;
-	MotionSVec		mhud_reload;
-	MotionSVec		mhud_hide;
-	MotionSVec		mhud_show;
-	MotionSVec		mhud_shots;
-	MotionSVec		mhud_idle_sprint;
-
+	struct SWMmotions{
+		MotionSVec		mhud_idle;
+		MotionSVec		mhud_idle_aim;
+		MotionSVec		mhud_reload;	//
+		MotionSVec		mhud_hide;		//
+		MotionSVec		mhud_show;		//
+		MotionSVec		mhud_shots;		//
+		MotionSVec		mhud_idle_sprint;
+	};
+	SWMmotions			mhud;	
+	
 	// General
 	//кадр момента пересчета UpdateSounds
 	u32				dwUpdateSounds_Frame;
@@ -74,6 +75,8 @@ protected:
 	virtual void	UpdateSounds	();
 
 	bool			TryReload		();
+	bool			TryPlayAnimIdle	();
+
 protected:
 	virtual void	ReloadMagazine	();
 			void	ApplySilencerKoeffs	();
@@ -93,8 +96,6 @@ public:
 	virtual void	FireEnd			();
 	virtual void	Reload			();
 	
-	virtual void	Hide			();
-	virtual void	Show			();
 
 	virtual	void	UpdateCL		();
 	virtual void	net_Destroy		();
@@ -118,7 +119,7 @@ public:
 	// для стрельбы очередями или одиночными
 	//////////////////////////////////////////////
 public:
-	virtual void	SwitchMode				();
+	virtual bool	SwitchMode				();
 	virtual bool	SingleShotMode			()			{return 1 == m_iQueueSize;}
 	virtual void	SetQueueSize			(int size);
 	IC		int		GetQueueSize			() const	{return m_iQueueSize;};

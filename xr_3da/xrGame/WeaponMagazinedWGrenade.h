@@ -46,7 +46,7 @@ public:
 	virtual void	StopHUDSounds	();
 
 	//переключение в режим подствольника
-	virtual void	SwitchMode		();
+	virtual bool	SwitchMode		();
 	void			PerformSwitch	();
 	void			OnAnimationEnd	();
 

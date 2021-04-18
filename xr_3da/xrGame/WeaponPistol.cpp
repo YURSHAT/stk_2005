@@ -2,6 +2,7 @@
 #include "weaponpistol.h"
 #include "WeaponHUD.h"
 #include "ParticlesObject.h"
+#include "actor.h"
 
 CWeaponPistol::CWeaponPistol(LPCSTR name) : CWeaponCustomPistol(name)
 {
@@ -29,11 +30,13 @@ void CWeaponPistol::Load	(LPCSTR section)
 
 	HUD_SOUND::LoadSound(section, "snd_close", sndClose, TRUE, m_eSoundClose);
 
-	animGet				(mhud_empty,		pSettings->r_string(*hud_sect, "anim_empty"));
-	animGet				(mhud_shot_l,		pSettings->r_string(*hud_sect, "anim_shot_last"));
-	animGet				(mhud_close,		pSettings->r_string(*hud_sect, "anim_close"));
-	animGet				(mhud_show_empty,	pSettings->r_string(*hud_sect, "anim_draw_empty"));
-	animGet				(mhud_reload_empty,	pSettings->r_string(*hud_sect, "anim_reload_empty"));
+	animGet				(mhud_pistol.mhud_empty,		pSettings->r_string(*hud_sect, "anim_empty"));
+	animGet				(mhud_pistol.mhud_shot_l,		pSettings->r_string(*hud_sect, "anim_shot_last"));
+	animGet				(mhud_pistol.mhud_close,		pSettings->r_string(*hud_sect, "anim_close"));
+	animGet				(mhud_pistol.mhud_show_empty,	pSettings->r_string(*hud_sect, "anim_draw_empty"));
+	animGet				(mhud_pistol.mhud_reload_empty,	pSettings->r_string(*hud_sect, "anim_reload_empty"));
+
+
 }
 
 void CWeaponPistol::OnH_B_Chield		()
@@ -44,23 +47,29 @@ void CWeaponPistol::OnH_B_Chield		()
 
 void CWeaponPistol::PlayAnimShow	()
 {
-	if(iAmmoElapsed > 1)
+	if(iAmmoElapsed >= 1)
 		m_opened = false;
 	else
 		m_opened = true;
 		
-	if(m_opened) 
-		m_pHUD->animPlay(mhud_show_empty[Random.randI(mhud_show_empty.size())],FALSE, this);
-	else 
-		m_pHUD->animPlay(mhud_show[Random.randI(mhud_show.size())],FALSE, this);
+	if(m_opened){ 
+		CWeaponPistol::WWPMotions& m = wwpm_current();
+		m_pHUD->animPlay(m.mhud_show_empty[Random.randI(m.mhud_show_empty.size())],FALSE, this);
+	}else{ 
+		CWeaponMagazined::SWMmotions& m = swm_current();
+		m_pHUD->animPlay(m.mhud_show[Random.randI(m.mhud_show.size())],FALSE, this);
+	}
 }
 
 void CWeaponPistol::PlayAnimIdle	()
 {
-	if(m_opened) 
-		m_pHUD->animPlay(mhud_empty[Random.randI(mhud_empty.size())],TRUE);
-	else
+	if(m_opened) {
+		CWeaponPistol::WWPMotions& m = wwpm_current();
+		m_pHUD->animPlay(m.mhud_empty[Random.randI(m.mhud_empty.size())],TRUE);
+	}else{
 		inherited::PlayAnimIdle		();
+	}
+
 /*	{
 		if(IsZoomed())
 		{
@@ -75,10 +84,13 @@ void CWeaponPistol::PlayAnimIdle	()
 
 void CWeaponPistol::PlayAnimReload	()
 {	
-	if(m_opened) 
-		m_pHUD->animPlay(mhud_reload_empty[Random.randI(mhud_reload_empty.size())], TRUE, this);
-	else
-		m_pHUD->animPlay(mhud_reload[Random.randI(mhud_reload.size())], TRUE, this);
+	if(m_opened){ 
+		CWeaponPistol::WWPMotions& m = wwpm_current();
+		m_pHUD->animPlay(m.mhud_reload_empty[Random.randI(m.mhud_reload_empty.size())], TRUE, this);
+	}else{
+		CWeaponMagazined::SWMmotions& m = swm_current();
+		m_pHUD->animPlay(m.mhud_reload[Random.randI(m.mhud_reload.size())], TRUE, this);
+	}
 	
 	m_opened = false;		
 }
@@ -89,7 +101,8 @@ void CWeaponPistol::PlayAnimHide()
 	if(m_opened) 
 	{
 		PlaySound			(sndClose,get_LastFP());
-		m_pHUD->animPlay	(mhud_close[Random.randI(mhud_close.size())],TRUE,this);
+		CWeaponPistol::WWPMotions& m = wwpm_current();
+		m_pHUD->animPlay	(m.mhud_close[Random.randI(m.mhud_close.size())],TRUE,this);
 	} 
 	else 
 		inherited::PlayAnimHide();
@@ -99,12 +112,14 @@ void CWeaponPistol::PlayAnimShoot	()
 {
 	if(iAmmoElapsed > 1) 
 	{
-		m_pHUD->animPlay	(mhud_shots[Random.randI(mhud_shots.size())],FALSE,this);
+		CWeaponMagazined::SWMmotions& m = swm_current();
+		m_pHUD->animPlay	(m.mhud_shots[Random.randI(m.mhud_shots.size())],FALSE,this);
 		m_opened = false;
 	}
 	else 
 	{
-		m_pHUD->animPlay	(mhud_shot_l[Random.randI(mhud_shot_l.size())],FALSE,this); 
+		CWeaponPistol::WWPMotions& m = wwpm_current();
+		m_pHUD->animPlay	(m.mhud_shot_l[Random.randI(m.mhud_shot_l.size())],FALSE,this); 
 		m_opened = true; 
 	}
 }
@@ -128,8 +143,9 @@ void CWeaponPistol::OnAnimationEnd()
 	if(STATE == eHiding && m_opened) 
 	{
 		m_opened = false;
-		switch2_Hiding();
-	} else inherited::OnAnimationEnd();
+//		switch2_Hiding();
+	} 
+	inherited::OnAnimationEnd();
 }
 
 void CWeaponPistol::OnShot		()
@@ -161,4 +177,14 @@ void CWeaponPistol::UpdateSounds()
 	inherited::UpdateSounds();
 
 	if (sndClose.playing()) sndClose.set_position	(get_LastFP());
+}
+
+CWeaponPistol::WWPMotions&	 CWeaponPistol::wwpm_current	()
+{
+	return					mhud_pistol;
+}
+
+CWeaponMagazined::SWMmotions&	 CWeaponPistol::swm_current	()
+{
+	return					mhud;
 }
