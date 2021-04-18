@@ -162,7 +162,12 @@ void CTrade::SellItem(CInventoryItem* pItem)
 	O->u_EventSend			(P);
 
 	// уменьшить денег у партнера
-	pPartner.inv_owner->m_dwMoney -= dwTransferMoney;
+	CActor* pActor = smart_cast<CActor*>(pPartner.base);
+
+	if (pActor)
+		pPartner.inv_owner->set_money(pPartner.inv_owner->get_money() - dwTransferMoney, false);
+	else
+		pPartner.inv_owner->m_dwMoney -= dwTransferMoney;
 
 	CAI_Trader* pTrader = NULL;
 	if (pThis.type == TT_TRADER) 
