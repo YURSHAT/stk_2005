@@ -69,7 +69,7 @@ void CInventoryOwner::reload				(LPCSTR section)
 	inventory().SetSlotsUseful (true);
 
 	m_dwMoney					= 0;
-	m_money						= 0;
+	m_money						= -1;
 	m_bTalking					= false;
 	m_pTalkPartner				= NULL;
 
@@ -106,6 +106,10 @@ BOOL CInventoryOwner::net_Spawn		(CSE_Abstract* DC)
 		CharacterInfo().m_CurrentRank.set(pTrader->m_rank);
 		CharacterInfo().m_CurrentReputation.set(pTrader->m_reputation);
 
+		CActor* pActor = smart_cast<CActor*>(E->base());
+
+		if (pActor)
+			set_money(pTrader->m_dwMoney, false);
 
 		CharacterInfo().Load(pTrader->character_profile());
 		CharacterInfo().InitSpecificCharacter (pTrader->specific_character());

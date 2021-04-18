@@ -672,6 +672,11 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 	if (!CInventoryOwner::net_Spawn(DC)) return FALSE;
 	if (!inherited::net_Spawn(DC))	return FALSE;
 
+	if (get_money() == -1) {
+		CSE_ALifeTraderAbstract	 *pTA = smart_cast<CSE_ALifeTraderAbstract*>(e);
+		set_money(pTA->m_dwMoney, false);
+	}
+
 	//убрать все артефакты с пояса
 	m_ArtefactsOnBelt.clear();
 	if (Level().CurrentViewEntity() == this)
@@ -718,9 +723,6 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 	Engine.Sheduler.Register	(this,TRUE);
 
 	hit_slowmo				= 0.f;
-
-	CSE_ALifeTraderAbstract	 *pTA	= smart_cast<CSE_ALifeTraderAbstract*>(e);
-	set_money(pTA->m_dwMoney, false);
 
 	OnChangeVisual();
 	//----------------------------------
