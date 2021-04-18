@@ -516,6 +516,10 @@ bool CInventory::Activate(u32 slot, bool force)
 		//Msg("slot %d, cant be activaterd", slot);
 #endif
 		return false;
+	
+	if(m_iActiveSlot == slot && m_slots[m_iActiveSlot].m_pIItem){
+		m_slots[m_iActiveSlot].m_pIItem->Activate();
+		}
 	}
 	
 

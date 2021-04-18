@@ -23,30 +23,30 @@ void CLevel::ClientReceive()
 		switch (m_type)
 		{
 		case M_SPAWN:
-			{				
-				// Begin analysis
-				shared_str			s_name;
-				P->r_stringZ		(s_name);
+		{
+			/*/
+			cl_Process_Spawn(*P);
+			/*/
+			game_events->insert(*P);
+			if (g_bDebugEvents)		ProcessGameEvents();
+			//*/
+		}
+		break;
+		case M_EVENT:
+			game_events->insert(*P);
+			if (g_bDebugEvents)		ProcessGameEvents();
+			break;
+		case M_EVENT_PACK:
+			NET_Packet	tmpP;
+			while (!P->r_eof())
+			{
+				tmpP.B.count = P->r_u8();
+				P->r(&tmpP.B.data, tmpP.B.count);
+				tmpP.timeReceive = P->timeReceive;
 
-				// Create DC (xrSE)
-				CSE_Abstract*		E	= F_entity_Create	(*s_name);
-				R_ASSERT2(E, *s_name);
-//				VERIFY				(E);
-				E->Spawn_Read		(*P);
-				if (E->s_flags.is(M_SPAWN_UPDATE))
-					E->UPDATE_Read	(*P);
-				//-------------------------------------------------
-//				Msg ("M_SPAWN - %s[%d] - %d", *s_name, E->ID, E->ID_Parent);				
-				//-------------------------------------------------
-				//force object to be local for server client
-				if (OnServer())
-				{
-					E->s_flags.set(M_SPAWN_OBJECT_LOCAL, TRUE);
-				};
-
-				game_spawn_queue.push_back(E);
-				if (g_bDebugEvents)		ProcessGameSpawns();
-			}
+				game_events->insert(tmpP);
+				if (g_bDebugEvents)		ProcessGameEvents();
+			};
 			break;
 		case M_UPDATE:
 			{
@@ -144,21 +144,6 @@ void CLevel::ClientReceive()
 			break;
 		case M_SV_CONFIG_FINISHED:
 			game_configured			= TRUE;
-			break;
-		case M_EVENT:
-			game_events->insert		(*P);
-			if (g_bDebugEvents)		ProcessGameEvents();
-			break;
-		case M_EVENT_PACK:
-			NET_Packet	tmpP;
-			while (!P->r_eof())
-			{
-				tmpP.B.count = P->r_u8();
-                P->r(&tmpP.B.data, tmpP.B.count);
-
-				game_events->insert		(tmpP);
-				if (g_bDebugEvents)		ProcessGameEvents();
-			};			
 			break;
 		case M_MIGRATE_DEACTIVATE:	// TO:   Changing server, just deactivate
 			{
@@ -277,7 +262,7 @@ void CLevel::ClientReceive()
 		net_msg_Release();
 	}	
 
-	if (!g_bDebugEvents) ProcessGameSpawns();
+//	if (!g_bDebugEvents) ProcessGameSpawns();
 }
 
 
