@@ -1168,7 +1168,10 @@ void CActor::make_Interpolation	()
 		}
 		else
 		{
-			float factor = float(CurTime - m_dwIStartTime)/(m_dwIEndTime - m_dwIStartTime);
+			float factor = 0.0f;
+
+			if (m_dwIEndTime != m_dwIStartTime)
+				factor = float(CurTime - m_dwIStartTime) / (m_dwIEndTime - m_dwIStartTime);
 
 			Position().lerp(IStart.Pos, IEnd.Pos, factor);
 			
