@@ -106,11 +106,6 @@ BOOL CInventoryOwner::net_Spawn		(CSE_Abstract* DC)
 		CharacterInfo().m_CurrentRank.set(pTrader->m_rank);
 		CharacterInfo().m_CurrentReputation.set(pTrader->m_reputation);
 
-		CActor* pActor = smart_cast<CActor*>(E->base());
-
-		if (pActor)
-			set_money(pTrader->m_dwMoney, false);
-
 		CharacterInfo().Load(pTrader->character_profile());
 		CharacterInfo().InitSpecificCharacter (pTrader->specific_character());
 
