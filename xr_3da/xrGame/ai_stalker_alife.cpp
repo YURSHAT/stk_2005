@@ -483,13 +483,22 @@ void CAI_Stalker::update_sell_info					()
 
 bool CAI_Stalker::can_sell							(CInventoryItem const * item)
 {
+	if (item == NULL)
+			return false;
+
 	update_sell_info		();
 	xr_vector<CTradeItem>::const_iterator	I = std::find(m_temp_items.begin(),m_temp_items.end(),item->object().ID());
-	VERIFY					(I != m_temp_items.end());
+
+	if (I == m_temp_items.end()) 
+			return false;
+
 	return					((*I).m_new_owner_id != ID());
 }
 
 bool CAI_Stalker::AllowItemToTrade 					(CInventoryItem const * item, EItemPlace place) const
 {
-	return					(!g_Alive() || const_cast<CAI_Stalker*>(this)->can_sell(item));
+	if (item == NULL)
+			return false;
+
+		return					(!g_Alive() || const_cast<CAI_Stalker*>(this)->can_sell(item));
 }

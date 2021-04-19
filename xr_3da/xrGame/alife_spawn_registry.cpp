@@ -46,6 +46,7 @@ void CALifeSpawnRegistry::load	(IReader &file_stream, LPCSTR game_name)
 
 	IReader						*chunk, *chunk0;
 	Msg							("* Loading spawn registry...");
+
 	R_ASSERT2					(file_stream.find_chunk(SPAWN_CHUNK_DATA),"Cannot find chunk SPAWN_CHUNK_DATA!");
 	chunk0						= file_stream.open_chunk(SPAWN_CHUNK_DATA);
 	
@@ -85,10 +86,14 @@ void CALifeSpawnRegistry::load	(LPCSTR spawn_name)
 void CALifeSpawnRegistry::load	(IReader &file_stream, xrGUID *save_guid)
 {
 	IReader						*chunk;
+	bool		no_check		= strstr(Core.Params, "-nospawncheck") != NULL;
 	chunk						= file_stream.open_chunk(0);
 	m_header.load				(*chunk);
 	chunk->close				();
-	R_ASSERT2					(!save_guid || (*save_guid == header().guid()),"Saved game doesn't correspond to the spawn : DELETE SAVED GAME!");
+
+	if(!no_check)
+		R_ASSERT2					(!save_guid || (*save_guid == header().guid()),"Saved game doesn't correspond to the spawn : DELETE SAVED GAME!");
+
 	R_ASSERT2					(header().graph_guid() == ai().game_graph().header().guid(),"Spawn doesn't correspond to the graph : REBUILD SPAWN!");
 
 	chunk						= file_stream.open_chunk(1);

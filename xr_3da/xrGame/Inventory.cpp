@@ -1071,6 +1071,7 @@ void  CInventory::AddAvailableItems(TIItemContainer& items_container, bool for_t
 	for(TIItemContainer::const_iterator it = m_ruck.begin(); m_ruck.end() != it; ++it) 
 	{
 		PIItem pIItem = *it;
+		if (!pIItem) return;
 		if(!for_trade || pIItem->CanTrade())
 			items_container.push_back(pIItem);
 	}

@@ -125,6 +125,7 @@ void CInventoryItem::Load(LPCSTR section)
 
 	m_flags.set(FCanTake,		READ_IF_EXISTS(pSettings, r_bool, section, "can_take",			TRUE));
 	m_flags.set(FCanTrade,		READ_IF_EXISTS(pSettings, r_bool, section, "can_trade",			TRUE));
+	m_flags.set(FIsQuestItem,	READ_IF_EXISTS(pSettings, r_bool, section, "quest_item",		FALSE));
 
 
 
@@ -791,6 +792,7 @@ void CInventoryItem::renderable_Render	()
 
 void CInventoryItem::reload		(LPCSTR section)
 {
+	//inherited::reload		(section);
 	m_holder_range_modifier	= READ_IF_EXISTS(pSettings,r_float,section,"holder_range_modifier",1.f);
 	m_holder_fov_modifier	= READ_IF_EXISTS(pSettings,r_float,section,"holder_fov_modifier",1.f);
 }
@@ -1007,7 +1009,7 @@ bool	CInventoryItem::CanTrade() const
 	if(m_pInventory)
 		res = inventory_owner().AllowItemToTrade(this,m_eItemPlace);
 
-	return (res && m_flags.test(FCanTrade));
+	return (res && m_flags.test(FCanTrade) && !IsQuestItem());
 }
 
 float CInventoryItem::GetKillMsgXPos		() const 

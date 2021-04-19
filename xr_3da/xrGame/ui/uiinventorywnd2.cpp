@@ -174,6 +174,9 @@ void CUIInventoryWnd::DropItem()
 	CActor *pActor = smart_cast<CActor*>(Level().CurrentEntity());
 	if(!pActor) return;
 
+	if (m_pCurrentItem && m_pCurrentItem->IsQuestItem())
+		return;
+
 	//	if (smart_cast<CCustomOutfit*>(m_pCurrentItem))
 	//		SendMessage(NULL, CUIOutfitSlot::UNDRESS_OUTFIT, NULL);
 	if (m_pCurrentDragDropItem == UIOutfitSlot.GetDragDropItemsList().front())
