@@ -8,7 +8,7 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-int		rsDVB_Size			= 512;
+int		rsDVB_Size			= 4096; // предотвращение вылета (bytes_need<=mSize) && vl_Count 
 int		rsDIB_Size			= 512;
 
 void _VertexStream::Create	()
