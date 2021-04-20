@@ -113,13 +113,14 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic	(IRender_Visual *pVisual, Fve
 		N->val.Matrix			= *RI.val_pTransform;
 		N->val.se				= &*pVisual->shader->E[4];		// 4=L_special
 	}
-	if (sh->flags.bWmark)	{
+	if (sh->flags.bWmark	&& pmask_wmark)	{
 		mapSorted_Node* N		= mapWmark.insertInAnyWay		(distSQ);
 		N->val.ssa				= SSA;
 		N->val.pObject			= RI.val_pObject;
 		N->val.pVisual			= pVisual;
 		N->val.Matrix			= *RI.val_pTransform;
 		N->val.se				= sh;							
+		return					;
 	}
 #endif
 
@@ -216,13 +217,14 @@ void R_dsgraph_structure::r_dsgraph_insert_static	(IRender_Visual *pVisual)
 		N->val.Matrix			= Fidentity;
 		N->val.se				= &*pVisual->shader->E[4];		// 4=L_special
 	}
-	if (sh->flags.bWmark)	{
+	if (sh->flags.bWmark	&& pmask_wmark)	{
 		mapSorted_Node* N		= mapWmark.insertInAnyWay		(distSQ);
 		N->val.ssa				= SSA;
 		N->val.pObject			= NULL;
 		N->val.pVisual			= pVisual;
 		N->val.Matrix			= Fidentity;
 		N->val.se				= sh;							
+		return					;
 	}
 #endif
 

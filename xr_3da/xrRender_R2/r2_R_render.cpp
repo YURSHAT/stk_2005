@@ -118,12 +118,12 @@ void CRender::render_main	(Fmatrix&	m_ViewProjection, bool _fportals)
 				break;	// exit loop on frustums
 			}
 		}
-		if (phase==PHASE_NORMAL)	g_pGameLevel->pHUD->Render_Last();		// HUD
+		if (g_pGameLevel && (phase==PHASE_NORMAL))	g_pGameLevel->pHUD->Render_Last();		// HUD
 	}
 	else
 	{
 		set_Object											(0);
-		if (phase==PHASE_NORMAL)	g_pGameLevel->pHUD->Render_Last();		// HUD
+		if (g_pGameLevel && (phase==PHASE_NORMAL))	g_pGameLevel->pHUD->Render_Last();		// HUD
 	}
 }
 
@@ -172,7 +172,7 @@ void CRender::Render		()
 	//******* Main calc - DEFERRER RENDERER
 	// Main calc
 	Device.Statistic.RenderCALC.Begin			();
-	r_pmask										(true,false);	// enable priority "0"
+	r_pmask										(true,false,true);	// enable priority "0"
 	if (bSUN)									set_Recorder	(&main_coarse_structure);
 	else										set_Recorder	(NULL);
 	phase										= PHASE_NORMAL;

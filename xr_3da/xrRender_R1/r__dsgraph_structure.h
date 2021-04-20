@@ -31,6 +31,7 @@ public:
 	u32															phase;
 	u32															marker;
 	bool														pmask		[2];
+	bool														pmask_wmark;
 public:
 	// Dynamic scene graph
 	R_dsgraph::mapNormal_T										mapNormal	[2];	// 2==(priority/2)
@@ -139,7 +140,7 @@ public:
 	}
 
 
-	void		r_pmask											(bool _1, bool _2)				{ pmask[0]=_1; pmask[1]=_2;			}
+	void		r_pmask											(bool _1, bool _2, bool _wm=false)				{ pmask[0]=_1; pmask[1]=_2;	pmask_wmark = _wm; }
 
 	void		r_dsgraph_insert_dynamic						(IRender_Visual	*pVisual, Fvector& Center);
 	void		r_dsgraph_insert_static							(IRender_Visual	*pVisual);
