@@ -312,7 +312,13 @@ void CWallmarksEngine::Render()
 	Device.mProject._43			-= 0.001f; 
 	RCache.set_xform_world		(Fidentity);
 	RCache.set_xform_project	(Device.mProject);
-
+	
+	Fmatrix mSavedView = Device.mView;
+	Fvector mViewPos;
+			mViewPos.mad(Device.vCameraPosition, Device.vCameraDirection, 0.005f);
+	Device.mView.build_camera_dir(mViewPos, Device.vCameraDirection, Device.vCameraTop);
+	RCache.set_xform_view(Device.mView);
+	
 	Device.Statistic.RenderDUMP_WM.Begin	();
 	Device.Statistic.RenderDUMP_WMS_Count	= 0;
 	Device.Statistic.RenderDUMP_WMD_Count	= 0;
@@ -372,14 +378,16 @@ void CWallmarksEngine::Render()
 		// Flush stream
 		FlushStream				(hGeom,slot->shader,w_offset,w_verts,w_start,TRUE);
 	}
+	
+	lock.Leave();				// Physics may add wallmarks in parallel with rendering
 
 	// Level-wmarks
 	RImplementation.r_dsgraph_render_wmarks	();
 	Device.Statistic.RenderDUMP_WM.End		();
 
 	// Projection
+	Device.mView				= mSavedView;
 	Device.mProject._43			= _43;
+	RCache.set_xform_view		(Device.mView);
 	RCache.set_xform_project	(Device.mProject);
-
-	lock.Leave();				// Physics may add wallmarks in parallel with rendering
 }
