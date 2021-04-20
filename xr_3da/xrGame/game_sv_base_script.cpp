@@ -16,8 +16,14 @@
 #include "ui/UIInventoryUtilities.h"
 #include "xr_time.h"
 #include "net_utils.h"
+#include "string_table.h"
 
 using namespace luabind;
+
+LPCSTR translate_string(LPCSTR str)
+{
+	return *CStringTable().translate(str);
+}
 
 void game_sv_GameState::script_register(lua_State *L)
 {
@@ -84,6 +90,7 @@ void game_sv_GameState::script_register(lua_State *L)
 	.def("GenerateGameMessage",	&game_sv_GameState::GenerateGameMessage)
 	.def("getRP",				&game_sv_GameState::getRP)
 	.def("getRPcount",			&game_sv_GameState::getRPcount)
+	.def("translate_string",	&translate_string)
 	];
 	
 	module(L)
