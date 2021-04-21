@@ -89,8 +89,9 @@ void game_sv_GameState::script_register(lua_State *L)
 
 	.def("GenerateGameMessage",	&game_sv_GameState::GenerateGameMessage)
 	.def("getRP",				&game_sv_GameState::getRP)
-	.def("getRPcount",			&game_sv_GameState::getRPcount)
-	.def("translate_string",	&translate_string)
+	.def("getRPcount",			&game_sv_GameState::getRPcount),
+
+	def("translate_string",	&translate_string)
 	];
 	
 	module(L)
