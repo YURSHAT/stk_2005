@@ -110,9 +110,9 @@ void	xrMemory::mem_free		(void* P)
 		xr_aligned_free			(_real);
 	} else {
 		// pooled
-		//VERIFY2					(pool<mem_pools_count);
+		VERIFY2					(pool<mem_pools_count);
 
-		//mem_pools[pool].destroy	(_real);
+		mem_pools[pool].destroy	(_real);
 	}
 #ifdef DEBUG_MEMORY_MANAGER
 	if (mem_initialized)		debug_cs.Leave	();
